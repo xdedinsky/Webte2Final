@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Apr 20, 2024 at 10:34 AM
+-- Generation Time: Apr 20, 2024 at 01:08 PM
 -- Server version: 8.0.36-0ubuntu0.22.04.1
 -- PHP Version: 8.3.3-1+ubuntu22.04.1+deb.sury.org+1
 
@@ -90,7 +90,7 @@ CREATE TABLE `Users` (
   `user_id` int NOT NULL,
   `username` varchar(50) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `email` int NOT NULL,
+  `email` varchar(255) NOT NULL,
   `role` enum('admin','user') NOT NULL,
   `created_at` timestamp NOT NULL,
   `updated_at` timestamp NOT NULL
@@ -169,7 +169,7 @@ ALTER TABLE `Sessions`
 -- AUTO_INCREMENT for table `Users`
 --
 ALTER TABLE `Users`
-  MODIFY `user_id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `user_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Constraints for dumped tables
