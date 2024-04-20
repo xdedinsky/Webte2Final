@@ -1,0 +1,63 @@
+:root {
+    --primary-color: #FF6A00; /* Adjust with the orange from the logo */
+    --secondary-color: #000000; /* Black */
+    --accent-color: #FFFFFF; /* White */
+    --nav-font-size: 1.2rem; /* Increased font size for navbar */
+    --inactive-color: #6e6c6c; /* Grey color for non-active links */
+    --invisible-color: rgba(0,0,0,0); /* Transparent color */
+}
+
+body {
+    background-color: var(--accent-color);
+    color: var(--secondary-color);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* A modern font family */
+}
+
+.navbar {
+    background-color: var(--primary-color);
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); /* Modern shadow for depth */
+    border-bottom: none; /* Removing border for a cleaner look */
+}
+
+.navbar-brand img {
+    height: auto;
+    width: auto;
+    max-height: 60px; /* Size to fit new navbar height */
+}
+
+.nav-link {
+    color: var(--inactive-color);
+    font-size: var(--nav-font-size);
+    font-weight: 500; /* Medium font weight for better readability */
+    transition: color 0.3s ease-in-out; /* Smooth transition for color change */
+    border-radius: 15px;
+    border: 2px solid var(--invisible-color); /* Border for active link */
+}
+
+.nav-link:hover, .nav-link:focus {
+    color: var(--accent-color);
+    background-color: rgba(255,255,255,0.2); /* Subtle hover effect */
+    border-radius: 15px;
+    border: 2px solid var(--accent-color); /* Border for active link */
+}
+
+.navbar .nav-link.active {
+    color: var(--accent-color); /* White color for active link */
+    background-color: transparent;
+}
+
+/* Responsive nav-brand size */
+@media (max-width: 768px) {
+    .navbar-brand img {
+        max-height: 50px;
+    }
+}
+
+/* Additional modern touches */
+button.navbar-toggler {
+    border-color: var(--accent-color);
+}
+
+button.navbar-toggler .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255, 255, 255, 0.7)' stroke-width='2' stroke-linecap='round' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+}
