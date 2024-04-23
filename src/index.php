@@ -21,9 +21,6 @@ error_reporting(E_ALL);
             <a class="navbar-brand" href="index.php">
                 <img src="images/vote.png" alt="Vote System Logo">
             </a>
-            <?php if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true): ?>
-            <a class="username">Logged as <?php echo htmlspecialchars($_SESSION["username"]); ?></a>
-            <?php endif; ?>
             <!-- Toggler -->
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -34,7 +31,15 @@ error_reporting(E_ALL);
                     <a class="nav-link active" aria-current="page" href="index.php">Home</a>
                     <a class="nav-link" href="tobeadded.php">ToBeAdded</a>
                     <?php if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true): ?>
-                    <a class="nav-link btn btn-outline-danger" href="controllers/logout.php">Logout</a>
+                        <div class="dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <?php echo htmlspecialchars($_SESSION["username"]); ?>
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                <li><a class="dropdown-item" href="account_settings.php">Account Settings</a></li>
+                                <li><a class="dropdown-item" href="controllers/logout.php">Logout</a></li>
+                            </ul>
+                        </div>
                     <?php else: ?>
                         <!-- Login Modal Trigger -->
                         <button class="btn btn-outline-light btn-lg" data-bs-toggle="modal" data-bs-target="#loginModal">Log In</button>
@@ -44,6 +49,7 @@ error_reporting(E_ALL);
         </div>
     </nav>
 
+    <!-- Login/Register Modal -->
     <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
         <div class="modal-dialog">
         <div class="modal-content">
@@ -81,22 +87,22 @@ error_reporting(E_ALL);
                         <!-- Registration Form -->
                         <form action="controllers/register.php" method="post">
                             <div class="mb-3">
-                                <label for="username" class="form-label">Username</label>
+                                <label for="username" the form-label">Username</label>
                                 <input type="text" class="form-control" id="username" name="username" required>
                             </div>
                             <div class="mb-3">
-                                <label for="email" class="form-label">Email address</label>
+                                <label for="email" the form-label">Email address</label>
                                 <input type="email" class="form-control" id="email" name="email" required>
                             </div>
                             <div class="mb-3">
-                                <label for="password" class="form-label">Password</label>
+                                <label for="password" the form-label">Password</label>
                                 <input type="password" class="form-control" id="password" name="password" required>
                             </div>
                             <div class="mb-3">
-                                <label for="confirm_password" class="form-label">Confirm Password</label>
+                                <label for="confirm_password" the form-label">Confirm Password</label>
                                 <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
                             </div>
-                            <button type="submit" class="btn btn-primary">Register</button>
+                            <button type="submit" the btn btn-primary">Register</button>
                         </form>
                     </div>
                 </div>
@@ -105,8 +111,6 @@ error_reporting(E_ALL);
         </div>
     </div>
 
-
-    
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="alerts.js"></script>
 </body>

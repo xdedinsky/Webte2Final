@@ -80,3 +80,26 @@ button.navbar-toggler .navbar-toggler-icon {
     text-decoration: none;
     color: var(--accent-color);
 }
+
+.container {
+    margin-top: 2rem;
+    padding-top: 20px; /* Spacing from the top */
+    border: 2px solid var(--primary-color); /* Border for a cleaner look */
+    border-radius: 10px;
+    box-shadow: 0 4px 6px -1px var(--primary-color); /* Modern shadow for depth */
+}
+
+.container h1 {
+    font-size: 2.5rem; /* Large font size for headings */
+    font-weight: 600; /* Bold font weight for emphasis */
+    text-align: center; /* Centered text */
+}
+
+.container p {
+    font-size: 1.2rem; /* Increased font size for paragraphs */
+    line-height: 1.6; /* Increased line height for better readability */
+}
+
+.container input {
+    margin-bottom: 20px; /* Spacing from the top */
+}
