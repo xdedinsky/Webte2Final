@@ -12,8 +12,12 @@ error_reporting(E_ALL);
     <title>VOTE</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="styles.css">
 </head>
+<style>
+    .hidden { display: none; }
+</style>
 <body>
     <nav class="navbar navbar-expand-lg">
         <div class="container-fluid">
@@ -28,8 +32,8 @@ error_reporting(E_ALL);
             <!-- Navbar links -->
             <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
-                    <a class="nav-link active" aria-current="page" href="index.php">Home</a>
-                    <a class="nav-link" aria-current="page" href="addQuestion.php">Add Q</a>
+                    <a class="nav-link" aria-current="page" href="index.php">Home</a>
+                    <a class="nav-link active" aria-current="page" href="addQuestion.php">Add Q</a>
                     <a class="nav-link" href="tobeadded.php">ToBeAdded</a>
                     <?php if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true): ?>
                         <div class="dropdown">
@@ -112,8 +116,118 @@ error_reporting(E_ALL);
         </div>
     </div>
 
+    <div class="container mt-4">
+        <form id="questionForm" class="needs-validation" novalidate>
+            <div class="mb-3">
+                <label for="question_type" class="form-label" ><h2>Select Question Type:</h2></label>
+                <select id="question_type" name="question_type" class="form-select" required>
+                    <option value="open_ended" style="user-select: none;">Open Question</option>
+                    <option value="multiple_choice" >Question with Options</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label for="question_text" class="form-label"><h2>Question Text:</h2></label>
+                <input type="text" id="question_text" name="question_text" class="form-control" required>
+            </div>
+
+            <div id="optionsContainer" class="hidden">
+                <label><h2>Options:</h2></label>
+                <div id="optionFields">
+                    <input type="text" name="options[]" class="form-control" placeholder="Option 1">
+                    <input type="text" name="options[]" class="form-control" placeholder="Option 2">
+                </div>
+                <div class="centered">
+                    <button type="button" id="addOption" class="btn btn-custom">Add Option</button>
+                    <button type="button" id="deleteOption" class="btn btn-custom">Delete Option</button>
+                </div>
+            </div>
+
+            <div class="centered">
+                <button type="submit" id="submitButton" class="btn btn-custom">Submit Question</button>
+            </div>
+        </form>
+    </div>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="alerts.js"></script>
+
+<script>
+$(document).ready(function() {
+    $('#question_type').change(function() {
+        const type = $(this).val();
+        if (type === 'multiple_choice') {
+            $('#optionsContainer').removeClass('hidden');
+            $('input[name="options[]"]').attr('required', true);  // Make options required when visible
+        } else {
+            $('#optionsContainer').addClass('hidden');
+            $('input[name="options[]"]').removeAttr('required');  // Remove required attribute when not visible
+        }
+    });
+
+    $('#addOption').click(function(event) {
+        event.preventDefault();
+        const optionNumber = $('#optionFields input').length + 1;
+        const newOption = `<input type="text" name="options[]" class="form-control" placeholder="Option ${optionNumber}" required>`;  // Add required attribute
+        $('#optionFields').append(newOption);
+    });
+
+    $('#deleteOption').click(function(event) {
+        event.preventDefault();
+        let options = $('#optionFields input');
+        if (options.length > 2) {
+            options.last().remove();
+        } else {
+            Swal.fire({
+                title: 'Attention!',
+                text: 'You must keep at least two options.',
+                icon: 'info',
+                confirmButtonText: 'OK'
+            });
+        }
+    });
+
+    $('#questionForm').submit(function(event) {
+        if (!this.checkValidity()) {
+            event.preventDefault();
+            event.stopPropagation();
+        } else {
+            event.preventDefault();
+            const formData = {
+                question_text: $('#question_text').val(),
+                question_type: $('#question_type').val(),
+                options: $('#question_type').val() === 'multiple_choice' ? $('input[name="options[]"]').map(function() { return $(this).val(); }).get() : []
+            };
+
+            $.ajax({
+                type: "POST",
+                url: "controllers/question.php",
+                data: JSON.stringify(formData),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function(response) {
+                    Swal.fire({
+                        title: 'Success!',
+                        text: 'Question submitted successfully!',
+                        icon: 'success',
+                        confirmButtonText: 'OK'
+                    });
+                },
+                error: function(err) {
+                    Swal.fire({
+                        title: 'Error!',
+                        text: 'Error submitting question!',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
+                }
+            });
+        }
+        this.classList.add('was-validated');
+    });
+});
+
+</script>
 <script src="script.js"></script>
 </body>
 </html>

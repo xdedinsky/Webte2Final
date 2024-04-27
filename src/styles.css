@@ -103,3 +103,33 @@ button.navbar-toggler .navbar-toggler-icon {
 .container input {
     margin-bottom: 20px; /* Spacing from the top */
 }
+
+.hidden { display: none; }
+
+.btn-custom {
+    background-color: var(--primary-color);
+    color: var(--accent-color);
+}
+.btn-custom:hover {
+    background-color: darken(var(--primary-color), 10%);
+}
+#addOption {
+    margin-top: 10px;
+}
+#deleteOption {
+    margin-top: 10px;
+}
+#submitButton {
+    margin: 10px;
+}
+.centered {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+}
+
+h2 {
+    color: var(--primary-color);
+    text-align: center;
+}
+
