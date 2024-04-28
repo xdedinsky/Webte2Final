@@ -1,5 +1,6 @@
 :root {
     --primary-color: #FF6A00; /* Adjust with the orange from the logo */
+    --primary-color-light: #FF8C42; /* Lighter shade of orange */
     --secondary-color: #000000; /* Black */
     --accent-color: #FFFFFF; /* White */
     --nav-font-size: 1.2rem; /* Increased font size for navbar */
@@ -133,3 +134,25 @@ h2 {
     text-align: center;
 }
 
+.card-footer {
+    background-color: var(--primary-color-light);
+    color: var(--accent-color);
+    border-top: none;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.card-header {
+    background-color: var(--primary-color);
+    color: var(--accent-color);
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.card-text {
+    font-size: 1.5em;
+}

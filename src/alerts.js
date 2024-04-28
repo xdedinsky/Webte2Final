@@ -58,6 +58,17 @@ document.addEventListener('DOMContentLoaded', function () {
                 confirmButtonText: 'Ok'
             });
             break;
+        case 'code-not-found':
+            Swal.fire({
+                title: 'Question with this code doesnt exist!',
+                text: 'Please enter a valid code.',
+                icon: 'error',
+                background: '#FFFFFF',
+                color: '#000000',
+                confirmButtonColor: '#FF6A00',
+                confirmButtonText: 'Ok'
+            });
+            break;
     }
 });
 

@@ -51,20 +51,19 @@ error_reporting(E_ALL);
 
     <div class="container">
         <h2>Change Password</h2>
-        <p>Please fill out this form to change your password.</p>
         <form id="changePasswordForm">
             <div class="form-group">
-                <label>Current Password</label>
+                <label><h2>Current Password</h2></label>
                 <input type="password" name="current_password" class="form-control <?php echo (!empty($current_password_err)) ? 'is-invalid' : ''; ?>">
                 <span class="invalid-feedback"><?php echo $current_password_err; ?></span>
             </div>    
             <div class="form-group">
-                <label>New Password</label>
+                <label><h2>New Password</h2></label>
                 <input type="password" name="new_password" class="form-control <?php echo (!empty($new_password_err)) ? 'is-invalid' : ''; ?>">
                 <span class="invalid-feedback"><?php echo $new_password_err; ?></span>
             </div>
             <div class="form-group">
-                <label>Confirm New Password</label>
+                <label><h2>Confirm New Password</h2></label>
                 <input type="password" name="confirm_password" class="form-control <?php echo (!empty($confirm_password_err)) ? 'is-invalid' : ''; ?>">
                 <span class="invalid-feedback"><?php echo $confirm_password_err; ?></span>
             </div>

@@ -17,7 +17,7 @@ if (!isset($data['question_text']) || !isset($data['question_type'])) {
 }
 
 //make random 5 varchar code
-$question_code = substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, 5);
+$question_code = substr(str_shuffle("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, 5);
 while (true) {
     $stmt = $conn->prepare("SELECT * FROM Questions WHERE question_code = ?");
     $stmt->bind_param("s", $question_code);
@@ -26,7 +26,7 @@ while (true) {
     if ($stmt->num_rows == 0) {
         break;
     }
-    $question_code = substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, 5);
+    $question_code = substr(str_shuffle("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, 5);
 }
 
 

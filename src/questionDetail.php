@@ -3,7 +3,38 @@ session_start();
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
+require '../../../configFinal.php'; 
+
+$questionCode = $_GET['questionCode'] ?? '';  // Safely fetch the question code
+
+// Prepare and execute the query to fetch the question details
+if ($stmt = $conn->prepare("SELECT * FROM Questions WHERE question_code = ?")) {
+    $stmt->bind_param("s", $questionCode);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    // Check if a question was actually fetched
+    if ($question = $result->fetch_assoc()) {
+        // Check the type of question and fetch options if it's multiple choice
+        if ($question['question_type'] == 'multiple_choice') {
+            if ($optionsStmt = $conn->prepare("SELECT option_id, option_text FROM QuestionOptions WHERE question_id = ?")) {
+                $optionsStmt->bind_param("i", $question['question_id']);
+                $optionsStmt->execute();
+                $optionsResult = $optionsStmt->get_result();
+                $options = $optionsResult->fetch_all(MYSQLI_ASSOC);
+            }
+        }
+    } else {
+        header("location: /Webte2Final/src/index.php?action=code-not-found");
+        exit;
+    }
+    $stmt->close();
+} else {
+    echo "SQL Error: " . $conn->error;
+    exit;
+}
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -115,9 +146,82 @@ error_reporting(E_ALL);
         </div>
         </div>
     </div>
+ 
+    <div class="row justify-content-center" style="margin-top: 5rem;">
+        <div class="col-md-8">
+            <form id="answerForm" action="controllers/submitAnswer.php" method="post">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Question Detail</h2>
+                    </div>
+                    <div class="card-body">
+                        <?php if (!empty($question)): ?>
+                            <h2 style="text-align:left;">Question:</h2>
+                            <p class="card-text"><?php echo htmlspecialchars($question['question_text']); ?></p>
+
+                            <?php if ($question['question_type'] == 'multiple_choice' && !empty($options)): ?>
+                                <div class="mt-4">
+                                    <h2 style="text-align:left;">Select your answer:</h2>
+                                    <?php foreach ($options as $option): ?>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="answer" id="option<?php echo htmlspecialchars($option['option_id']); ?>" value="<?php echo htmlspecialchars($option['option_id']); ?>" required>
+                                            <label class="form-check-label" for="option<?php echo htmlspecialchars($option['option_id']); ?>">
+                                                <?php echo htmlspecialchars($option['option_text']); ?>
+                                            </label>
+                                        </div>
+                                    <?php endforeach; ?>
+                                </div>
+                            <?php else: ?>
+                                <div class="mt-4">
+                                    <label for="openAnswer" class="form-label"><h2>Your answer:</h2></label>
+                                    <input type="text" class="form-control" id="openAnswer" name="answer" required>
+                                </div>
+                            <?php endif; ?>
+                        <?php else: ?>
+                            <p class="card-text">No question found with that code.</p>
+                        <?php endif; ?>
+                    </div>
+                    <div class="card-footer">
+                        <!-- Hidden input to carry the question ID -->
+                        <input type="hidden" name="question_id" value="<?php echo $question['question_id']; ?>">
+                        <button type="submit" class="btn btn-primary">Submit Answer</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="alerts.js"></script>
 <script src="script.js"></script>
+<script>
+$(document).ready(function() {
+    $('#answerForm').submit(function(e) {
+        e.preventDefault(); // Prevent default form submission
+
+        var formData = {
+            question_id: $("input[name='question_id']").val(),
+            answer: $("input[name='answer']:checked, #openAnswer").val()
+        };
+
+        $.ajax({
+            type: "POST",
+            url: $(this).attr('action'),
+            data: JSON.stringify(formData),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function(response) {
+                console.log('Success:', response);
+            },
+            error: function(xhr, status, error) {
+                console.log('Error:', xhr.responseText);
+            }
+        });
+    });
+});
+</script>
+
 </body>
 </html>
