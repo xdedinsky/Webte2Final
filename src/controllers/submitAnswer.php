@@ -34,41 +34,31 @@ if ($questionStmt = $conn->prepare("SELECT question_type FROM Questions WHERE qu
     }
 
     $question_type = $questionData['question_type'];
-    $option_id = null;
-    $response_text = '';
 
-    // Determine whether to record an option_id or response_text based on question type
+    // Prepare to insert multiple answers if necessary
     if ($question_type == 'multiple_choice') {
-        $option_id = $answer;  // Directly use answer as option_id for multiple choice
+        if (is_array($answer)) {
+            foreach ($answer as $option_id) {
+                if (!$insertStmt = $conn->prepare("INSERT INTO Responses (question_id, user_id, option_id, created_at) VALUES (?, ?, ?, NOW())")) {
+                    header('HTTP/1.1 500 Internal Server Error');
+                    echo json_encode(['error' => $conn->error]);
+                    exit;
+                }
+                $insertStmt->bind_param("iii", $question_id, $user_id, $option_id);
+                $insertStmt->execute();
+                $insertStmt->close();
+            }
+            echo json_encode(['success' => 'Responses submitted successfully']);
+        } else {
+            // Handle a single answer for multiple choice
+            $option_id = $answer;
+            $response_text = '';
+            insertResponse($conn, $question_id, $user_id, $option_id, $response_text);
+        }
     } else if ($question_type == 'open_ended') {
-        $response_text = $answer;  // Use answer as response text for open-ended
-    }
-
-    // Insert the answer into the Responses table
-    if ($insertStmt = $conn->prepare("INSERT INTO Responses (question_id, user_id, option_id, response_text, created_at) VALUES (?, ?, ?, ?, NOW())")) {
-        $user_id = $_SESSION['user_id'] ?? 0;  // Default to 0 or handle accordingly if user is not logged in
-
-        if ($user_id > 0) {
-            // If a valid user_id exists, proceed with the insertion
-            $insertStmt->bind_param("iiis", $question_id, $user_id, $option_id, $response_text);
-        } else {
-            // If no valid user_id, handle the NULL scenario
-            $insertStmt->bind_param("iiis", $question_id, $null, $option_id, $response_text);
-        }
-        $insertStmt->execute();
-
-        if ($insertStmt->affected_rows > 0) {
-            echo json_encode(['success' => 'Response submitted successfully']);
-        } else {
-            // Output error if the insert failed
-            header('HTTP/1.1 500 Internal Server Error');
-            echo json_encode(['error' => 'Failed to submit response']);
-        }
-        $insertStmt->close();
-    } else {
-        // Output SQL error
-        header('HTTP/1.1 500 Internal Server Error');
-        echo json_encode(['error' => $conn->error]);
+        $response_text = $answer;
+        $option_id = null;
+        insertResponse($conn, $question_id, $user_id, $option_id, $response_text);
     }
 } else {
     // Output SQL error when querying question type
@@ -77,4 +67,21 @@ if ($questionStmt = $conn->prepare("SELECT question_type FROM Questions WHERE qu
 }
 
 $conn->close();
+
+// Function to handle insertion of a single response
+function insertResponse($conn, $question_id, $user_id, $option_id, $response_text) {
+    if ($insertStmt = $conn->prepare("INSERT INTO Responses (question_id, user_id, option_id, response_text, created_at) VALUES (?, ?, ?, ?, NOW())")) {
+        $insertStmt->bind_param("iiis", $question_id, $user_id, $option_id, $response_text);
+        if ($insertStmt->execute()) {
+            echo json_encode(['success' => 'Response submitted successfully']);
+        } else {
+            header('HTTP/1.1 500 Internal Server Error');
+            echo json_encode(['error' => 'Failed to submit response']);
+        }
+        $insertStmt->close();
+    } else {
+        header('HTTP/1.1 500 Internal Server Error');
+        echo json_encode(['error' => $conn->error]);
+    }
+}
 ?>

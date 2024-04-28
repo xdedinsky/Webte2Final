@@ -162,14 +162,25 @@ if ($stmt = $conn->prepare("SELECT * FROM Questions WHERE question_code = ?")) {
                             <?php if ($question['question_type'] == 'multiple_choice' && !empty($options)): ?>
                                 <div class="mt-4">
                                     <h2 style="text-align:left;">Select your answer:</h2>
-                                    <?php foreach ($options as $option): ?>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="answer" id="option<?php echo htmlspecialchars($option['option_id']); ?>" value="<?php echo htmlspecialchars($option['option_id']); ?>" required>
-                                            <label class="form-check-label" for="option<?php echo htmlspecialchars($option['option_id']); ?>">
-                                                <?php echo htmlspecialchars($option['option_text']); ?>
-                                            </label>
-                                        </div>
-                                    <?php endforeach; ?>
+                                    <?php if ($question['options_count'] == 'single'): ?>
+                                        <?php foreach ($options as $option): ?>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="answer" id="option<?php echo htmlspecialchars($option['option_id']); ?>" value="<?php echo htmlspecialchars($option['option_id']); ?>" required>
+                                                <label class="form-check-label" for="option<?php echo htmlspecialchars($option['option_id']); ?>">
+                                                    <?php echo htmlspecialchars($option['option_text']); ?>
+                                                </label>
+                                            </div>
+                                        <?php endforeach; ?>
+                                    <?php elseif ($question['options_count'] == 'multiple'): ?>
+                                        <?php foreach ($options as $option): ?>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="answer[]" id="option<?php echo htmlspecialchars($option['option_id']); ?>" value="<?php echo htmlspecialchars($option['option_id']); ?>">
+                                                <label class="form-check-label" for="option<?php echo htmlspecialchars($option['option_id']); ?>">
+                                                    <?php echo htmlspecialchars($option['option_text']); ?>
+                                                </label>
+                                            </div>
+                                        <?php endforeach; ?>
+                                    <?php endif; ?>
                                 </div>
                             <?php else: ?>
                                 <div class="mt-4">
@@ -181,6 +192,7 @@ if ($stmt = $conn->prepare("SELECT * FROM Questions WHERE question_code = ?")) {
                             <p class="card-text">No question found with that code.</p>
                         <?php endif; ?>
                     </div>
+
                     <div class="card-footer">
                         <!-- Hidden input to carry the question ID -->
                         <input type="hidden" name="question_id" value="<?php echo $question['question_id']; ?>">
@@ -201,11 +213,27 @@ $(document).ready(function() {
     $('#answerForm').submit(function(e) {
         e.preventDefault(); // Prevent default form submission
 
+        var questionId = $("input[name='question_id']").val();
+        var answers;
+
+        // Handle multiple answer submissions if checkboxes are used
+        if ($("input[type='checkbox'][name='answer[]']").length > 0) {
+            answers = [];
+            $("input[type='checkbox'][name='answer[]']:checked").each(function() {
+                answers.push($(this).val());
+            });
+        } else {
+            // It's either a single choice or open-ended question
+            answers = $("input[type='radio'][name='answer']:checked, #openAnswer").val();
+        }
+
+        // Create JSON object for the form data
         var formData = {
-            question_id: $("input[name='question_id']").val(),
-            answer: $("input[name='answer']:checked, #openAnswer").val()
+            question_id: questionId,
+            answer: answers
         };
 
+        // AJAX request with JSON data
         $.ajax({
             type: "POST",
             url: $(this).attr('action'),
@@ -213,14 +241,24 @@ $(document).ready(function() {
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function(response) {
-                console.log('Success:', response);
+                Swal.fire({
+                    title: 'Answer submitted!',
+                    icon: 'success',
+                    confirmButtonText: 'Ok'
+                });
             },
             error: function(xhr, status, error) {
-                console.log('Error:', xhr.responseText);
+                Swal.fire({
+                    title: 'Oops..',
+                    text: 'Answer was nott submitted: ' + error,
+                    icon: 'error',
+                    confirmButtonText: 'Ok'
+                });
             }
         });
     });
 });
+
 </script>
 
 </body>

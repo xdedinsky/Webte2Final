@@ -31,11 +31,10 @@ while (true) {
 
 
 // Insert query
-$stmt = $conn->prepare("INSERT INTO Questions (user_id, question_text, question_type, active, question_code, created_at, updated_at) VALUES (?, ?, ?, ?, ?, NOW(), NOW())");
-$stmt->bind_param("issis", $_SESSION['user_id'], $data['question_text'], $data['question_type'], $active, $question_code);
-
-// Set active to 1 (true)
+$stmt = $conn->prepare("INSERT INTO Questions (user_id, question_text, question_type, options_count, active, question_code, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, NOW(), NOW())");
+$options_count = ($data['question_type'] == 'multiple_choice') ? $data['answer_type'] : NULL; 
 $active = 1;
+$stmt->bind_param("isssis", $_SESSION['user_id'], $data['question_text'], $data['question_type'], $options_count, $active, $question_code);
 
 // Execute and check for errors
 if (!$stmt->execute()) {

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Apr 28, 2024 at 02:07 PM
+-- Generation Time: Apr 28, 2024 at 06:38 PM
 -- Server version: 8.0.36-0ubuntu0.22.04.1
 -- PHP Version: 8.3.3-1+ubuntu22.04.1+deb.sury.org+1
 
@@ -33,6 +33,19 @@ CREATE TABLE `QuestionOptions` (
   `option_text` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+--
+-- Dumping data for table `QuestionOptions`
+--
+
+INSERT INTO `QuestionOptions` (`option_id`, `question_id`, `option_text`) VALUES
+(6, 7, 'Dobre'),
+(7, 7, 'Zle'),
+(8, 8, 'Jozo'),
+(9, 8, 'Fero'),
+(10, 9, 'Radka'),
+(11, 9, 'Jasmina'),
+(12, 9, 'Sofia');
+
 -- --------------------------------------------------------
 
 --
@@ -46,10 +59,22 @@ CREATE TABLE `Questions` (
   `question_type` enum('multiple_choice','open_ended') NOT NULL,
   `active` tinyint(1) NOT NULL,
   `question_code` varchar(5) NOT NULL,
+  `options_count` enum('single','multiple') DEFAULT NULL,
   `created_at` timestamp NOT NULL,
   `updated_at` timestamp NOT NULL,
   `note_at_close` text
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `Questions`
+--
+
+INSERT INTO `Questions` (`question_id`, `user_id`, `question_text`, `question_type`, `active`, `question_code`, `options_count`, `created_at`, `updated_at`, `note_at_close`) VALUES
+(6, 7, 'Ako sa mas ?', 'open_ended', 1, 'ABCDE', NULL, '2024-04-28 14:27:51', '2024-04-28 14:27:51', NULL),
+(7, 7, 'Ako sa mas ? choice', 'multiple_choice', 1, 'EDCBA', NULL, '2024-04-28 14:28:10', '2024-04-28 14:28:10', NULL),
+(8, 7, 'Meno Single', 'multiple_choice', 1, '83F6Z', 'single', '2024-04-28 18:19:39', '2024-04-28 18:19:39', NULL),
+(9, 7, 'Meno Multiple ', 'multiple_choice', 1, 'XNWHR', 'multiple', '2024-04-28 18:20:02', '2024-04-28 18:20:02', NULL),
+(10, 7, 'Meno open', 'open_ended', 1, 'BVJUQ', NULL, '2024-04-28 18:20:25', '2024-04-28 18:20:25', NULL);
 
 -- --------------------------------------------------------
 
@@ -60,11 +85,32 @@ CREATE TABLE `Questions` (
 CREATE TABLE `Responses` (
   `response_id` int NOT NULL,
   `question_id` int NOT NULL,
-  `user_id` int NOT NULL,
-  `option_id` int NOT NULL,
-  `response_text` text NOT NULL,
+  `user_id` int DEFAULT NULL,
+  `option_id` int DEFAULT NULL,
+  `response_text` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
   `created_at` timestamp NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `Responses`
+--
+
+INSERT INTO `Responses` (`response_id`, `question_id`, `user_id`, `option_id`, `response_text`, `created_at`) VALUES
+(4, 6, 7, NULL, 'D', '2024-04-28 15:23:56'),
+(5, 7, 7, 7, '', '2024-04-28 15:24:11'),
+(6, 6, 7, NULL, 'QWE', '2024-04-28 15:25:58'),
+(7, 6, NULL, NULL, 'DDD', '2024-04-28 15:26:11'),
+(8, 6, NULL, NULL, 'Jozo', '2024-04-28 15:31:50'),
+(9, 6, NULL, NULL, 'A', '2024-04-28 15:33:48'),
+(10, 6, NULL, NULL, 'BASD', '2024-04-28 15:34:04'),
+(11, 7, NULL, 7, '', '2024-04-28 15:34:30'),
+(12, 7, NULL, 7, '', '2024-04-28 15:34:38'),
+(14, 6, 7, NULL, 'Dovreerere', '2024-04-28 18:34:54'),
+(15, 8, 7, 8, '', '2024-04-28 18:35:09'),
+(16, 8, 7, 8, '', '2024-04-28 18:37:17'),
+(17, 9, 7, 10, NULL, '2024-04-28 18:37:30'),
+(18, 9, 7, 11, NULL, '2024-04-28 18:37:30'),
+(19, 6, 7, NULL, 'Ahoj', '2024-04-28 18:38:14');
 
 -- --------------------------------------------------------
 
@@ -153,19 +199,19 @@ ALTER TABLE `Users`
 -- AUTO_INCREMENT for table `QuestionOptions`
 --
 ALTER TABLE `QuestionOptions`
-  MODIFY `option_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `option_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `Questions`
 --
 ALTER TABLE `Questions`
-  MODIFY `question_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `question_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `Responses`
 --
 ALTER TABLE `Responses`
-  MODIFY `response_id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `response_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `Sessions`

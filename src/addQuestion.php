@@ -132,6 +132,18 @@ error_reporting(E_ALL);
             </div>
 
             <div id="optionsContainer" class="hidden">
+                <div class="mb-3">
+                    <label class="form-label"><h2>Answer Type:</h2></label>
+                    <div>
+                        <input type="radio" id="single_answer" name="answer_type" value="single" checked required>
+                        <label for="single_answer">Single Correct Answer</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="multiple_answers" name="answer_type" value="multiple" required>
+                        <label for="multiple_answers">Multiple Correct Answers</label>
+                    </div>
+                </div>
+
                 <label><h2>Options:</h2></label>
                 <div id="optionFields">
                     <input type="text" name="options[]" class="form-control" placeholder="Option 1">
@@ -159,9 +171,11 @@ $(document).ready(function() {
         if (type === 'multiple_choice') {
             $('#optionsContainer').removeClass('hidden');
             $('input[name="options[]"]').attr('required', true);  // Make options required when visible
+            $('input[name="answer_type"]').attr('required', true);
         } else {
             $('#optionsContainer').addClass('hidden');
             $('input[name="options[]"]').removeAttr('required');  // Remove required attribute when not visible
+            $('input[name="answer_type"]').removeAttr('required');
         }
     });
 
@@ -196,7 +210,8 @@ $(document).ready(function() {
             const formData = {
                 question_text: $('#question_text').val(),
                 question_type: $('#question_type').val(),
-                options: $('#question_type').val() === 'multiple_choice' ? $('input[name="options[]"]').map(function() { return $(this).val(); }).get() : []
+                options: $('#question_type').val() === 'multiple_choice' ? $('input[name="options[]"]').map(function() { return $(this).val(); }).get() : [],
+                answer_type: $('#question_type').val() === 'multiple_choice' ? $('input[name="answer_type"]:checked').val() : null
             };
 
             $.ajax({
