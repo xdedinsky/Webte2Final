@@ -12,7 +12,7 @@ if ($stmt = $conn->prepare("SELECT * FROM Questions WHERE question_code = ?")) {
     $stmt->bind_param("s", $questionCode);
     $stmt->execute();
     $result = $stmt->get_result();
-
+    
     // Check if a question was actually fetched
     if ($question = $result->fetch_assoc()) {
         // Check the type of question and fetch options if it's multiple choice
