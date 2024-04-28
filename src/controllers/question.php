@@ -16,9 +16,23 @@ if (!isset($data['question_text']) || !isset($data['question_type'])) {
     exit;
 }
 
+//make random 5 varchar code
+$question_code = substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, 5);
+while (true) {
+    $stmt = $conn->prepare("SELECT * FROM Questions WHERE question_code = ?");
+    $stmt->bind_param("s", $question_code);
+    $stmt->execute();
+    $stmt->store_result();
+    if ($stmt->num_rows == 0) {
+        break;
+    }
+    $question_code = substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, 5);
+}
+
+
 // Insert query
-$stmt = $conn->prepare("INSERT INTO Questions (user_id, question_text, question_type, active, created_at, updated_at) VALUES (?, ?, ?, ?, NOW(), NOW())");
-$stmt->bind_param("issi", $_SESSION['user_id'], $data['question_text'], $data['question_type'], $active);
+$stmt = $conn->prepare("INSERT INTO Questions (user_id, question_text, question_type, active, question_code, created_at, updated_at) VALUES (?, ?, ?, ?, ?, NOW(), NOW())");
+$stmt->bind_param("issis", $_SESSION['user_id'], $data['question_text'], $data['question_type'], $active, $question_code);
 
 // Set active to 1 (true)
 $active = 1;

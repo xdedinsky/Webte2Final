@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Apr 20, 2024 at 01:08 PM
+-- Generation Time: Apr 28, 2024 at 02:07 PM
 -- Server version: 8.0.36-0ubuntu0.22.04.1
 -- PHP Version: 8.3.3-1+ubuntu22.04.1+deb.sury.org+1
 
@@ -45,6 +45,7 @@ CREATE TABLE `Questions` (
   `question_text` text NOT NULL,
   `question_type` enum('multiple_choice','open_ended') NOT NULL,
   `active` tinyint(1) NOT NULL,
+  `question_code` varchar(5) NOT NULL,
   `created_at` timestamp NOT NULL,
   `updated_at` timestamp NOT NULL,
   `note_at_close` text
@@ -97,6 +98,13 @@ CREATE TABLE `Users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
+-- Dumping data for table `Users`
+--
+
+INSERT INTO `Users` (`user_id`, `username`, `password`, `email`, `role`, `created_at`, `updated_at`) VALUES
+(7, 'admin', '$2y$10$SL/RO2YeUqV6DrIAxolfL.YQOhlCX35W.AhlIY4n19k2qm2Y.kioO', 'admin@admin.sk', 'user', '2024-04-27 21:52:32', '2024-04-27 21:52:32');
+
+--
 -- Indexes for dumped tables
 --
 
@@ -145,13 +153,13 @@ ALTER TABLE `Users`
 -- AUTO_INCREMENT for table `QuestionOptions`
 --
 ALTER TABLE `QuestionOptions`
-  MODIFY `option_id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `option_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `Questions`
 --
 ALTER TABLE `Questions`
-  MODIFY `question_id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `question_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `Responses`
@@ -169,7 +177,7 @@ ALTER TABLE `Sessions`
 -- AUTO_INCREMENT for table `Users`
 --
 ALTER TABLE `Users`
-  MODIFY `user_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `user_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- Constraints for dumped tables
