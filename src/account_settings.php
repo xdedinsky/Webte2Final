@@ -3,6 +3,7 @@ session_start();
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
+include_once 'header.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -15,39 +16,7 @@ error_reporting(E_ALL);
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg">
-        <div class="container-fluid">
-            <!-- Logo -->
-            <a class="navbar-brand" localize="home" href="index.php">
-                <img src="images/vote.png" alt="Vote System Logo">
-            </a>
-            <!-- Toggler -->
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <!-- Navbar links -->
-            <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
-                <div class="navbar-nav">
-                    <a class="nav-link" aria-current="page" localize="home" href="index.php"></a>
-                    <a class="nav-link" localize="to_be_added" href="tobeadded.php"></a>
-                    <?php if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true): ?>
-                        <div class="dropdown">
-                            <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <?php echo htmlspecialchars($_SESSION["username"]); ?>
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                <li><a class="dropdown-item" localize="acc_settings" href="account_settings.php"></a></li>
-                                <li><a class="dropdown-item" localize="log_out" href="controllers/logout.php"></a></li>
-                            </ul>
-                        </div>
-                    <?php else: ?>
-                        <!-- Login Modal Trigger -->
-                        <button class="btn btn-outline-light btn-lg" localize="log_in" data-bs-toggle="modal" data-bs-target="#loginModal"></button>
-                    <?php endif; ?>
-                </div>
-            </div>
-        </div>
-    </nav>
+    
 
     <div class="container">
         <h2 localize = "change_pwd"></h2>
@@ -76,6 +45,7 @@ error_reporting(E_ALL);
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="alerts.js"></script>
+<script src="script.js"></script>
 <script>
 document.getElementById('changePasswordForm').addEventListener('submit', function(event) {
     event.preventDefault();

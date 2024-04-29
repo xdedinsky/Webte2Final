@@ -7,6 +7,28 @@
     "change_pwd" : "Change Password",
     "current_pwd" : "Current Password",
     "new_pwd" : "New Password",
-    "conf_pwd" : "Confirm New Password"
+    "conf_pwd" : "Confirm New Password",
+    "add_q" : "Add Q",
+    "account_acces" : "Account Access",
+    "log_in_button" : "Login",
+    "signup_button" : "Register",
+    "username" : "Username",
+    "pwd" : "Password",
+    "email" : "Email address",
+    "confirm_pwd" : "Confirm Password",
+    "select_question_type" : "Select Question Type:",
+    "open_question" : "Open Question",
+    "question_with_options" : "Question with Options",
+    "question_text" : "Question Text:",
+    "answer_type" : "Answer Type:",
+    "single_correct_answer" : "Single Correct Answer",
+    "multiple_correct_answers" : "Multiple Correct Answers",
+    "options" : "Options:",
+    "add_option" : "Add Option",
+    "delete_option" : "Delete Option",
+    "submit_question" : "Submit Question",
+    "search" : "Search"
+
+
 
 }
