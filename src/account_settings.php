@@ -18,7 +18,7 @@ error_reporting(E_ALL);
     <nav class="navbar navbar-expand-lg">
         <div class="container-fluid">
             <!-- Logo -->
-            <a class="navbar-brand" href="index.php">
+            <a class="navbar-brand" localize="home" href="index.php">
                 <img src="images/vote.png" alt="Vote System Logo">
             </a>
             <!-- Toggler -->
@@ -28,21 +28,21 @@ error_reporting(E_ALL);
             <!-- Navbar links -->
             <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
-                    <a class="nav-link" aria-current="page" href="index.php">Home</a>
-                    <a class="nav-link" href="tobeadded.php">ToBeAdded</a>
+                    <a class="nav-link" aria-current="page" localize="home" href="index.php"></a>
+                    <a class="nav-link" localize="to_be_added" href="tobeadded.php"></a>
                     <?php if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true): ?>
                         <div class="dropdown">
                             <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <?php echo htmlspecialchars($_SESSION["username"]); ?>
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                <li><a class="dropdown-item" href="account_settings.php">Account Settings</a></li>
-                                <li><a class="dropdown-item" href="controllers/logout.php">Logout</a></li>
+                                <li><a class="dropdown-item" localize="acc_settings" href="account_settings.php"></a></li>
+                                <li><a class="dropdown-item" localize="log_out" href="controllers/logout.php"></a></li>
                             </ul>
                         </div>
                     <?php else: ?>
                         <!-- Login Modal Trigger -->
-                        <button class="btn btn-outline-light btn-lg" data-bs-toggle="modal" data-bs-target="#loginModal">Log In</button>
+                        <button class="btn btn-outline-light btn-lg" localize="log_in" data-bs-toggle="modal" data-bs-target="#loginModal"></button>
                     <?php endif; ?>
                 </div>
             </div>
@@ -50,20 +50,20 @@ error_reporting(E_ALL);
     </nav>
 
     <div class="container">
-        <h2>Change Password</h2>
+        <h2 localize = "change_pwd"></h2>
         <form id="changePasswordForm">
             <div class="form-group">
-                <label><h2>Current Password</h2></label>
+                <label><h2 localize="current_pwd"></h2></label>
                 <input type="password" name="current_password" class="form-control <?php echo (!empty($current_password_err)) ? 'is-invalid' : ''; ?>">
                 <span class="invalid-feedback"><?php echo $current_password_err; ?></span>
             </div>    
             <div class="form-group">
-                <label><h2>New Password</h2></label>
+                <label><h2 localize="new_pwd"></h2></label>
                 <input type="password" name="new_password" class="form-control <?php echo (!empty($new_password_err)) ? 'is-invalid' : ''; ?>">
                 <span class="invalid-feedback"><?php echo $new_password_err; ?></span>
             </div>
             <div class="form-group">
-                <label><h2>Confirm New Password</h2></label>
+                <label><h2 localize="conf_pwd"></h2></label>
                 <input type="password" name="confirm_password" class="form-control <?php echo (!empty($confirm_password_err)) ? 'is-invalid' : ''; ?>">
                 <span class="invalid-feedback"><?php echo $confirm_password_err; ?></span>
             </div>

@@ -1,0 +1,12 @@
+{
+    "home": "Home",
+    "to_be_added" : "ToBeAdded",
+    "acc_settings" : "Account Settings",
+    "log_out" : "Logout",
+    "log_in" : "Log In",
+    "change_pwd" : "Change Password",
+    "current_pwd" : "Current Password",
+    "new_pwd" : "New Password",
+    "conf_pwd" : "Confirm New Password"
+
+}
