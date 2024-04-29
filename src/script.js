@@ -103,3 +103,41 @@ function validatePassword() {
     }
     return true; // Allow form submission
 }
+
+
+
+
+function fetchQuestions() {
+    console.log("som v metode");
+    // URL pre skript getQuestions.php (upravte podľa potreby)
+    const url = 'controllers/getQuestions.php';
+
+    fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            // Získanie kontajneru pre otázky z DOM
+            const questionsContainer = document.getElementById('questionsDiv');
+
+            // Iterovanie cez každú otázku v JSON odpovedi
+            data.forEach(question => {
+                // Vytvorenie elementu pre otázku
+                const questionElement = document.createElement('div');
+                questionElement.classList.add('question');
+
+                // Naplnenie obsahu otázky s údajmi z JSON
+                questionElement.innerHTML = `
+                    <p>Question ID: ${question.question_id}</p>
+                    <p>User ID: ${question.user_id}</p>
+                    <p>Question Text: ${question.question_text}</p>
+                    <p>Question Code: ${question.question_code}</p>
+                    <p>Updated At: ${question.updated_at}</p>
+                `;
+
+                // Pridanie otázky do kontajneru
+                questionsContainer.appendChild(questionElement);
+            });
+        })
+        .catch(error => {
+            console.error('Error fetching questions:', error);
+        });
+}
