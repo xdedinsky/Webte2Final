@@ -122,7 +122,16 @@ error_reporting(E_ALL);
     
 </div>
 
+<?php
+// Overenie, či je používateľ prihlásený (session logedin true)
+if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
 
+    echo"som dnu";
+    echo '<script>';
+    echo 'fetchQuestions();'; // Volanie funkcie fetchQuestions() v JavaScripte
+    echo '</script>';
+}
+?>
 
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
