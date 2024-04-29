@@ -32,6 +32,9 @@ window.addEventListener('DOMContentLoaded', async () => {
 function validatePassword() {
     var password = document.getElementById("passwordReg").value;
     var confirm_password = document.getElementById("confirm_password").value;
+    var email = document.getElementById("email").value;
+    var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
     if (password.length < 6 || confirm_password.length < 6) {
         Swal.fire({
             title: 'Weak Password!',
@@ -49,6 +52,18 @@ function validatePassword() {
         Swal.fire({
             title: 'Password Mismatch!',
             text: 'Please make sure your passwords match.',
+            icon: 'error',
+            background: '#FFFFFF',
+            color: '#000000',
+            confirmButtonColor: '#FF6A00',
+            confirmButtonText: 'Ok'
+        });
+        return false; // Prevent form submission
+    }
+    if (!emailRegex.test(email)) {
+        Swal.fire({
+            title: 'Invalid Email!',
+            text: 'Please enter a valid email address.',
             icon: 'error',
             background: '#FFFFFF',
             color: '#000000',
