@@ -42,6 +42,8 @@ function fetchQuestions() {
                     <p>Question Text: ${question.question_text}</p>
                     <p>Question Code: ${question.question_code}</p>
                     <p>Updated At: ${question.updated_at}</p>
+                    <p>Active: ${question.active}</p>
+                    <a href="controllers/changeStatus.php?question_id=${question.question_id}&active=${question.active}">Toggle Active</a>
                 `;
 
                 // Pridanie otázky do kontajneru
