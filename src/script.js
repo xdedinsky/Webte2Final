@@ -11,13 +11,13 @@ function setLanguagePreference(lang) {
 }
 
 async function fetchLanguageData(lang) {
-    const response = await fetch(`../../languages/${lang}.json`);
+    const response = await fetch(`language/${lang}.json`);
     return response.json();
 }
 
 async function changeLanguage(lang) {
     await setLanguagePreference(lang);
-    
+
     const langData = await fetchLanguageData(lang);
     updateContent(langData);
 }
@@ -35,10 +35,11 @@ function validatePassword() {
     var email = document.getElementById("email").value;
     var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    if (password.length < 6 || confirm_password.length < 6) {
+    if (password.trim() === '' || confirm_password.trim() === '') {
+        console.log("ASDs");
         Swal.fire({
-            title: 'Weak Password!',
-            text: 'Your password must be at least 6 characters long.',
+            title: 'Empty Password Field!',
+            text: 'Please fill in the password field.',
             icon: 'error',
             background: '#FFFFFF',
             color: '#000000',
@@ -48,6 +49,31 @@ function validatePassword() {
         return false; // Prevent form submission
     }
 
+    if (password.length < 2 || confirm_password.length < 2) {
+        console.log("ASDs");
+        Swal.fire({
+            title: 'Weak Password!',
+            text: 'Password must be at least 2 characters long.',
+            icon: 'error',
+            background: '#FFFFFF',
+            color: '#000000',
+            confirmButtonColor: '#FF6A00',
+            confirmButtonText: 'Ok'
+        });
+        return false; // Prevent form submission
+    }
+    if (password.length < 6 || confirm_password.length < 6) {
+        Swal.fire({
+            title: 'Weakss Password!',
+            text: 'Your password must be at least 6 characters long.',
+            icon: 'error',
+            background: '#FFFFFF',
+            color: '#000000',
+            confirmButtonColor: '#FF6A00',
+            confirmButtonText: 'Ok'
+        });
+        return false; // Prevent form submission
+    }
     if (password !== confirm_password) {
         Swal.fire({
             title: 'Password Mismatch!',
@@ -60,7 +86,10 @@ function validatePassword() {
         });
         return false; // Prevent form submission
     }
+
+    // Check if email format is valid using JavaScript regex
     if (!emailRegex.test(email)) {
+        console.log("ASD");
         Swal.fire({
             title: 'Invalid Email!',
             text: 'Please enter a valid email address.',
