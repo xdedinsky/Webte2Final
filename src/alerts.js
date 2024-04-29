@@ -69,6 +69,17 @@ document.addEventListener('DOMContentLoaded', function () {
                 confirmButtonText: 'Ok'
             });
             break;
+        case 'username-taken':
+            Swal.fire({
+                title: 'Username already exist!',
+                text: 'Please enter a valid code.',
+                icon: 'error',
+                background: '#FFFFFF',
+                color: '#000000',
+                confirmButtonColor: '#FF6A00',
+                confirmButtonText: 'Ok'
+            });
+            break;
     }
 });
 

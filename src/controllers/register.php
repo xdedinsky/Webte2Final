@@ -10,8 +10,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['email'];
     $password = $_POST['passwordReg'];
     $role = 'user';  // Prednastavená rola
-
+    
     if (!empty($username) && !empty($email) && !empty($password)) {
+        // Check if the username already exists
+        $sql_check_username = "SELECT * FROM Users WHERE username = ?";
+        $stmt_check_username = $conn->prepare($sql_check_username);
+        $stmt_check_username->bind_param("s", $username);
+        $stmt_check_username->execute();
+        $result_check_username = $stmt_check_username->get_result();
+
+        if ($result_check_username->num_rows > 0) {
+            header("location: /Webte2Final/src/index.php?action=username-taken");
+            exit(); 
+        }
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
         $sql = "INSERT INTO Users (username, email, password, role, created_at, updated_at) VALUES (?, ?, ?, ?, NOW(), NOW())";
