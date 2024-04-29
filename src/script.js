@@ -28,11 +28,13 @@ window.addEventListener('DOMContentLoaded', async () => {
     updateContent(langData);
 
 });
-
+var usernameLogin = document.getElementById("username").value;
+var passwordLogin = document.getElementById("password").value;
+var password = document.getElementById("passwordReg").value;
+var confirm_password = document.getElementById("confirm_password").value;
+var email = document.getElementById("email").value;
 function validatePassword() {
-    var password = document.getElementById("passwordReg").value;
-    var confirm_password = document.getElementById("confirm_password").value;
-    var email = document.getElementById("email").value;
+
     var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     if (password.trim() === '' || confirm_password.trim() === '') {
@@ -89,7 +91,6 @@ function validatePassword() {
 
     // Check if email format is valid using JavaScript regex
     if (!emailRegex.test(email)) {
-        console.log("ASD");
         Swal.fire({
             title: 'Invalid Email!',
             text: 'Please enter a valid email address.',
@@ -103,3 +104,4 @@ function validatePassword() {
     }
     return true; // Allow form submission
 }
+
