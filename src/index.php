@@ -116,6 +116,15 @@ error_reporting(E_ALL);
         </div>
     </div>
 
+
+
+<div id="questionsDiv">
+    
+</div>
+
+
+
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="alerts.js"></script>
 <script src="script.js"></script>

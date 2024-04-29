@@ -30,9 +30,9 @@ window.addEventListener('DOMContentLoaded', async () => {
 });
 
 function validatePassword() {
-    var password = document.getElementById("passwordReg");
-    var confirm_password = document.getElementById("confirm_password");
-    if (password.length < 6) {
+    var password = document.getElementById("passwordReg").value;
+    var confirm_password = document.getElementById("confirm_password").value;
+    if (password.length < 6 || confirm_password.length < 6) {
         Swal.fire({
             title: 'Weak Password!',
             text: 'Your password must be at least 6 characters long.',
@@ -45,7 +45,7 @@ function validatePassword() {
         return false; // Prevent form submission
     }
 
-    if (password.value !== confirm_password.value) {
+    if (password !== confirm_password) {
         Swal.fire({
             title: 'Password Mismatch!',
             text: 'Please make sure your passwords match.',
