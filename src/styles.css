@@ -156,3 +156,8 @@ h2 {
 .card-text {
     font-size: 1.5em;
 }
+
+.question{/*TODO*/
+    border: black 1px solid;
+    margin-bottom: 2em;
+}

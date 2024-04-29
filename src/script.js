@@ -11,7 +11,7 @@ function setLanguagePreference(lang) {
 }
 
 async function fetchLanguageData(lang) {
-    const response = await fetch(`../language/${lang}.json`);
+    const response = await fetch(`language/${lang}.json`);
     return response.json();
 }
 
@@ -104,4 +104,6 @@ function validatePassword() {
     }
     return true; // Allow form submission
 }
+
+
 
