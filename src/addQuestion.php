@@ -36,11 +36,11 @@ include_once 'header.php';
                 </select>
             </div>
             <div class="mb-3">
-                <label for="type_of_question" class="form-label">
-                    <h2>Type of Question:</h2>
+                <label for="subject" class="form-label">
+                    <h2>Subject:</h2>
                 </label>
-                <input type="text" id="type_of_question" name="type_of_question" class="form-control"
-                    required placeholder="Write the type of question">
+                <input type="text" id="subject" name="subject" class="form-control"
+                    required placeholder="Write the type of subject">
             </div>
 
             <div class="mb-3">
@@ -90,13 +90,13 @@ include_once 'header.php';
                     $('#optionsContainer').removeClass('hidden');
                     $('input[name="options[]"]').attr('required', true);  // Make options required when visible
                     $('input[name="answer_type"]').attr('required', true);
-                    $('input[name="type_of_question"]').attr('required', true);
+                    $('input[name="subject"]').attr('required', true);
 
                 } else {
                     $('#optionsContainer').addClass('hidden');
                     $('input[name="options[]"]').removeAttr('required');  // Remove required attribute when not visible
                     $('input[name="answer_type"]').removeAttr('required');
-                    $('input[name="type_of_question"]').removeAttr('required');
+                    $('input[name="subject"]').removeAttr('required');
 
                 }
             });
@@ -132,7 +132,7 @@ include_once 'header.php';
                     const formData = {
                         question_text: $('#question_text').val(),
                         question_type: $('#question_type').val(),
-                        type_of_question: $('#type_of_question').val(),
+                        subject: $('#subject').val(),
                             options: $('#question_type').val() === 'multiple_choice' ? $('input[name="options[]"]').map(function () { return $(this).val(); }).get() : [],
                         answer_type: $('#question_type').val() === 'multiple_choice' ? $('input[name="answer_type"]:checked').val() : null
                     };

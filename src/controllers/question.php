@@ -10,7 +10,7 @@ $json = file_get_contents('php://input');
 $data = json_decode($json, true);
 
 // Validate input data
-if (!isset($data['question_text']) || !isset($data['question_type']) || !isset($data['type_of_question'])) {
+if (!isset($data['question_text']) || !isset($data['question_type']) || !isset($data['subject'])) {
     http_response_code(400); // Bad Request
     echo json_encode(['error' => 'Invalid input data']);
     exit;
@@ -34,7 +34,7 @@ while (true) {
 $stmt = $conn->prepare("INSERT INTO Questions (user_id, question_text, question_type, subject, options_count, active, question_code, created_at, updated_at) VALUES (?,?, ?, ?, ?, ?, ?, NOW(), NOW())");
 $options_count = ($data['question_type'] == 'multiple_choice') ? $data['answer_type'] : NULL; 
 $active = 1;
-$stmt->bind_param("issssis", $_SESSION['user_id'], $data['question_text'], $data['question_type'],$data['type_of_question'], $options_count, $active, $question_code);
+$stmt->bind_param("issssis", $_SESSION['user_id'], $data['question_text'], $data['question_type'],$data['subject'], $options_count, $active, $question_code);
 
 // Execute and check for errors
 if (!$stmt->execute()) {
