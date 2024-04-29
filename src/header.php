@@ -22,8 +22,8 @@
             </button>
             <!-- Navbar links -->
             <div class="select-language">
-                <button class="language-btn" data-lang="en" id="en" onclick="setLanguagePreference('en')"><img src="images/en.png"></button>
-                <button class="language-btn" data-lang="sk" id="sk" onclick="setLanguagePreference('sk')"><img src="images/sk.gif"></button>
+                <button class="language-btn" data-lang="en" id="en" onclick="setLanguagePreference('en')"><img src="images/uk.png" width="70px" height="50px"></button>
+                <button class="language-btn" data-lang="sk" id="sk" onclick="setLanguagePreference('sk')"><img src="images/slovakia.png" width="100px" height="100px"></button>
                 </div>
             <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
                 <div class="navbar-nav">

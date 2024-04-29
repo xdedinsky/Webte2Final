@@ -161,3 +161,8 @@ h2 {
     border: black 1px solid;
     margin-bottom: 2em;
 }
+.language-btn{
+    background-color: transparent; /* Nastaví transparentné pozadie */
+    border: 1px solid transparent; /* Nastaví transparentnú hranicu */
+    color: #000;
+}
