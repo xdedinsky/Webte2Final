@@ -1,6 +1,6 @@
 function updateContent(langData) {
-    document.querySelectorAll('[data-i18n]').forEach(element => {
-        const key = element.getAttribute('data-i18n');
+    document.querySelectorAll('[localize]').forEach(element => {
+        const key = element.getAttribute('localize');
         element.textContent = langData[key];
     });
 }
