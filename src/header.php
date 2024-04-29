@@ -21,8 +21,16 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <!-- Navbar links -->
+            <div class="select-language">
+                <button class="language-btn" data-lang="en" id="en" onclick="setLanguagePreference('en')"><img src="images/en.png"></button>
+                <button class="language-btn" data-lang="sk" id="sk" onclick="setLanguagePreference('sk')"><img src="images/sk.gif"></button>
+                </div>
             <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
+                <form class="d-flex" action="questionDetail.php" method="get">
+                <input class="form-control me-2" type="search" placeholder="Search Q" aria-label="Search" name="questionCode">
+                <button class="btn btn-outline-light" localize="search" type="submit"></button>
+            </form>
                     <a class="nav-link" localize="home" aria-current="page" href="index.php"></a>
                     <a class="nav-link active" aria-current="page" localize="add_q" href="addQuestion.php"></a>
                     <a class="nav-link" localize="to_be_added" href="addQuestion.php"></a>
