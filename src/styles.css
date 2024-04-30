@@ -15,6 +15,18 @@
     /* Transparent color */
 }
 
+.tableHeader {
+    background-color: var(--primary-color);
+    color: var(--accent-color);
+    padding: 10px !important;
+}
+
+.containerTable {
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
 body {
     background-color: var(--accent-color);
     color: var(--secondary-color);

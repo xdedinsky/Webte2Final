@@ -7,102 +7,108 @@ include_once 'header.php';
 require '../../../configFinal.php';
 
 if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
+    $stmt = $conn->prepare("SELECT role FROM Users WHERE user_id = ?");
+    $stmt->bind_param("i", $_SESSION['user_id']);
+    $stmt->execute();
+    $stmt->store_result();
+    $stmt->bind_result($role);
+    $stmt->fetch();
+    $stmt->close();
     $user_id = $_SESSION["user_id"] ;
-    $role = $_SESSION["role"];
-    //echo $role;
-    //echo $user_id;
 ?>
+<div class="containerTable">
+    <div class="tableHeader">
+        <label for="subjectFilter">Subject:</label>
+        <select id="subjectFilter" class="filterselect" onchange="filterTable()">
+            <option value="">Všetky</option>
+            <?php
+            if ($role === "admin") {
+                $sql_questions = "SELECT DISTINCT subject  FROM Questions";
+                $stmt_questions = $conn->prepare($sql_questions);
+            } elseif ($role === "user") {
+                $sql_questions = "SELECT DISTINCT subject  FROM Questions WHERE user_id = ?";
+                $stmt_questions = $conn->prepare($sql_questions);
+                $stmt_questions->bind_param("i", $user_id);
+            }
+            $stmt_questions->execute();
+            $result = $stmt_questions->get_result();
+            foreach ($result as $row): ?>
+                <option value="<?php echo $row['subject'] ?>">
+                    <?php echo $row['subject'] ?>
+                </option>
+            <?php endforeach; ?>
+            <!-- Add years dynamically based on your data -->
+        </select>
 
-<label for="subjectFilter">Subject:</label>
-<select id="subjectFilter" class="filterselect" onchange="filterTable()">
-    <option value="">Všetky</option>
-    <?php
-    if ($role === "admin") {
-        $sql_questions = "SELECT DISTINCT subject  FROM Questions";
-        $stmt_questions = $conn->prepare($sql_questions);
-    } elseif ($role === "user") {
-        $sql_questions = "SELECT DISTINCT subject  FROM Questions WHERE user_id = ?";
-        $stmt_questions = $conn->prepare($sql_questions);
-        $stmt_questions->bind_param("i", $user_id);
-    }
-    $stmt_questions->execute();
-    $result = $stmt_questions->get_result();
-    foreach ($result as $row): ?>
-        <option value="<?php echo $row['subject'] ?>">
-            <?php echo $row['subject'] ?>
-        </option>
-    <?php endforeach; ?>
-    <!-- Add years dynamically based on your data -->
-</select>
+        <label for="dateFilter">Date:</label>
+        <select id="dateFilter" class="filterselect" onchange="filterTable()">
+            <option value="">All</option>
+            <?php
+            if ($role === "admin") {
+                $sql_dates = "SELECT DISTINCT DATE(created_at) AS date_value FROM Questions";
+                $stmt_dates = $conn->prepare($sql_dates);
+            } elseif ($role === "user") {
+                $sql_dates = "SELECT DISTINCT DATE(created_at) AS date_value FROM Questions WHERE user_id = ?";
+                $stmt_dates = $conn->prepare($sql_dates);
+                $stmt_dates->bind_param("i", $user_id);
+            }
+            // Query to fetch unique dates from the Questions table
+            
+            $stmt_dates->execute();
+            $dates = $stmt_dates->get_result();
+            
 
-<label for="dateFilter">Date:</label>
-<select id="dateFilter" class="filterselect" onchange="filterTable()">
-    <option value="">All</option>
-    <?php
-    if ($role === "admin") {
-        $sql_dates = "SELECT DISTINCT DATE(created_at) AS date_value FROM Questions";
-        $stmt_dates = $conn->prepare($sql_dates);
-    } elseif ($role === "user") {
-        $sql_dates = "SELECT DISTINCT DATE(created_at) AS date_value FROM Questions WHERE user_id = ?";
-        $stmt_dates = $conn->prepare($sql_dates);
-        $stmt_dates->bind_param("i", $user_id);
-    }
-    // Query to fetch unique dates from the Questions table
-    
-    $stmt_dates->execute();
-    $dates = $stmt_dates->get_result();
-    
+            // Loop through unique dates and generate <option> elements
+            foreach ($dates as $date): ?>
+                <option value="<?php echo htmlspecialchars($date['date_value']); ?>">
+                    <?php echo htmlspecialchars($date['date_value']); ?>
+                </option>
+            
+            <?php endforeach; ?>
 
-    // Loop through unique dates and generate <option> elements
-    foreach ($dates as $date): ?>
-        <option value="<?php echo htmlspecialchars($date['date_value']); ?>">
-            <?php echo htmlspecialchars($date['date_value']); ?>
-        </option>
-       
-    <?php endforeach; ?>
+            
+            
+        </select>
 
-    
-    
-</select>
+        <?php if($role==="admin"){?>
+        <label for="userFilter">User:</label>
+        <select id="userFilter" class="filterselect" onchange="filterTableAdmin()">
+            <option value="">All</option>
 
-<?php if($role==="admin"){?>
-<label for="userFilter">User:</label>
-<select id="userFilter" class="filterselect" onchange="filterTableAdmin()">
-    <option value="">All</option>
+            <?php
+            // Check the role to determine the SQL query and bind parameters
 
-    <?php
-    // Check the role to determine the SQL query and bind parameters
+            $sql_users = "SELECT DISTINCT username FROM Users";
+            $stmt_users = $conn->prepare($sql_users);
+            // Execute the prepared statement
+            $stmt_users->execute();
 
-    $sql_users = "SELECT DISTINCT username FROM Users";
-    $stmt_users = $conn->prepare($sql_users);
-    // Execute the prepared statement
-    $stmt_users->execute();
+            // Get the result set
+            $result = $stmt_users->get_result();
 
-    // Get the result set
-    $result = $stmt_users->get_result();
+            // Loop through unique user names and generate <option> elements
+            while ($user = $result->fetch_assoc()) {
+                ?>
+                <option value="<?php echo htmlspecialchars($user['username']); ?>">
+                    <?php echo htmlspecialchars($user['username']); ?>
+                </option>
+                <?php
+            }
 
-    // Loop through unique user names and generate <option> elements
-    while ($user = $result->fetch_assoc()) {
-        ?>
-        <option value="<?php echo htmlspecialchars($user['username']); ?>">
-            <?php echo htmlspecialchars($user['username']); ?>
-        </option>
+            // Close the statement
+            $stmt_users->close();
+            ?>
+
+        </select>
+
         <?php
-    }
-
-    // Close the statement
-    $stmt_users->close();
-    ?>
-
-</select>
-
-<?php
-}
-}?>
+        }
+        }?>
+    </div>
 
 
-<div id="questionsDiv">
-</div>
+    <div id="questionsDiv">
+    </div>
 
 <?php
 if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
