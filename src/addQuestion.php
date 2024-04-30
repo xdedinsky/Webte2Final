@@ -52,7 +52,7 @@ include_once 'header.php';
                 <h2 localize="add_to_user"></h2>
             </label>
             <input type="text" id="user" name="user" class="form-control">
-        '
+        ';
     }?>
 
             <div id="optionsContainer" class="hidden">
