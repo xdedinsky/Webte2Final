@@ -28,20 +28,18 @@ window.addEventListener('DOMContentLoaded', async () => {
     updateContent(langData);
 
 });
-var usernameLogin = document.getElementById("username").value;
-var passwordLogin = document.getElementById("password").value;
-var password = document.getElementById("passwordReg").value;
-var confirm_password = document.getElementById("confirm_password").value;
-var email = document.getElementById("email").value;
-function validatePassword() {
 
+
+function validatePassword() {
+    var password = document.getElementById("passwordReg").value;
+    var confirm_password = document.getElementById("confirm_password").value;
+    var email = document.getElementById("email").value;
     var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    if (password.trim() === '' || confirm_password.trim() === '') {
-        console.log("ASDs");
+    if (password.trim() === '' || confirm_password.trim() === '' || email.trim() === '') {
         Swal.fire({
-            title: 'Empty Password Field!',
-            text: 'Please fill in the password field.',
+            title: 'Empty Field!',
+            text: 'Please fill all fields.',
             icon: 'error',
             background: '#FFFFFF',
             color: '#000000',
@@ -52,7 +50,6 @@ function validatePassword() {
     }
 
     if (password.length < 2 || confirm_password.length < 2) {
-        console.log("ASDs");
         Swal.fire({
             title: 'Weak Password!',
             text: 'Password must be at least 2 characters long.',

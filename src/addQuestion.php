@@ -24,7 +24,6 @@ include_once 'header.php';
 </style>
 
 <body>
-   
     <div class="container mt-4">
         <form id="questionForm" class="needs-validation" novalidate>
             <div class="mb-3">
@@ -38,7 +37,7 @@ include_once 'header.php';
                 <label for="subject" class="form-label">
                     <h2 localize="subject"></h2>
                 </label>
-                <input type="text" id="subject" name="subject" class="form-control">
+                <input type="text" id="subject" name="subject" class="form-control" required>
             </div>
 
             <div class="mb-3">
@@ -46,7 +45,7 @@ include_once 'header.php';
                 <input type="text" id="question_text" name="question_text" class="form-control" required>
             </div>
             <?php
-    if($_SESSION["isAdmin"] === "admin"){
+    if($_SESSION["role"] === "admin"){
         echo'
             <div class="mb-3">
             <label for="username" class="form-label">

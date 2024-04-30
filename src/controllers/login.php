@@ -23,7 +23,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $_SESSION["loggedin"] = true;
                     $_SESSION["user_id"] = $user_id;
                     $_SESSION["username"] = $username;   
-                    $_SESSION["isAdmin"] = $role;              
+                    $_SESSION["role"] = $role; 
+
                     header("location: /Webte2Final/src/index.php?action=login-success");
                 } else {
                      header("location: /Webte2Final/src/index.php?action=login-failed");

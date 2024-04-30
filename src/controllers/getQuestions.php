@@ -17,13 +17,14 @@ if ($result->num_rows > 0) {
     $row = $result->fetch_assoc();
     $user_id = $row["user_id"];
     $role = $row["role"];
+    
 
 
     if ($role === "admin") {
-        $sql_questions = "SELECT question_id, user_id, question_text, active, question_code, updated_at FROM Questions";
+        $sql_questions = "SELECT q.question_id, u.username, q.question_text, q.subject, DATE(q.created_at) AS date, q.active, q.question_code, q.updated_at FROM Questions q JOIN Users u on u.user_id = q.user_id";
         $stmt_questions = $conn->prepare($sql_questions);
     } elseif ($role === "user") {
-        $sql_questions = "SELECT question_id, user_id, question_text, active, question_code, updated_at FROM Questions WHERE user_id = ?";
+        $sql_questions = "SELECT q.question_id, u.username, q.question_text, q.subject, DATE(q.created_at) AS date, q.active, q.question_code, q.updated_at FROM Questions q JOIN Users u on u.user_id = q.user_id WHERE q.user_id = ?";
         $stmt_questions = $conn->prepare($sql_questions);
         $stmt_questions->bind_param("i", $user_id);
     }
