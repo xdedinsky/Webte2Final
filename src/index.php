@@ -4,63 +4,56 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 include_once 'header.php';
-
 ?>
 
-
 <div id="questionsDiv">
-    
 </div>
 
 <?php
-// Overenie, či je používateľ prihlásený (session logedin true)
-if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {    
-
+if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
+    echo "<table id='tableQuestions' class='table table-bordered'>";
+    echo "<thead><tr><th>Question ID</th><th>User ID</th><th>Question Text</th><th>Question Code</th><th>Active</th><th>Action</th></tr></thead>";
+    echo "<tbody></tbody>";
+    echo "</table>";
 ?>
 <script>
-    fetchQuestions();
-function fetchQuestions() {
-    // URL pre skript getQuestions.php (upravte podľa potreby)
-    const url = 'controllers/getQuestions.php';
+    document.addEventListener('DOMContentLoaded', fetchQuestions);
 
-    fetch(url)
-        .then(response => response.json())
-        .then(data => {
-            // Získanie kontajneru pre otázky z DOM
-            const questionsContainer = document.getElementById('questionsDiv');
+    function fetchQuestions() {
+        const url = 'controllers/getQuestions.php';
 
-            // Iterovanie cez každú otázku v JSON odpovedi
-            data.forEach(question => {
-                // Vytvorenie elementu pre otázku
-                const questionElement = document.createElement('div');
-                questionElement.classList.add('question');
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                const questionsContainer = document.getElementById('tableQuestions').querySelector('tbody');
+                data.forEach(question => {
+                    const row = document.createElement('tr');
 
-                // Naplnenie obsahu otázky s údajmi z JSON
-                questionElement.innerHTML = `
-                    <p>Question ID: ${question.question_id}</p>
-                    <p>User ID: ${question.user_id}</p>
-                    <p>Question Text: ${question.question_text}</p>
-                    <p>Question Code: ${question.question_code}</p>
-                    <p>Updated At: ${question.updated_at}</p>
-                    <p>Active: ${question.active}</p>
+                    row.innerHTML = `
+                        <td>${question.question_id}</td>
+                        <td>${question.user_id}</td>
+                        <td>${question.question_text}</td>
+                        <td>${question.question_code}</td>
+                        <td>${question.active}</td>
+                        <td><a href="controllers/changeStatus.php?question_id=${question.question_id}&active=${question.active}">${question.active ? `Deactivate` : `Activate`}</a></td>
+                    `;
 
-                    <a href="controllers/changeStatus.php?question_id=${question.question_id}&active=${question.active}">${question.active ? `Deaktivovat` : `Aktivovať`} </a>
-                    
-                `;
+                    questionsContainer.appendChild(row);
+                });
 
-                // Pridanie otázky do kontajneru
-                questionsContainer.appendChild(questionElement);
+                const dataTable = new DataTable('#tableQuestions', {
+                    searchable: true, 
+                    paging: true, 
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching questions:', error);
             });
-        })
-        .catch(error => {
-            console.error('Error fetching questions:', error);
-        });
-}
+    }
 </script>
 
 <?php
-// Overenie, či je používateľ prihlásený (session logedin true)
-  
+
 }
 ?>
 
