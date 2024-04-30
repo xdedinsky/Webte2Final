@@ -110,6 +110,9 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
     <div id="questionsDiv">
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="alerts.js"></script>
+<script src="script.js"></script>
 <?php
 if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
     echo "<table id='tableQuestions' class='table table-bordered'>";
@@ -117,9 +120,7 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
     echo "<tbody></tbody>";
     echo "</table>";
 ?>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script src="alerts.js"></script>
-<script src="script.js"></script>
+
 <script>
     let dataTable;
     function filterTable() {
