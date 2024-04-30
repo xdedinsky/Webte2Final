@@ -48,8 +48,8 @@ function isActive($navLink) {
                             <button class="btn btn-outline-light" localize="search" type="submit"></button>
                         </form>
                     </div>
-                    <a class="nav-link" localize="home" aria-current="page" href="index.php"></a>
-                    <a class="nav-link" aria-current="page" localize="add_q" href="addQuestion.php"></a>
+                    <a class="nav-link <?php echo isActive('index');?> " localize="home" aria-current="page" href="index.php"></a>
+                    <a class="nav-link <?php echo isActive('addQuestion');?>" aria-current="page" localize="add_q" href="addQuestion.php"></a>
                     <?php if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true): ?>
                         <div class="dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
