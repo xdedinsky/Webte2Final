@@ -2,10 +2,10 @@
 -- version 5.2.1deb1+jammy2
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:3306
--- Generation Time: Apr 28, 2024 at 06:38 PM
--- Server version: 8.0.36-0ubuntu0.22.04.1
--- PHP Version: 8.3.3-1+ubuntu22.04.1+deb.sury.org+1
+-- Hostiteľ: localhost:3306
+-- Čas generovania: Út 30.Apr 2024, 09:45
+-- Verzia serveru: 8.0.36-0ubuntu0.22.04.1
+-- Verzia PHP: 8.3.3-1+ubuntu22.04.1+deb.sury.org+1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `webteFinal`
+-- Databáza: `webteFinal`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `QuestionOptions`
+-- Štruktúra tabuľky pre tabuľku `QuestionOptions`
 --
 
 CREATE TABLE `QuestionOptions` (
@@ -34,22 +34,23 @@ CREATE TABLE `QuestionOptions` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
--- Dumping data for table `QuestionOptions`
+-- Sťahujem dáta pre tabuľku `QuestionOptions`
 --
 
 INSERT INTO `QuestionOptions` (`option_id`, `question_id`, `option_text`) VALUES
-(6, 7, 'Dobre'),
-(7, 7, 'Zle'),
-(8, 8, 'Jozo'),
-(9, 8, 'Fero'),
-(10, 9, 'Radka'),
-(11, 9, 'Jasmina'),
-(12, 9, 'Sofia');
+(1, 3, 'a'),
+(2, 3, 'aa'),
+(3, 4, 'b'),
+(4, 4, 'bbb'),
+(5, 4, 'bbbbb'),
+(6, 5, 'c'),
+(7, 5, 'ccc'),
+(8, 5, 'ccccc');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Questions`
+-- Štruktúra tabuľky pre tabuľku `Questions`
 --
 
 CREATE TABLE `Questions` (
@@ -57,6 +58,7 @@ CREATE TABLE `Questions` (
   `user_id` int NOT NULL,
   `question_text` text NOT NULL,
   `question_type` enum('multiple_choice','open_ended') NOT NULL,
+  `subject` varchar(255) NOT NULL,
   `active` tinyint(1) NOT NULL,
   `question_code` varchar(5) NOT NULL,
   `options_count` enum('single','multiple') DEFAULT NULL,
@@ -66,20 +68,22 @@ CREATE TABLE `Questions` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
--- Dumping data for table `Questions`
+-- Sťahujem dáta pre tabuľku `Questions`
 --
 
-INSERT INTO `Questions` (`question_id`, `user_id`, `question_text`, `question_type`, `active`, `question_code`, `options_count`, `created_at`, `updated_at`, `note_at_close`) VALUES
-(6, 7, 'Ako sa mas ?', 'open_ended', 1, 'ABCDE', NULL, '2024-04-28 14:27:51', '2024-04-28 14:27:51', NULL),
-(7, 7, 'Ako sa mas ? choice', 'multiple_choice', 1, 'EDCBA', NULL, '2024-04-28 14:28:10', '2024-04-28 14:28:10', NULL),
-(8, 7, 'Meno Single', 'multiple_choice', 1, '83F6Z', 'single', '2024-04-28 18:19:39', '2024-04-28 18:19:39', NULL),
-(9, 7, 'Meno Multiple ', 'multiple_choice', 1, 'XNWHR', 'multiple', '2024-04-28 18:20:02', '2024-04-28 18:20:02', NULL),
-(10, 7, 'Meno open', 'open_ended', 1, 'BVJUQ', NULL, '2024-04-28 18:20:25', '2024-04-28 18:20:25', NULL);
+INSERT INTO `Questions` (`question_id`, `user_id`, `question_text`, `question_type`, `subject`, `active`, `question_code`, `options_count`, `created_at`, `updated_at`, `note_at_close`) VALUES
+(1, 7, 'otvorena1', 'open_ended', 'Predmet1', 1, '70DGU', NULL, '2024-04-30 09:36:42', '2024-04-30 09:36:42', NULL),
+(2, 7, 'otvorena2', 'open_ended', 'Predmet2', 1, 'MJ289', NULL, '2024-04-30 09:36:49', '2024-04-30 09:36:49', NULL),
+(3, 7, 'UzavaretaSingle1', 'multiple_choice', 'Predmet1', 1, 'IREOL', 'single', '2024-04-30 09:37:24', '2024-04-30 09:37:24', NULL),
+(4, 7, 'UzavaretaSingle1', 'multiple_choice', 'Predmet1', 1, 'VSJXC', 'multiple', '2024-04-30 09:37:39', '2024-04-30 09:37:39', NULL),
+(5, 7, 'UzavaretaSingle2', 'multiple_choice', 'Predmet2', 1, 'SFJZI', 'single', '2024-04-30 09:38:01', '2024-04-30 09:38:01', NULL),
+(6, 9, 'otvorenaR1', 'open_ended', 'predmet1', 1, 'MWDP9', NULL, '2024-04-30 09:39:27', '2024-04-30 09:39:27', NULL),
+(7, 9, 'otvorenaR2', 'open_ended', 'Predmet1', 1, 'BAECH', NULL, '2024-04-30 09:39:41', '2024-04-30 09:39:41', NULL);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Responses`
+-- Štruktúra tabuľky pre tabuľku `Responses`
 --
 
 CREATE TABLE `Responses` (
@@ -91,31 +95,10 @@ CREATE TABLE `Responses` (
   `created_at` timestamp NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
---
--- Dumping data for table `Responses`
---
-
-INSERT INTO `Responses` (`response_id`, `question_id`, `user_id`, `option_id`, `response_text`, `created_at`) VALUES
-(4, 6, 7, NULL, 'D', '2024-04-28 15:23:56'),
-(5, 7, 7, 7, '', '2024-04-28 15:24:11'),
-(6, 6, 7, NULL, 'QWE', '2024-04-28 15:25:58'),
-(7, 6, NULL, NULL, 'DDD', '2024-04-28 15:26:11'),
-(8, 6, NULL, NULL, 'Jozo', '2024-04-28 15:31:50'),
-(9, 6, NULL, NULL, 'A', '2024-04-28 15:33:48'),
-(10, 6, NULL, NULL, 'BASD', '2024-04-28 15:34:04'),
-(11, 7, NULL, 7, '', '2024-04-28 15:34:30'),
-(12, 7, NULL, 7, '', '2024-04-28 15:34:38'),
-(14, 6, 7, NULL, 'Dovreerere', '2024-04-28 18:34:54'),
-(15, 8, 7, 8, '', '2024-04-28 18:35:09'),
-(16, 8, 7, 8, '', '2024-04-28 18:37:17'),
-(17, 9, 7, 10, NULL, '2024-04-28 18:37:30'),
-(18, 9, 7, 11, NULL, '2024-04-28 18:37:30'),
-(19, 6, 7, NULL, 'Ahoj', '2024-04-28 18:38:14');
-
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Sessions`
+-- Štruktúra tabuľky pre tabuľku `Sessions`
 --
 
 CREATE TABLE `Sessions` (
@@ -130,7 +113,7 @@ CREATE TABLE `Sessions` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Users`
+-- Štruktúra tabuľky pre tabuľku `Users`
 --
 
 CREATE TABLE `Users` (
@@ -144,32 +127,34 @@ CREATE TABLE `Users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
--- Dumping data for table `Users`
+-- Sťahujem dáta pre tabuľku `Users`
 --
 
 INSERT INTO `Users` (`user_id`, `username`, `password`, `email`, `role`, `created_at`, `updated_at`) VALUES
-(7, 'admin', '$2y$10$SL/RO2YeUqV6DrIAxolfL.YQOhlCX35W.AhlIY4n19k2qm2Y.kioO', 'admin@admin.sk', 'user', '2024-04-27 21:52:32', '2024-04-27 21:52:32');
+(7, 'admin', '$2y$10$SL/RO2YeUqV6DrIAxolfL.YQOhlCX35W.AhlIY4n19k2qm2Y.kioO', 'admin@admin.sk', 'admin', '2024-04-29 14:28:13', '2024-04-29 14:28:13'),
+(9, 'rado', '$2y$10$cy7YF0zahZbA9OFjZOHJ5Oj1DOGlNbKgBYsA3CGoY38ABsYqyaIbm', 'radoslav.kubalec17@gmail.com', 'user', '2024-04-29 14:28:37', '2024-04-29 14:28:37'),
+(10, 'jurkoheslorado1', '$2y$10$cy7YF0zahZbA9OFjZOHJ5Oj1DOGlNbKgBYsA3CGoY38ABsYqyaIbm', 'radoslav.kubalec17@gmail.com', 'user', '2024-04-30 09:41:47', '2024-04-30 09:41:47');
 
 --
--- Indexes for dumped tables
+-- Kľúče pre exportované tabuľky
 --
 
 --
--- Indexes for table `QuestionOptions`
+-- Indexy pre tabuľku `QuestionOptions`
 --
 ALTER TABLE `QuestionOptions`
   ADD PRIMARY KEY (`option_id`),
   ADD KEY `question_id` (`question_id`);
 
 --
--- Indexes for table `Questions`
+-- Indexy pre tabuľku `Questions`
 --
 ALTER TABLE `Questions`
   ADD PRIMARY KEY (`question_id`),
   ADD KEY `user_id` (`user_id`);
 
 --
--- Indexes for table `Responses`
+-- Indexy pre tabuľku `Responses`
 --
 ALTER TABLE `Responses`
   ADD PRIMARY KEY (`response_id`),
@@ -178,71 +163,71 @@ ALTER TABLE `Responses`
   ADD KEY `OPTION` (`option_id`);
 
 --
--- Indexes for table `Sessions`
+-- Indexy pre tabuľku `Sessions`
 --
 ALTER TABLE `Sessions`
   ADD PRIMARY KEY (`session_id`),
   ADD KEY `question_id` (`question_id`);
 
 --
--- Indexes for table `Users`
+-- Indexy pre tabuľku `Users`
 --
 ALTER TABLE `Users`
   ADD PRIMARY KEY (`user_id`),
   ADD UNIQUE KEY `username` (`username`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT pre exportované tabuľky
 --
 
 --
--- AUTO_INCREMENT for table `QuestionOptions`
+-- AUTO_INCREMENT pre tabuľku `QuestionOptions`
 --
 ALTER TABLE `QuestionOptions`
-  MODIFY `option_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `option_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
--- AUTO_INCREMENT for table `Questions`
+-- AUTO_INCREMENT pre tabuľku `Questions`
 --
 ALTER TABLE `Questions`
-  MODIFY `question_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `question_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
--- AUTO_INCREMENT for table `Responses`
+-- AUTO_INCREMENT pre tabuľku `Responses`
 --
 ALTER TABLE `Responses`
-  MODIFY `response_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `response_id` int NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `Sessions`
+-- AUTO_INCREMENT pre tabuľku `Sessions`
 --
 ALTER TABLE `Sessions`
   MODIFY `session_id` int NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `Users`
+-- AUTO_INCREMENT pre tabuľku `Users`
 --
 ALTER TABLE `Users`
-  MODIFY `user_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `user_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
--- Constraints for dumped tables
+-- Obmedzenie pre exportované tabuľky
 --
 
 --
--- Constraints for table `QuestionOptions`
+-- Obmedzenie pre tabuľku `QuestionOptions`
 --
 ALTER TABLE `QuestionOptions`
   ADD CONSTRAINT `QuestionOptions_ibfk_1` FOREIGN KEY (`question_id`) REFERENCES `Questions` (`question_id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 --
--- Constraints for table `Questions`
+-- Obmedzenie pre tabuľku `Questions`
 --
 ALTER TABLE `Questions`
   ADD CONSTRAINT `Questions_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `Users` (`user_id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 --
--- Constraints for table `Responses`
+-- Obmedzenie pre tabuľku `Responses`
 --
 ALTER TABLE `Responses`
   ADD CONSTRAINT `OPTION` FOREIGN KEY (`option_id`) REFERENCES `QuestionOptions` (`option_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
@@ -250,7 +235,7 @@ ALTER TABLE `Responses`
   ADD CONSTRAINT `USER` FOREIGN KEY (`user_id`) REFERENCES `Users` (`user_id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 --
--- Constraints for table `Sessions`
+-- Obmedzenie pre tabuľku `Sessions`
 --
 ALTER TABLE `Sessions`
   ADD CONSTRAINT `Sessions_ibfk_1` FOREIGN KEY (`question_id`) REFERENCES `Questions` (`question_id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
