@@ -27,5 +27,6 @@
     "add_option" : "Pridať možnosť",
     "delete_option" : "Odstrániť možnosť",
     "submit_question" : "Odoslať otázku",
-    "search" : "Vyhľadať"
+    "search" : "Vyhľadať",
+    "subject" : "Predmet:"
 }

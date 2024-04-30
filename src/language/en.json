@@ -27,5 +27,7 @@
     "add_option" : "Add Option",
     "delete_option" : "Delete Option",
     "submit_question" : "Submit Question",
-    "search" : "Search"
+    "search" : "Search",
+    "subject" : "Subject:",
+    "subject-placeholder" : "Write the type of subject"
 }

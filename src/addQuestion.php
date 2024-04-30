@@ -37,10 +37,9 @@ include_once 'header.php';
             </div>
             <div class="mb-3">
                 <label for="subject" class="form-label">
-                    <h2>Subject:</h2>
+                    <h2 localize="subject"></h2>
                 </label>
-                <input type="text" id="subject" name="subject" class="form-control"
-                    required placeholder="Write the type of subject">
+                <input type="text" id="subject" name="subject" class="form-control">
             </div>
 
             <div class="mb-3">
