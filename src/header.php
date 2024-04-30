@@ -57,7 +57,7 @@
                     <?php endif; ?>
                     <div class="select-language">
                         <button class="language-btn" data-lang="en" id="en" onclick="setLanguagePreference('en')"><svg
-                                xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22"
+                                xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 22 22"
                                 class="Flag_flag_1I8Yz MultistoreSwitch_flag_3upTB">
                                 <path opacity=".1" d="M0 3h22v16H0z"></path>
                                 <path fill="#00247d" fill-rule="evenodd" d="M1 17.999h20V4H1v13.999z"></path>
@@ -71,7 +71,7 @@
                                 </path>
                             </svg></button>
                         <button class="language-btn" data-lang="sk" id="sk" onclick="setLanguagePreference('sk')"><svg
-                                xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22"
+                                xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 22 22"
                                 class="Flag_flag_1I8Yz MultistoreSwitch_flag_3upTB">
                                 <path opacity=".1" d="M0 3h22v16H0z"></path>
                                 <path fill="#fff" fill-rule="evenodd" d="M1 18h20V4H1v14z"></path>
