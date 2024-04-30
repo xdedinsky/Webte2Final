@@ -4,7 +4,102 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 include_once 'header.php';
+require '../../../configFinal.php';
+
+if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
+    $user_id = $_SESSION["user_id"] ;
+    $role = $_SESSION["role"];
+    echo $role;
+    echo $user_id;
 ?>
+
+<label for="subjectFilter">Subject:</label>
+<select id="subjectFilter" class="filterselect" onchange="filterTable()">
+    <option value="">Všetky</option>
+    <?php
+    if ($role === "admin") {
+        $sql_questions = "SELECT DISTINCT subject  FROM Questions";
+        $stmt_questions = $conn->prepare($sql_questions);
+    } elseif ($role === "user") {
+        $sql_questions = "SELECT DISTINCT subject  FROM Questions WHERE user_id = ?";
+        $stmt_questions = $conn->prepare($sql_questions);
+        $stmt_questions->bind_param("i", $user_id);
+    }
+    $stmt_questions->execute();
+    $result = $stmt_questions->get_result();
+    foreach ($result as $row): ?>
+        <option value="<?php echo $row['subject'] ?>">
+            <?php echo $row['subject'] ?>
+        </option>
+    <?php endforeach; ?>
+    <!-- Add years dynamically based on your data -->
+</select>
+
+<label for="dateFilter">Date:</label>
+<select id="dateFilter" class="filterselect" onchange="filterTable()">
+    <option value="">All</option>
+    <?php
+    if ($role === "admin") {
+        $sql_dates = "SELECT DISTINCT DATE(created_at) AS date_value FROM Questions";
+        $stmt_dates = $conn->prepare($sql_dates);
+    } elseif ($role === "user") {
+        $sql_dates = "SELECT DISTINCT DATE(created_at) AS date_value FROM Questions WHERE user_id = ?";
+        $stmt_dates = $conn->prepare($sql_dates);
+        $stmt_dates->bind_param("i", $user_id);
+    }
+    // Query to fetch unique dates from the Questions table
+    
+    $stmt_dates->execute();
+    $dates = $stmt_dates->get_result();
+    
+
+    // Loop through unique dates and generate <option> elements
+    foreach ($dates as $date): ?>
+        <option value="<?php echo htmlspecialchars($date['date_value']); ?>">
+            <?php echo htmlspecialchars($date['date_value']); ?>
+        </option>
+       
+    <?php endforeach; ?>
+
+    
+    
+</select>
+
+<?php if($role==="admin"){?>
+<label for="userFilter">User:</label>
+<select id="userFilter" class="filterselect" onchange="filterTableAdmin()">
+    <option value="">All</option>
+
+    <?php
+    // Check the role to determine the SQL query and bind parameters
+
+    $sql_users = "SELECT DISTINCT username FROM Users";
+    $stmt_users = $conn->prepare($sql_users);
+    // Execute the prepared statement
+    $stmt_users->execute();
+
+    // Get the result set
+    $result = $stmt_users->get_result();
+
+    // Loop through unique user names and generate <option> elements
+    while ($user = $result->fetch_assoc()) {
+        ?>
+        <option value="<?php echo htmlspecialchars($user['username']); ?>">
+            <?php echo htmlspecialchars($user['username']); ?>
+        </option>
+        <?php
+    }
+
+    // Close the statement
+    $stmt_users->close();
+    ?>
+
+</select>
+
+<?php
+}
+}?>
+
 
 <div id="questionsDiv">
 </div>
@@ -12,11 +107,38 @@ include_once 'header.php';
 <?php
 if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
     echo "<table id='tableQuestions' class='table table-bordered'>";
-    echo "<thead><tr><th>Question ID</th><th>User ID</th><th>Question Text</th><th>Question Code</th><th>Active</th><th>Action</th></tr></thead>";
+    echo "<thead><tr><th>Question ID</th><th id = 'ucol'>User</th><th id = 'scol'>Subject</th><th>Question Text</th><th>Question Code</th><th id = 'dcol'>Date</th><th>Active</th><th>Action</th></tr></thead>";
     echo "<tbody></tbody>";
     echo "</table>";
 ?>
 <script>
+    let datateble;
+     function filterTable() {
+        const subject = document.getElementById('subjectFilter').value;
+        const date = document.getElementById('dateFilter').value;
+        if (subject == '') {
+            dataTable.column('#scol').search('').draw();
+        } else {
+            dataTable.column('#scol').search(subject).draw();
+        }
+        if (date == '') {
+            dataTable.column('#dcol').search('').draw();
+        } else {
+            dataTable.column('#dcol').search(date).draw();
+        }
+    }
+
+    function filterTableAdmin() {
+        const user = document.getElementById('userFilter').value;
+        if (user == '') {
+            dataTable.column('#ucol').search('').draw();
+        } else {
+            dataTable.column('#ucol').search(user).draw();
+        }
+        filterTable();
+
+
+    }
     document.addEventListener('DOMContentLoaded', fetchQuestions);
 
     function fetchQuestions() {
@@ -31,9 +153,11 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
 
                     row.innerHTML = `
                         <td>${question.question_id}</td>
-                        <td>${question.user_id}</td>
+                        <td>${question.username}</td>
+                        <td>${question.subject}</td>
                         <td>${question.question_text}</td>
                         <td>${question.question_code}</td>
+                        <td>${question.date}</td>
                         <td>${question.active}</td>
                         <td><a href="controllers/changeStatus.php?question_id=${question.question_id}&active=${question.active}">${question.active ? `Deactivate` : `Activate`}</a></td>
                     `;
@@ -41,7 +165,7 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
                     questionsContainer.appendChild(row);
                 });
 
-                const dataTable = new DataTable('#tableQuestions', {
+                 dataTable = new DataTable('#tableQuestions', {
                     searchable: true, 
                     paging: true, 
                 });

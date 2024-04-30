@@ -10,19 +10,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = $_POST['password'];
 
     if (!empty($username) && !empty($password)) {
-        $sql = "SELECT user_id, password FROM Users WHERE username = ?";
+        $sql = "SELECT user_id, password, role FROM Users WHERE username = ?";
         if ($stmt = $conn->prepare($sql)) {
             $stmt->bind_param("s", $username);
             $stmt->execute();
             $stmt->store_result();
 
             if ($stmt->num_rows == 1) {
-                $stmt->bind_result($user_id, $hashed_password);
+                $stmt->bind_result($user_id, $hashed_password, $role);
                 $stmt->fetch();
                 if (password_verify($password, $hashed_password)) {
                     $_SESSION["loggedin"] = true;
                     $_SESSION["user_id"] = $user_id;
-                    $_SESSION["username"] = $username;                    
+                    $_SESSION["username"] = $username;   
+                    $_SESSION["role"] = $role; 
+
                     header("location: /Webte2Final/src/index.php?action=login-success");
                 } else {
                      header("location: /Webte2Final/src/index.php?action=login-failed");
