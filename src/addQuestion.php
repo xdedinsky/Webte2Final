@@ -25,7 +25,6 @@ include_once 'header.php';
 
 <body>
    
-
     <div class="container mt-4">
         <form id="questionForm" class="needs-validation" novalidate>
             <div class="mb-3">
@@ -46,6 +45,16 @@ include_once 'header.php';
                 <label for="question_text" class="form-label"><h2 localize="question_text"></h2></label>
                 <input type="text" id="question_text" name="question_text" class="form-control" required>
             </div>
+            <?php
+    if($_SESSION["isAdmin"] === "admin"){
+        echo'
+            <div class="mb-3">
+            <label for="username" class="form-label">
+                <h2 localize="add_to_user"></h2>
+            </label>
+            <input type="text" id="user" name="user" class="form-control">
+        '
+    }?>
 
             <div id="optionsContainer" class="hidden">
                 <div class="mb-3">
@@ -76,7 +85,8 @@ include_once 'header.php';
             </div>
         </form>
     </div>
-
+    
+    
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="alerts.js"></script>
 <script src="script.js"></script>

@@ -29,5 +29,6 @@
     "submit_question" : "Submit Question",
     "search" : "Search",
     "subject" : "Subject:",
-    "subject-placeholder" : "Write the type of subject"
+    "subject-placeholder" : "Write the type of subject",
+    "add_to_user" : "Add to user"
 }
