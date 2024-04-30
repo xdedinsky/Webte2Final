@@ -1,4 +1,5 @@
 <?php
+ob_start(); // Start output buffering
 session_start();
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
@@ -31,7 +32,7 @@ if ($stmt = $conn->prepare("SELECT * FROM Questions WHERE question_code = ?")) {
     }
     $stmt->close();
 } else {
-    echo "SQL Error: " . $conn->error;
+    echo "SQL Error ";
     exit;
 }
 ?>
@@ -153,3 +154,6 @@ $(document).ready(function() {
 
 </body>
 </html>
+<?php
+ob_end_flush(); // Flush the output buffer and send to the client
+?>

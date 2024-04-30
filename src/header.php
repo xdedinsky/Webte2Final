@@ -1,3 +1,15 @@
+<?php
+function isActive($navLink) {
+    $currentLink = basename($_SERVER['REQUEST_URI'], ".php");
+
+    // Check if the navigation link is in the current URL
+    if (strpos($currentLink, $navLink) !== false) {
+        return 'active';  // Return the 'active' class
+    } else {
+        return '';
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
