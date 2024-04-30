@@ -113,13 +113,16 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
 <?php
 if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
     echo "<table id='tableQuestions' class='table table-bordered'>";
-    echo "<thead><tr><th>Question ID</th><th id = 'ucol'>User</th><th id = 'scol'>Subject</th><th>Question Text</th><th>Question Code</th><th id = 'dcol'>Date</th><th>Active</th><th>Action</th></tr></thead>";
+    echo "<thead><tr><th>Question ID</th><th id = 'ucol'>User</th><th id = 'scol'>Subject</th><th>Question Text</th><th>Question Code</th><th id = 'dcol'>Date</th><th>Active</th></tr></thead>";
     echo "<tbody></tbody>";
     echo "</table>";
 ?>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="alerts.js"></script>
+<script src="script.js"></script>
 <script>
-    let datateble;
-     function filterTable() {
+    let dataTable;
+    function filterTable() {
         const subject = document.getElementById('subjectFilter').value;
         const date = document.getElementById('dateFilter').value;
         if (subject == '') {
@@ -142,8 +145,6 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
             dataTable.column('#ucol').search(user).draw();
         }
         filterTable();
-
-
     }
     document.addEventListener('DOMContentLoaded', fetchQuestions);
 
@@ -157,6 +158,9 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
                 data.forEach(question => {
                     const row = document.createElement('tr');
 
+                    // Check if the question is active and set the checkbox accordingly
+                    const isChecked = question.active == '1' ? 'checked' : '';
+
                     row.innerHTML = `
                         <td>${question.question_id}</td>
                         <td>${question.username}</td>
@@ -164,32 +168,47 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
                         <td>${question.question_text}</td>
                         <td>${question.question_code}</td>
                         <td>${question.date}</td>
-                        <td>${question.active}</td>
-                        <td><a href="controllers/changeStatus.php?question_id=${question.question_id}&active=${question.active}">${question.active ? `Deactivate` : `Activate`}</a></td>
+                        <td>
+                            <input type="checkbox" ${isChecked} onchange="toggleActive(${question.question_id}, this.checked)">
+                        </td>
                     `;
 
                     questionsContainer.appendChild(row);
                 });
 
-                 dataTable = new DataTable('#tableQuestions', {
+                dataTable = new DataTable('#tableQuestions', {
                     searchable: true, 
                     paging: true, 
                 });
             })
             .catch(error => {
-                //TODO ak nema otazky nezobrazovat filter a  hlavicku tabulky
-                //console.error('Error fetching questions:', error);
+                console.error('Error fetching questions:', error);
             });
     }
+
+    function toggleActive(questionId, isActive) {
+        // Create the URL to send the request to
+        const url = `controllers/changeStatus.php?question_id=${questionId}&active=${isActive ? 1 : 0}`;
+        
+        fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            Swal.fire({
+                icon: data.success ? 'success' : 'error',
+                title: data.success ? 'Success' : 'Error',
+                text: data.message
+            });
+        })
+        .catch(error => {
+            console.error('Error updating status:', error);
+        });
+    }
+
 </script>
 
 <?php
 
 }
 ?>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script src="alerts.js"></script>
-<script src="script.js"></script>
 </body>
 </html>
