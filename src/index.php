@@ -9,8 +9,8 @@ require '../../../configFinal.php';
 if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
     $user_id = $_SESSION["user_id"] ;
     $role = $_SESSION["role"];
-    echo $role;
-    echo $user_id;
+    //echo $role;
+    //echo $user_id;
 ?>
 
 <label for="subjectFilter">Subject:</label>
@@ -171,7 +171,8 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
                 });
             })
             .catch(error => {
-                console.error('Error fetching questions:', error);
+                //TODO ak nema otazky nezobrazovat filter a  hlavicku tabulky
+                //console.error('Error fetching questions:', error);
             });
     }
 </script>
