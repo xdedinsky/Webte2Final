@@ -144,10 +144,10 @@ if ($stmt = $conn->prepare("SELECT * FROM Questions WHERE question_code = ?")) {
                     Swal.fire({
                         title: 'Answer submitted!',
                         icon: 'success',
-                        confirmButtonText: 'Ok'
+                        confirmButtonText: 'Ok',
+                        allowOutsideClick: false // Prevent dismissing on click outside
                     }).then((result) => {
                         if (result.isConfirmed) {
-                            // Redirect to showanswers.php
                             window.location.href = `answers.php?qid=${questionId}`;
                         }
                     });
@@ -155,7 +155,7 @@ if ($stmt = $conn->prepare("SELECT * FROM Questions WHERE question_code = ?")) {
                 error: function (xhr, status, error) {
                     Swal.fire({
                         title: 'Oops..',
-                        text: 'Answer was nott submitted: ' + error,
+                        text: 'Answer was not submitted: ' + error,
                         icon: 'error',
                         confirmButtonText: 'Ok'
                     });
