@@ -8,10 +8,11 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
     $stmt->bind_result($role);
     $stmt->fetch();
     $stmt->close();
-    $user_id = $_SESSION["user_id"] ;
+    $user_id = $_SESSION["user_id"];
     $_SESSION["role"] = $role;
 }
-function isActive($navLink) {
+function isActive($navLink)
+{
     $currentLink = basename($_SERVER['REQUEST_URI'], ".php");
 
     // Check if the navigation link is in the current URL
@@ -29,6 +30,11 @@ function isActive($navLink) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VOTE</title>
+    <link rel="stylesheet" type="text/css"
+        href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.dataTables.min.css">
+    <script type="text/javascript"
+        src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="https://cdn.datatables.net/2.0.1/css/dataTables.dataTables.css" />
@@ -61,8 +67,13 @@ function isActive($navLink) {
                             <button class="btn btn-outline-light" localize="search" type="submit"></button>
                         </form>
                     </div>
-                    <a class="nav-link <?php echo isActive('index');?> " localize="home" aria-current="page" href="index.php"></a>
-                    <a class="nav-link <?php echo isActive('addQuestion');?>" aria-current="page" localize="add_q" href="addQuestion.php"></a>
+                    <a class="nav-link <?php echo isActive('index'); ?> " localize="home" aria-current="page"
+                        href="index.php"></a>
+
+                    <?php if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true): ?>
+                        <a class="nav-link <?php echo isActive('addQuestion'); ?>" aria-current="page" localize="add_q"
+                            href="addQuestion.php"></a>
+                    <?php endif; ?>
                     <?php if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true): ?>
                         <div class="dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
