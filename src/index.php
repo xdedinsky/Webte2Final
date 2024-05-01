@@ -109,6 +109,20 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
 
     <div id="questionsDiv">
     </div>
+        <div class="modal fade" id="qrModal" tabindex="-1" aria-labelledby="qrModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="qrModalLabel">QR Code</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="qrCode" style="text-align: center;"></div> <!-- Inline style for centering -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="alerts.js"></script>
@@ -116,12 +130,34 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
     <?php
     if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
         echo "<table id='tableQuestions' class='table table-bordered'>";
-        echo "<thead><tr><th>Question ID</th><th id = 'ucol'>User</th><th id = 'scol'>Subject</th><th>Question Text</th><th>Question Code</th><th id = 'dcol'>Date</th><th>Active</th></tr></thead>";
+        echo "<thead><tr><th>Question ID</th><th>User</th><th>Subject</th><th>Question Text</th><th>Question Code</th><th>Date</th><th>Active</th><th>QR Code</th></tr></thead>";
         echo "<tbody></tbody>";
         echo "</table>";
         ?>
 
         <script>
+            function showQRCode(questionCode) {
+                var qrCodeContainer = document.getElementById('qrCode');
+                qrCodeContainer.innerHTML = ''; // Clear previous QR codes
+
+                // Create an anchor element that wraps the QR code and redirects on click
+                var link = document.createElement('a');
+                link.href = `https://node28.webte.fei.stuba.sk/${questionCode}`; // Link to redirect
+                link.target = '_blank'; // Open in new tab
+
+                // Create QR code inside the link
+                var qr = new QRCode(link, {
+                    text: `https://node28.webte.fei.stuba.sk/${questionCode}`,
+                    width: 256,
+                    height: 256,
+                    colorDark : "#000000",
+                    colorLight : "#ffffff",
+                    correctLevel : QRCode.CorrectLevel.H
+                });
+
+                qrCodeContainer.appendChild(link); // Append the link (which contains the QR code) to the modal body
+            }
+
             let dataTable;
             function filterTable() {
                 const subject = document.getElementById('subjectFilter').value;
@@ -163,16 +199,21 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
                             const isChecked = question.active == '1' ? 'checked' : '';
 
                             row.innerHTML = `
-                            <td>${question.question_id}</td>
-                            <td>${question.username}</td>
-                            <td>${question.subject}</td>
-                            <td>${question.question_text}</td>
-                            <td>${question.question_code}</td>
-                            <td>${question.date}</td>
-                            <td>
-                                <input type="checkbox" ${isChecked} onchange="toggleActive(${question.question_id}, this.checked)">
-                            </td>
-                        `;
+                                <td>${question.question_id}</td>
+                                <td>${question.username}</td>
+                                <td>${question.subject}</td>
+                                <td>${question.question_text}</td>
+                                <td>${question.question_code}</td>
+                                <td>${question.date}</td>
+                                <td>
+                                    <input type="checkbox" ${isChecked} onchange="toggleActive(${question.question_id}, this.checked)">
+                                </td>
+                                    <td class="center-content">
+                                        <a href="#" data-bs-toggle="modal" data-bs-target="#qrModal" onclick="showQRCode('${question.question_code}')">
+                                            <img src="images/qrimage.png" alt="qrimage" width="20" height="20">
+                                        </a>
+                                    </td>
+                                `;
 
                             questionsContainer.appendChild(row);
                         });
@@ -211,6 +252,8 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
 
     }
     ?>
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
+
     </body>
 
     </html>

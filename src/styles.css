@@ -267,3 +267,34 @@ h2 {
     white-space: nowrap;
     display: inline-block;
 }
+
+#qrModal .modal-content {
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+}
+
+#qrModal .modal-header {
+    border-bottom: 1px solid #dee2e6; /* Gives a subtle line to separate the header */
+}
+
+#qrModal .modal-body {
+    padding: 20px;
+    text-align: center; /* Ensures QR code is centered */
+}
+
+#qrModal .btn-close {
+    background-color: #f5f5f5; /* Light grey background for close button, adjust as needed */
+}
+
+/* Style for QR code itself, ensuring it is visually centered and has some spacing if needed */
+#qrCode {
+    background-color: #fff; /* White background to contrast with QR code */
+    display: inline-block; /* Helps in centering */
+    margin: auto; /* Further assists with center alignment */
+}
+
+.center-content {
+    text-align: center; /* Centers text and inline elements within the cell */
+    vertical-align: middle; /* Optionally, this aligns content in the middle vertically if needed */
+}
