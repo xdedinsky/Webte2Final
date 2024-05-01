@@ -28,7 +28,38 @@ window.addEventListener('DOMContentLoaded', async () => {
     updateContent(langData);
 
 });
-
+function validateNewPassword(){
+    var newPassword = document.getElementById("new_password").value;
+    var confirmPassword = document.getElementById("confirm_password2").value;
+    console.log("SOM");
+    if (newPassword.length < 2 || confirmPassword.length < 2) {
+        console.log("2");
+        Swal.fire({
+            title: 'Weak Password!',
+            text: 'Password must be at least 2 characters long.',
+            icon: 'error',
+            background: '#FFFFFF',
+            color: '#000000',
+            confirmButtonColor: '#FF6A00',
+            confirmButtonText: 'Ok'
+        });
+        return false; 
+    }
+    if (newPassword.length < 6 || confirmPassword.length < 6) {
+        console.log("6");
+        Swal.fire({
+            title: 'Weak Password!',
+            text: 'Your password must be at least 6 characters long.',
+            icon: 'error',
+            background: '#FFFFFF',
+            color: '#000000',
+            confirmButtonColor: '#FF6A00',
+            confirmButtonText: 'Ok'
+        });
+        return false; 
+    }
+    return true;
+}
 
 function validatePassword() {
     var password = document.getElementById("passwordReg").value;
@@ -63,7 +94,7 @@ function validatePassword() {
     }
     if (password.length < 6 || confirm_password.length < 6) {
         Swal.fire({
-            title: 'Weakss Password!',
+            title: 'Weak Password!',
             text: 'Your password must be at least 6 characters long.',
             icon: 'error',
             background: '#FFFFFF',
