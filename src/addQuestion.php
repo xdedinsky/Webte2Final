@@ -4,6 +4,7 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 include_once 'header.php';
+require '../../../configFinal.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -46,13 +47,31 @@ include_once 'header.php';
             </div>
             <?php
     if($_SESSION["role"] === "admin"){
-        echo'
-            <div class="mb-3">
+        echo '
+        <div class="mb-3">
             <label for="username" class="form-label">
                 <h2 localize="add_to_user"></h2>
             </label>
-            <input type="text" id="user" name="user" class="form-control">
+            <select id="user" name="user" class="form-control">
         ';
+
+        // Připravte a proveďte dotaz na seznam uživatelů
+        $sql = "SELECT user_id, username FROM Users";
+        if ($stmt = $conn->prepare($sql)) {
+            $stmt->execute();
+            $stmt->bind_result($user_id, $username);
+
+            // Iterujte přes výsledky a vytvořte možnosti (options)
+            while ($stmt->fetch()) {
+                echo "<option value=\"$user_id\">$username</option>";
+            }
+            $stmt->close();
+        }
+
+        echo '
+            </select>
+            </div>
+        ' ;
     }?>
 
             <div id="optionsContainer" class="hidden">

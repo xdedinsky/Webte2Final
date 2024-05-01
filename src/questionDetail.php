@@ -43,16 +43,16 @@ if ($stmt = $conn->prepare("SELECT * FROM Questions WHERE question_code = ?")) {
         <form id="answerForm" action="controllers/submitAnswer.php" method="post">
             <div class="card">
                 <div class="card-header">
-                    <h2 class="card-title">Question Detail</h2>
+                    <h2 class="card-title" localize="question_detail"></h2>
                 </div>
                 <div class="card-body">
                     <?php if (!empty($question)): ?>
-                        <h2 style="text-align:left;">Question:</h2>
+                        <h2 style="text-align:left;" localize="question"></h2>
                         <p class="card-text"><?php echo htmlspecialchars($question['question_text']); ?></p>
 
                         <?php if ($question['question_type'] == 'multiple_choice' && !empty($options)): ?>
                             <div class="mt-4">
-                                <h2 style="text-align:left;">Select your answer:</h2>
+                                <h2 style="text-align:left;" localize="select_answer"></h2>
                                 <?php if ($question['options_count'] == 'single'): ?>
                                     <?php foreach ($options as $option): ?>
                                         <div class="form-check">
@@ -82,20 +82,20 @@ if ($stmt = $conn->prepare("SELECT * FROM Questions WHERE question_code = ?")) {
                         <?php else: ?>
                             <div class="mt-4">
                                 <label for="openAnswer" class="form-label">
-                                    <h2>Your answer:</h2>
+                                    <h2 localize="your_answer"></h2>
                                 </label>
                                 <input type="text" class="form-control" id="openAnswer" name="answer" required>
                             </div>
                         <?php endif; ?>
                     <?php else: ?>
-                        <p class="card-text">No question found with that code.</p>
+                        <p class="card-text" localize="no_question_found"></p>
                     <?php endif; ?>
                 </div>
 
                 <div class="card-footer">
                     <!-- Hidden input to carry the question ID -->
                     <input type="hidden" name="question_id" value="<?php echo $question['question_id']; ?>">
-                    <button type="submit" class="btn btn-primary">Submit Answer</button>
+                    <button type="submit" class="btn btn-primary" localize="submit_answer"></button>
                 </div>
             </div>
         </form>

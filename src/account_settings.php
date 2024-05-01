@@ -27,21 +27,21 @@ include_once 'header.php';
                     <h2 localize="current_pwd"></h2>
                 </label>
                 <input type="password" id="current_password" name="current_password" class="form-control" required>
-                <div class="invalid-feedback">Please enter your current password.</div>
+                <div class="invalid-feedback" localize="enter_current_pwd"></div>
             </div>
             <div class="mb-3">
                 <label>
                     <h2 localize="new_pwd"></h2>
                 </label>
                 <input type="password" id="new_password" name="new_password" class="form-control" required>
-                <div class="invalid-feedback">Please enter a new password.</div>
+                <div class="invalid-feedback" localize="enter_new_pwd"></div>
             </div>
             <div class="mb-3">
                 <label>
                     <h2 localize="conf_pwd"></h2>
                 </label>
                 <input type="password" id="confirm_password2" name="confirm_password2" class="form-control" required>
-                <div class="invalid-feedback">Please confirm your new password.</div>
+                <div class="invalid-feedback" localize="confirm_your_pwd"></div>
             </div>
             <div class="mb-3">
                 <input type="submit" class="btn btn-primary" value="Submit">

@@ -18,9 +18,9 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
 ?>
 <div class="containerTable">
     <div class="tableHeader">
-        <label for="subjectFilter">Subject:</label>
+        <label for="subjectFilter" localize="subject"></label>
         <select id="subjectFilter" class="filterselect" onchange="filterTable()">
-            <option value="">Všetky</option>
+            <option value="" localize="all_filter"></option>
             <?php
             if ($role === "admin") {
                 $sql_questions = "SELECT DISTINCT subject  FROM Questions";
@@ -40,9 +40,9 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
             <!-- Add years dynamically based on your data -->
         </select>
 
-        <label for="dateFilter">Date:</label>
+        <label for="dateFilter" localize="date"></label>
         <select id="dateFilter" class="filterselect" onchange="filterTable()">
-            <option value="">All</option>
+            <option value="" localize="all"></option>
             <?php
             if ($role === "admin") {
                 $sql_dates = "SELECT DISTINCT DATE(created_at) AS date_value FROM Questions";
@@ -71,9 +71,9 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
         </select>
 
         <?php if($role==="admin"){?>
-        <label for="userFilter">User:</label>
+        <label for="userFilter" localize="user"></label>
         <select id="userFilter" class="filterselect" onchange="filterTableAdmin()">
-            <option value="">All</option>
+            <option value="" localize="all_filter"></option>
 
             <?php
             // Check the role to determine the SQL query and bind parameters

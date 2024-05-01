@@ -28,5 +28,20 @@
     "delete_option" : "Odstrániť možnosť",
     "submit_question" : "Odoslať otázku",
     "search" : "Vyhľadať",
-    "subject" : "Predmet:"
+    "subject" : "Predmet:",
+    "add_to_user" : "Pridať používateľovi",
+    "your_answer:" : "Vaša odpoveď:",
+    "no_question_found" : "Nenašla sa otázka s týmto kódom.",
+    "submit_answer" : "Odoslať odpoveď",
+    "select_your_answer:" : "Vyberte si svoju odpoveď:",
+    "question:" : "Otázka:",
+    "question_detail" : "Detail otázky",
+    "date:" : "Dátum:",
+    "all" : "Všetky",
+    "user:" : "Používateľ:",
+    "all_filter" : "Všetky",
+    "results" : "Výsledky hlasovania",
+    "enter_current_pwd" : "Zadajte svoje aktuálne heslo.",
+    "enter_new_pwd" : "Zadajte nové heslo.",
+    "confirm_your_pwd" :"Prosím, potvrďte svoje nové heslo."
 }

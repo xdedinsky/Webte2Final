@@ -30,5 +30,20 @@
     "search" : "Search",
     "subject" : "Subject:",
     "subject-placeholder" : "Write the type of subject",
-    "add_to_user" : "Add to user"
+    "add_to_user" : "Add to user",
+    "your_answer" : "Your answer:",
+    "no_question_found" : "No question found with that code.",
+    "submit_answer" : "Submit Answer",
+    "select_answer" : "Select your answer:",
+    "question" : "Question:",
+    "question_detail" : "Question Detail",
+    "date": "Date:",
+    "all" : "All",
+    "user" : "User:",
+    "all_filter" : "All",
+    "results" : "Voting results",
+    "enter_current_pwd" : "Please enter your current password.",
+    "enter_new_pwd" : "Please enter a new password.",
+    "confirm_your_pwd" :"Please confirm your new password."
+
 }

@@ -11,7 +11,7 @@ $question_id = $_GET['qid'];
 
 
 <div id="answers">
-<h2>Výsledky hlasovania</h2>
+<h2 localize="results"></h2>
 </div>
 
 
