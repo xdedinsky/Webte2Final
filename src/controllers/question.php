@@ -29,12 +29,20 @@ while (true) {
     $question_code = substr(str_shuffle("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, 5);
 }
 
+if($_SESSION['role'] === 'admin'){
+    $stmt = $conn->prepare("INSERT INTO Questions (user_id, question_text, question_type, subject, options_count, active, question_code, created_at, updated_at) VALUES (?,?, ?, ?, ?, ?, ?, NOW(), NOW())");
+    $options_count = ($data['question_type'] == 'multiple_choice') ? $data['answer_type'] : NULL; 
+    $active = 1;
+    $stmt->bind_param("issssis", $data['user'], $data['question_text'], $data['question_type'],$data['subject'], $options_count, $active, $question_code);
+}
+else{
+    $stmt = $conn->prepare("INSERT INTO Questions (user_id, question_text, question_type, subject, options_count, active, question_code, created_at, updated_at) VALUES (?,?, ?, ?, ?, ?, ?, NOW(), NOW())");
+    $options_count = ($data['question_type'] == 'multiple_choice') ? $data['answer_type'] : NULL; 
+    $active = 1;
+    $stmt->bind_param("issssis", $_SESSION['user_id'], $data['question_text'], $data['question_type'],$data['subject'], $options_count, $active, $question_code);
 
+}
 // Insert query
-$stmt = $conn->prepare("INSERT INTO Questions (user_id, question_text, question_type, subject, options_count, active, question_code, created_at, updated_at) VALUES (?,?, ?, ?, ?, ?, ?, NOW(), NOW())");
-$options_count = ($data['question_type'] == 'multiple_choice') ? $data['answer_type'] : NULL; 
-$active = 1;
-$stmt->bind_param("issssis", $_SESSION['user_id'], $data['question_text'], $data['question_type'],$data['subject'], $options_count, $active, $question_code);
 
 // Execute and check for errors
 if (!$stmt->execute()) {

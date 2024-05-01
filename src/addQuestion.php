@@ -49,7 +49,7 @@ require '../../../configFinal.php';
     if($_SESSION["role"] === "admin"){
         echo '
         <div class="mb-3">
-            <label for="username" class="form-label">
+            <label for="user" class="form-label">
                 <h2 localize="add_to_user"></h2>
             </label>
             <select id="user" name="user" class="form-control">
@@ -159,6 +159,7 @@ require '../../../configFinal.php';
                     const formData = {
                         question_text: $('#question_text').val(),
                         question_type: $('#question_type').val(),
+                        user: $('#user').val(),
                         subject: $('#subject').val(),
                             options: $('#question_type').val() === 'multiple_choice' ? $('input[name="options[]"]').map(function () { return $(this).val(); }).get() : [],
                         answer_type: $('#question_type').val() === 'multiple_choice' ? $('input[name="answer_type"]:checked').val() : null
