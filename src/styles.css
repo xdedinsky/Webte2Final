@@ -13,6 +13,8 @@
     /* Grey color for non-active links */
     --invisible-color: rgba(0, 0, 0, 0);
     /* Transparent color */
+    --body-font-family: 'Arial', sans-serif; /* Modern and readable font for body text */
+    --header-font-family: 'Helvetica Neue', sans-serif; /* Stylish font for headers */
 }
 
 .tableHeader {
@@ -30,8 +32,7 @@
 body {
     background-color: var(--accent-color);
     color: var(--secondary-color);
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    /* A modern font family */
+    font-family: var(--body-font-family);
 }
 
 .form-wrapper {
@@ -165,6 +166,7 @@ button.navbar-toggler .navbar-toggler-icon {
     /* Bold font weight for emphasis */
     text-align: center;
     /* Centered text */
+    font-family: var(--header-font-family);
 }
 
 .container p {
@@ -213,6 +215,7 @@ button.navbar-toggler .navbar-toggler-icon {
 h2 {
     color: var(--primary-color);
     text-align: center;
+    font-family: var(--header-font-family);
 }
 
 .card-footer {
@@ -297,4 +300,64 @@ h2 {
 .center-content {
     text-align: center; /* Centers text and inline elements within the cell */
     vertical-align: middle; /* Optionally, this aligns content in the middle vertically if needed */
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+#wordCloud span {
+    animation: fadeIn 1s;
+}
+
+li:hover {
+    background-color: var(--primary-color);
+    color: var(--accent-color);
+    transform: translateY(-3px);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+@media (max-width: 768px) {
+    
+    #answers, #wordCloud {
+        margin: 10px;
+        padding: 10px;
+    }
+
+    .cloudTag {
+        font-size: 80%; /* Smaller tags on smaller screens */
+    }
+}
+
+#answers {
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    margin: 20px;
+    transition: all 0.3s ease-in-out;
+}
+
+.cloudTag {
+    display: inline-block;
+    margin: 5px;
+    transition: transform 0.2s ease-in-out;
+}
+
+.cloudTag:hover {
+    transform: scale(1.1);
+    cursor: pointer;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+li {
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: var(--primary-color-light);
+    color: var(--accent-color);
+    border-radius: 4px;
 }
