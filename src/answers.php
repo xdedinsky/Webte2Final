@@ -13,6 +13,11 @@ $question_id = $_GET['qid'];
 <div id="answers">
 <h2>Výsledky hlasovania</h2>
 </div>
+
+
+<div id="wordCloud">
+
+</div>
 <script>
 // JavaScript kód s použitím PHP premennej questionId
 const question_id = <?php echo json_encode($question_id); ?>;
@@ -51,6 +56,9 @@ if (question_id) {
             });
 
             answersContainer.appendChild(dataListContainer);
+
+
+            createWordCloud(data); 
         })
         .catch(error => {
             console.error('Fetch error:', error);
@@ -59,6 +67,26 @@ if (question_id) {
 } else {
     console.error('Question ID is not defined or null.');
     // Handle case when questionId is not defined or null
+}
+
+
+
+
+
+
+function createWordCloud(data) {
+    const wordCloudContainer = document.getElementById('wordCloud'); // Získanie kontajnera pre word cloud
+
+    // Vytvorenie elementov pre zobrazenie jednotlivých slov v word cloude
+    Object.entries(data.data).forEach(([word, count]) => {
+        const wordElement = document.createElement('span');
+        wordElement.textContent = `${word} `; // Zobrazenie slova s medzerou
+
+        // Zmena veľkosti písma podľa počtu výskytov
+        wordElement.style.fontSize = `${count * 15}px`;
+
+        wordCloudContainer.appendChild(wordElement); // Pridanie slova do word cloudu
+    });
 }
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
