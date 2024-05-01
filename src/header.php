@@ -1,4 +1,16 @@
 <?php
+require '../../../configFinal.php';
+if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
+    $stmt = $conn->prepare("SELECT role FROM Users WHERE user_id = ?");
+    $stmt->bind_param("i", $_SESSION['user_id']);
+    $stmt->execute();
+    $stmt->store_result();
+    $stmt->bind_result($role);
+    $stmt->fetch();
+    $stmt->close();
+    $user_id = $_SESSION["user_id"] ;
+    $_SESSION["role"] = $role;
+}
 function isActive($navLink) {
     $currentLink = basename($_SERVER['REQUEST_URI'], ".php");
 
