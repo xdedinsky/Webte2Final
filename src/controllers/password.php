@@ -22,6 +22,7 @@ if ($newPassword !== $confirmPassword) {
 
 // Function to validate the current password
 function validateCurrentPassword($userId, $currentPassword, $conn) {
+    $hashedPassword = null; // Initialize the variable
     $sql = "SELECT password FROM Users WHERE user_id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $userId);
@@ -46,8 +47,9 @@ function updateUserPassword($userId, $newPassword, $conn) {
     $stmt->bind_param("si", $hashedNewPassword, $userId);
     if ($stmt->execute()) {
         return true;
+    } else {
+        return false;
     }
-    return false;
 }
 
 // Validate current password
@@ -61,5 +63,6 @@ if (updateUserPassword($_SESSION['user_id'], $newPassword, $conn)) {
     echo json_encode(['success' => true]);
 } else {
     echo json_encode(['success' => false, 'error' => 'Failed to update password.']);
+    exit;
 }
 ?>
