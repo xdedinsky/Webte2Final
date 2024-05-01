@@ -28,7 +28,9 @@ require '../../../configFinal.php';
     <div class="container mt-4">
         <form id="questionForm" class="needs-validation" novalidate>
             <div class="mb-3">
-                <label for="question_type" class="form-label" ><h2 localize="select_question_type" ></h2></label>
+                <label for="question_type" class="form-label">
+                    <h2 localize="select_question_type"></h2>
+                </label>
                 <select id="question_type" name="question_type" class="form-select" required>
                     <option value="open_ended" localize="open_question" style="user-select: none;"></option>
                     <option value="multiple_choice" localize="question_with_options"></option>
@@ -42,12 +44,14 @@ require '../../../configFinal.php';
             </div>
 
             <div class="mb-3">
-                <label for="question_text" class="form-label"><h2 localize="question_text"></h2></label>
+                <label for="question_text" class="form-label">
+                    <h2 localize="question_text"></h2>
+                </label>
                 <input type="text" id="question_text" name="question_text" class="form-control" required>
             </div>
             <?php
-    if($_SESSION["role"] === "admin"){
-        echo '
+            if ($_SESSION["role"] === "admin") {
+                echo '
         <div class="mb-3">
             <label for="username" class="form-label">
                 <h2 localize="add_to_user"></h2>
@@ -55,28 +59,30 @@ require '../../../configFinal.php';
             <select id="user" name="user" class="form-control">
         ';
 
-        // Připravte a proveďte dotaz na seznam uživatelů
-        $sql = "SELECT user_id, username FROM Users";
-        if ($stmt = $conn->prepare($sql)) {
-            $stmt->execute();
-            $stmt->bind_result($user_id, $username);
+                // Připravte a proveďte dotaz na seznam uživatelů
+                $sql = "SELECT user_id, username FROM Users";
+                if ($stmt = $conn->prepare($sql)) {
+                    $stmt->execute();
+                    $stmt->bind_result($user_id, $username);
 
-            // Iterujte přes výsledky a vytvořte možnosti (options)
-            while ($stmt->fetch()) {
-                echo "<option value=\"$user_id\">$username</option>";
-            }
-            $stmt->close();
-        }
+                    // Iterujte přes výsledky a vytvořte možnosti (options)
+                    while ($stmt->fetch()) {
+                        echo "<option value=\"$user_id\">$username</option>";
+                    }
+                    $stmt->close();
+                }
 
-        echo '
+                echo '
             </select>
             </div>
-        ' ;
-    }?>
+        ';
+            } ?>
 
             <div id="optionsContainer" class="hidden">
                 <div class="mb-3">
-                    <label class="form-label"><h2 localize="answer_type"></h2></label>
+                    <label class="form-label">
+                        <h2 localize="answer_type"></h2>
+                    </label>
                     <div>
                         <input type="radio" id="single_answer" name="answer_type" value="single" checked required>
                         <label for="single_answer" localize="single_correct_answer"></label>
@@ -87,7 +93,9 @@ require '../../../configFinal.php';
                     </div>
                 </div>
 
-                <label><h2 localize="options"></h2></label>
+                <label>
+                    <h2 localize="options"></h2>
+                </label>
                 <div id="optionFields">
                     <input type="text" name="options[]" class="form-control" placeholder="Option 1">
                     <input type="text" name="options[]" class="form-control" placeholder="Option 2">
@@ -103,11 +111,11 @@ require '../../../configFinal.php';
             </div>
         </form>
     </div>
-    
-    
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script src="alerts.js"></script>
-<script src="script.js"></script>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="alerts.js"></script>
+    <script src="script.js"></script>
 
     <script>
         $(document).ready(function () {
@@ -160,7 +168,7 @@ require '../../../configFinal.php';
                         question_text: $('#question_text').val(),
                         question_type: $('#question_type').val(),
                         subject: $('#subject').val(),
-                            options: $('#question_type').val() === 'multiple_choice' ? $('input[name="options[]"]').map(function () { return $(this).val(); }).get() : [],
+                        options: $('#question_type').val() === 'multiple_choice' ? $('input[name="options[]"]').map(function () { return $(this).val(); }).get() : [],
                         answer_type: $('#question_type').val() === 'multiple_choice' ? $('input[name="answer_type"]:checked').val() : null
                     };
 
@@ -175,7 +183,12 @@ require '../../../configFinal.php';
                                 title: 'Success!',
                                 text: 'Question submitted successfully!',
                                 icon: 'success',
-                                confirmButtonText: 'OK'
+                                confirmButtonText: 'OK',
+                                allowOutsideClick: false
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    window.location.href = 'https://node71.webte.fei.stuba.sk/Webte2Final/src/index.php';
+                                }
                             });
                         },
                         error: function (err) {
