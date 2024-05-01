@@ -253,3 +253,17 @@ h2 {
     margin-left: 20px;
 }
 
+
+#wordCloud{
+    margin-left: 25%;
+    width: 50%;
+    justify-content: center;
+    text-align: center;
+}
+.cloudTag{
+    vertical-align: middle;
+    font-weight: bold;
+    text-align: center;
+    white-space: nowrap;
+    display: inline-block;
+}
