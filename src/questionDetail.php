@@ -39,10 +39,10 @@ if ($stmt = $conn->prepare("SELECT * FROM Questions WHERE question_code = ?")) {
 }
 ?>
 
-
 <div class="row justify-content-center" style="margin-top: 5rem;">
     <div class="col-md-8">
-        <form id="answerForm" action="controllers/submitAnswer.php" method="post">
+        <form id="answerForm" action="controllers/submitAnswer.php" method="post" class="needs-validation" novalidate>
+            <!-- Added class="needs-validation" and novalidate attribute for Bootstrap validation -->
             <div class="card">
                 <div class="card-header">
                     <h2 class="card-title" localize="question_detail"></h2>
@@ -82,11 +82,15 @@ if ($stmt = $conn->prepare("SELECT * FROM Questions WHERE question_code = ?")) {
                                 <?php endif; ?>
                             </div>
                         <?php else: ?>
-                            <div class="mt-4">
-                                <label for="openAnswer" class="form-label">
-                                    <h2 localize="your_answer"></h2>
-                                </label>
-                                <input type="text" class="form-control" id="openAnswer" name="answer" required>
+                            <div class="container mt-4">
+                                <div class="mb-3">
+                                    <label for="openAnswer" class="form-label">
+                                        <h2 localize="your_answer"></h2>
+                                    </label>
+                                    <input type="text" class="form-control" id="openAnswer" name="answer" required>
+                                    <div class="invalid-feedback">Please provide an answer.</div>
+                                    <!-- Added invalid feedback for Bootstrap validation -->
+                                </div>
                             </div>
                         <?php endif; ?>
                     <?php else: ?>
@@ -104,8 +108,6 @@ if ($stmt = $conn->prepare("SELECT * FROM Questions WHERE question_code = ?")) {
     </div>
 </div>
 
-
-
 <script src="alerts.js"></script>
 <script src="script.js"></script>
 <script>
@@ -113,57 +115,64 @@ if ($stmt = $conn->prepare("SELECT * FROM Questions WHERE question_code = ?")) {
         $('#answerForm').submit(function (e) {
             e.preventDefault(); // Prevent default form submission
 
-            var questionId = $("input[name='question_id']").val();
-            var answers;
-
-            // Handle multiple answer submissions if checkboxes are used
-            if ($("input[type='checkbox'][name='answer[]']").length > 0) {
-                answers = [];
-                $("input[type='checkbox'][name='answer[]']:checked").each(function () {
-                    answers.push($(this).val());
-                });
+            // Validate the form using Bootstrap's built-in validation
+            if (this.checkValidity() === false) {
+                e.stopPropagation();
             } else {
-                // It's either a single choice or open-ended question
-                answers = $("input[type='radio'][name='answer']:checked, #openAnswer").val();
+                var questionId = $("input[name='question_id']").val();
+                var answers;
+
+                // Handle multiple answer submissions if checkboxes are used
+                if ($("input[type='checkbox'][name='answer[]']").length > 0) {
+                    answers = [];
+                    $("input[type='checkbox'][name='answer[]']:checked").each(function () {
+                        answers.push($(this).val());
+                    });
+                } else {
+                    // It's either a single choice or open-ended question
+                    answers = $("input[type='radio'][name='answer']:checked, #openAnswer").val();
+                }
+
+                // Create JSON object for the form data
+                var formData = {
+                    question_id: questionId,
+                    answer: answers
+                };
+
+                // AJAX request with JSON data
+                $.ajax({
+                    type: "POST",
+                    url: $(this).attr('action'),
+                    data: JSON.stringify(formData),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (response) {
+                        Swal.fire({
+                            title: 'Answer submitted!',
+                            icon: 'success',
+                            confirmButtonText: 'Ok',
+                            allowOutsideClick: false // Prevent dismissing on click outside
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                window.location.href = `answers.php?qid=${questionId}`;
+                            }
+                        });
+                    },
+                    error: function (xhr, status, error) {
+                        Swal.fire({
+                            title: 'Oops..',
+                            text: 'Answer was not submitted: ' + error,
+                            icon: 'error',
+                            confirmButtonText: 'Ok'
+                        });
+                    }
+                });
             }
 
-            // Create JSON object for the form data
-            var formData = {
-                question_id: questionId,
-                answer: answers
-            };
-
-            // AJAX request with JSON data
-            $.ajax({
-                type: "POST",
-                url: $(this).attr('action'),
-                data: JSON.stringify(formData),
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: function (response) {
-                    Swal.fire({
-                        title: 'Answer submitted!',
-                        icon: 'success',
-                        confirmButtonText: 'Ok',
-                        allowOutsideClick: false // Prevent dismissing on click outside
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            window.location.href = `answers.php?qid=${questionId}`;
-                        }
-                    });
-                },
-                error: function (xhr, status, error) {
-                    Swal.fire({
-                        title: 'Oops..',
-                        text: 'Answer was not submitted: ' + error,
-                        icon: 'error',
-                        confirmButtonText: 'Ok'
-                    });
-                }
-            });
+            // Add Bootstrap's was-validated class to trigger validation styling
+            $(this).addClass('was-validated');
         });
     });
-
 </script>
 
 </body>
