@@ -14,38 +14,36 @@ include_once 'header.php';
     <title>VOTE Account</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
-    <div class="container">
+    <div class="container mt-4">
         <h2 localize="change_pwd"></h2>
-        <form id="changePasswordForm">
-            <div class="form-group">
+        <form action="" id="changePasswordForm" class="needs-validation" novalidate>
+            <div class="mb-3">
                 <label>
                     <h2 localize="current_pwd"></h2>
                 </label>
-                <input type="password" id="current_password" name="current_password"
-                    class="form-control <?php echo (!empty($current_password_err)) ? 'is-invalid' : ''; ?>">
-                <span class="invalid-feedback"><?php echo $current_password_err; ?></span>
+                <input type="password" id="current_password" name="current_password" class="form-control" required>
+                <div class="invalid-feedback">Please enter your current password.</div>
             </div>
-            <div class="form-group">
+            <div class="mb-3">
                 <label>
                     <h2 localize="new_pwd"></h2>
                 </label>
-                <input type="password" id="new_password" name="new_password"
-                    class="form-control <?php echo (!empty($new_password_err)) ? 'is-invalid' : ''; ?>">
-                <span class="invalid-feedback"><?php echo $new_password_err; ?></span>
+                <input type="password" id="new_password" name="new_password" class="form-control" required>
+                <div class="invalid-feedback">Please enter a new password.</div>
             </div>
-            <div class="form-group">
+            <div class="mb-3">
                 <label>
                     <h2 localize="conf_pwd"></h2>
                 </label>
-                <input type="password" id="confirm_password" name="confirm_password"
-                    class="form-control <?php echo (!empty($confirm_password_err)) ? 'is-invalid' : ''; ?>">
-                <span class="invalid-feedback"><?php echo $confirm_password_err; ?></span>
+                <input type="password" id="confirm_password2" name="confirm_password2" class="form-control" required>
+                <div class="invalid-feedback">Please confirm your new password.</div>
             </div>
-            <div class="form-group">
+            <div class="mb-3">
                 <input type="submit" class="btn btn-primary" value="Submit">
             </div>
         </form>
@@ -56,33 +54,41 @@ include_once 'header.php';
     <script src="alerts.js"></script>
     <script src="script.js"></script>
     <script>
-        document.getElementById('changePasswordForm').addEventListener('submit', function (event) {
-            event.preventDefault();
+        $(document).ready(function () {
+            $('#changePasswordForm').submit(function (event) {
+                event.preventDefault();
+                if (this.checkValidity()) {
+                    var formData = {
+                        confirm_password2: $('#confirm_password2').val(),
+                        current_password: $('#current_password').val(),
+                        new_password: $('#new_password').val(),
+                    };
 
-            var formData = {
-                confirm_password: document.getElementById('confirm_password').value
-                current_password: document.getElementById('current_password').value,
-                new_password: document.getElementById('new_password').value,
-            };
-
-            fetch('controllers/password.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(formData)
-            })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        Swal.fire('Success', 'Password changed successfully!', 'success');
-                    } else {
-                        Swal.fire('Error', data.error, 'error');
-                    }
-                })
-                .catch(error => {
-                    Swal.fire('Error', 'Something went wrong!', 'error');
-                });
+                    $.ajax({
+                        type: 'POST',
+                        url: 'controllers/password.php',
+                        data: JSON.stringify(formData),
+                        contentType: 'application/json',
+                        success: function (data) {
+                            if (data.success) {
+                                Swal.fire('Success', 'Password changed successfully!', 'success').then((result) => {
+                                    if (result.isConfirmed) {
+                                        window.location.href = 'https://node71.webte.fei.stuba.sk/Webte2Final/src/account_settings.php';
+                                    }
+                                });
+                            } else {
+                                Swal.fire('Error', data.error, 'error');
+                            }
+                        },
+                        error: function () {
+                            Swal.fire('Error', 'Something went wrong!', 'error');
+                        }
+                    });
+                } else {
+                    event.stopPropagation();
+                }
+                $('#changePasswordForm').addClass('was-validated');
+            });
         });
     </script>
 </body>

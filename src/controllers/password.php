@@ -13,7 +13,7 @@ $data = json_decode(file_get_contents('php://input'), true);
 
 $currentPassword = $data['current_password'];
 $newPassword = $data['new_password'];
-$confirmPassword = $data['confirm_password'];
+$confirmPassword = $data['confirm_password2'];
 
 if ($newPassword !== $confirmPassword) {
     echo json_encode(['success' => false, 'error' => 'Passwords do not match.']);
