@@ -188,7 +188,7 @@ require '../../../configFinal.php';
                                 allowOutsideClick: false
                             }).then((result) => {
                                 if (result.isConfirmed) {
-                                    window.location.href = 'https://node71.webte.fei.stuba.sk/Webte2Final/src/index.php';
+                                    window.location.href = 'index.php';
                                 }
                             });
                         },
