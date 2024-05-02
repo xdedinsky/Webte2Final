@@ -132,6 +132,24 @@ function validatePassword() {
     }
     return true; // Allow form submission
 }
+function filterTableAdmin() {
+    var selectedUser = document.getElementById("userFilter").value;
+    if (selectedUser !== "") {
+        document.getElementById("passwordColumn").style.display = "block";
+        document.getElementById("text").style.display = "none";
+        document.getElementById("userDataTitle").style.display = "block";
+        document.getElementById("roleColumn").style.display = "block";
+        document.getElementById("userDataTitle2").style.display = "block";
 
+        document.getElementById("userDataTitle2").textContent = selectedUser;
+    } else {
+        document.getElementById("text").style.display = "block";
+        document.getElementById("passwordColumn").style.display = "none";
+        document.getElementById("roleColumn").style.display = "none";
+        document.getElementById("userDataTitle").style.display = "none"; // Skrýt nový nadpis
+        document.getElementById("userDataTitle2").style.display = "none"; // Skrýt nový nadpis
+
+    }
+}
 
 
