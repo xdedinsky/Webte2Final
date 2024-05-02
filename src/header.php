@@ -42,7 +42,6 @@ function isActive($navLink)
     <script src="https://cdn.datatables.net/2.0.1/js/dataTables.js"></script>
     <link rel="stylesheet" href="styles.css">
     <script src="script.js"></script>
-    <link rel="icon" type="image/png" href="images/vote.png">
 </head>
 
 <body>
@@ -134,8 +133,8 @@ function isActive($navLink)
             </div>
         </div>
     </nav>
-
-    <!-- Login/Register Modal -->
+    
+<!-- Login/Register Modal -->
     <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -147,12 +146,12 @@ function isActive($navLink)
                     <!-- Nav tabs for login and registration forms -->
                     <ul class="nav nav-tabs" id="accountTabs" role="tablist">
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link active zero-border" id="login-tab" data-bs-toggle="tab"
+                            <button class="nav-link active modalButtons" id="login-tab" data-bs-toggle="tab"
                                 data-bs-target="#login" type="button" localize="log_in_button" role="tab"
                                 aria-controls="login" aria-selected="true"></button>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link zero-border" id="register-tab" data-bs-toggle="tab"
+                            <button class="nav-link modalButtons" id="register-tab" data-bs-toggle="tab"
                                 data-bs-target="#register" type="button" role="tab" localize="signup_button"
                                 aria-controls="register" aria-selected="false"></button>
                         </li>
