@@ -81,6 +81,9 @@ function isActive($navLink)
                                 <?php echo htmlspecialchars($_SESSION["username"]); ?>
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                <?php if ($role === 'admin') { ?>
+                                    <li><a class="dropdown-item" localize="user_man" href="user_managment.php"></a></li>
+                                <?php } ?>
                                 <li><a class="dropdown-item" localize="acc_settings" href="account_settings.php"></a></li>
                                 <li><a class="dropdown-item" localize="log_out" href="controllers/logout.php"></a></li>
                             </ul>
