@@ -147,7 +147,7 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
     <?php
     if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
         echo "<table id='tableQuestions' class='table table-bordered'>";
-        echo "<thead><tr><th>Question ID</th><th>User</th><th>Subject</th><th>Question Text</th><th>Question Code</th><th>Date</th><th>Active</th><th>Backup</th><th>QR Code</th></tr></thead>";
+        echo "<thead><tr><th>Question ID</th><th>User</th><th>Subject</th><th>Question Text</th><th>Question Code</th><th>Date</th><th>Active</th><th>Uzatvoriť</th><th>QR Code</th></tr></thead>";
         echo "<tbody></tbody>";
         echo "</table>";
         ?>
@@ -284,7 +284,7 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
                                                                     </td>
                                                                     <td class="center-content">
                                                                         <a href="#" data-bs-toggle="modal" data-bs-target="#backupModal" onclick="showBackupNote('${question.question_id}')">
-                                                                            Backup
+                                                                            Uzatvoriť
                                                                         </a>
                                                                     </td>
                                                                     <td class="center-content">
