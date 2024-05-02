@@ -80,6 +80,28 @@ document.addEventListener('DOMContentLoaded', function () {
                 confirmButtonText: 'Ok'
             });
             break;
+        case 'backup_noneed':
+            Swal.fire({
+                title: 'Backup',
+                text: 'No backup is required.',
+                icon: 'info',
+                background: '#FFFFFF',
+                color: '#000000',
+                confirmButtonColor: '#FF6A00',
+                confirmButtonText: 'Ok'
+            });
+            break;
+        case 'backup_ok':
+            Swal.fire({
+                title: 'Backup',
+                text: 'backup has been created.',
+                icon: 'success',
+                background: '#FFFFFF',
+                color: '#000000',
+                confirmButtonColor: '#FF6A00',
+                confirmButtonText: 'Ok'
+            });
+            break;
     }
 });
 

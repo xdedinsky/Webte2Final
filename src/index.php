@@ -119,9 +119,26 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
                 <div class="modal-body">
                     <div id="qrCode" style="text-align: center;"></div> <!-- Inline style for centering -->
                 </div>
+
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="backupModal" tabindex="-1" aria-labelledby="backupModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="backupModalLabel">backup</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="backupNote" style="text-align: center;"></div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -130,7 +147,7 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
     <?php
     if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
         echo "<table id='tableQuestions' class='table table-bordered'>";
-        echo "<thead><tr><th>Question ID</th><th>User</th><th>Subject</th><th>Question Text</th><th>Question Code</th><th>Date</th><th>Active</th><th>QR Code</th></tr></thead>";
+        echo "<thead><tr><th>Question ID</th><th>User</th><th>Subject</th><th>Question Text</th><th>Question Code</th><th>Date</th><th>Active</th><th>Backup</th><th>QR Code</th></tr></thead>";
         echo "<tbody></tbody>";
         echo "</table>";
         ?>
@@ -156,6 +173,63 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
                 });
 
                 qrCodeContainer.appendChild(link); // Append the link (which contains the QR code) to the modal body
+            }
+            function showBackupNote(question_id) {
+                var backupNote = document.getElementById('backupNote');
+                backupNote.innerHTML = ''; // Clear previous QR codes
+
+                var noteInput = document.createElement('input');
+                noteInput.type = 'text';
+                noteInput.placeholder = 'Napíšte svoju poznámku...';
+                noteInput.id = 'backupNoteInput'; // ID pre ľahký prístup
+
+                // Tlačidlo na odoslanie poznámky
+                var submitButton = document.createElement('button');
+                submitButton.textContent = 'Odoslať';
+                submitButton.onclick = function () {
+                    var noteText = noteInput.value; // Získať text z textového poľa
+                    sendBackupNoteToServer(question_id, noteText); // Odoslať poznámku na server
+                };
+
+                // Pridať textové pole a tlačidlo do záložky
+                backupNote.appendChild(noteInput);
+                backupNote.appendChild(submitButton);
+            }
+
+            function sendBackupNoteToServer(question_id, noteText) {
+                var xhr = new XMLHttpRequest();
+
+                xhr.open('POST', 'controllers/backup.php', true);
+                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+                // Pripravenie dát na odoslanie
+                var data = 'question_id=' + encodeURIComponent(question_id) + '&note=' + encodeURIComponent(noteText);
+
+                // Definovanie správania sa počas rôznych fáz životného cyklu požiadavky
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === XMLHttpRequest.DONE) {
+                        if (xhr.status === 200) {
+                            console.log("data odoslane")
+                            var response = JSON.parse(xhr.responseText);
+                            if (response.message === 'ok') {
+                                console.log('Poznámka úspešne odoslaná!');
+                                // Presmerovanie na inú stránku po úspešnom odoslaní
+                                window.location.href = '/Webte2Final/src/index.php?action=backup_ok';
+                            } else if (response.message === 'no_need') {
+                                console.log('Nie je potrebné odoslať poznámku.');
+                                // Presmerovanie na inú stránku v prípade, že nie je potrebné odoslať poznámku
+                                window.location.href = '/Webte2Final/src/index.php?action=backup_noneed';
+                            }
+                            var modal = document.getElementById('backupModal');
+                            var bootstrapModal = bootstrap.Modal.getInstance(modal);
+                            //bootstrapModal.hide();
+                        } else {
+                            console.log('Chyba pri odosielaní poznámky.');
+                        }
+                    }
+                };
+                // Odoslať dáta na server
+                xhr.send(data);
             }
 
             let dataTable;
@@ -199,21 +273,27 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
                             const isChecked = question.active == '1' ? 'checked' : '';
                             const username2 = question.username;
                             row.innerHTML = `
-                                                <td>${question.question_id}</td>
-                                                <td>${question.username}</td>
-                                                <td>${question.subject}</td>
-                                                <td>${question.question_text}</td>
-                                                <td>${question.question_code}</td>
-                                                <td>${question.date}</td>
-                                                <td>   
-                                                    <input type="checkbox" ${isChecked} onchange="toggleActive(${question.question_id}, this.checked)">
-                                                </td>
-                                                    <td class="center-content">
-                                                        <a href="#" data-bs-toggle="modal" data-bs-target="#qrModal" onclick="showQRCode('${question.question_code}')">
-                                                            <img src="images/qrimage.png" alt="qrimage" width="20" height="20">
-                                                        </a>
-                                                    </td>
-                                                `;
+                                                                    <td>${question.question_id}</td>
+                                                                    <td>${question.username}</td>
+                                                                    <td>${question.subject}</td>
+                                                                    <td>${question.question_text}</td>
+                                                                    <td>${question.question_code}</td>
+                                                                    <td>${question.date}</td>
+                                                                    <td>   
+                                                                        <input type="checkbox" ${isChecked} onchange="toggleActive(${question.question_id}, this.checked)">
+                                                                    </td>
+                                                                    <td class="center-content">
+                                                                        <a href="#" data-bs-toggle="modal" data-bs-target="#backupModal" onclick="showBackupNote('${question.question_id}')">
+                                                                            Backup
+                                                                        </a>
+                                                                    </td>
+                                                                    <td class="center-content">
+                                                                        <a href="#" data-bs-toggle="modal" data-bs-target="#qrModal" onclick="showQRCode('${question.question_code}')">
+                                                                            <img src="images/qrimage.png" alt="qrimage" width="20" height="20">
+                                                                        </a>
+                                                                    </td>
+                                                    
+                                                                    `;
 
                             questionsContainer.appendChild(row);
                         });
