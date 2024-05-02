@@ -311,12 +311,7 @@ h2 {
     animation: fadeIn 1s;
 }
 
-li:hover {
-    background-color: var(--primary-color);
-    color: var(--accent-color);
-    transform: translateY(-3px);
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
+
 
 @media (max-width: 768px) {
     
@@ -360,4 +355,10 @@ li:hover {
     background-color: var(--primary-color-light);
     color: var(--accent-color);
     border-radius: 4px;
+}
+#answers li:hover {
+    background-color: var(--primary-color);
+    color: var(--accent-color);
+    transform: translateY(-3px);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
