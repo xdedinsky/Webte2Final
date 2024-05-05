@@ -22,12 +22,19 @@ async function changeLanguage(lang) {
     updateContent(langData);
 }
 
+var usedLanguage;
 window.addEventListener('DOMContentLoaded', async () => {
     const userPreferredLanguage = localStorage.getItem('language') || 'en';
     const langData = await fetchLanguageData(userPreferredLanguage);
+    usedLanguage = langData;
     updateContent(langData);
 
 });
+
+function getLocalizedErrorMessage(key) {
+    return usedLanguage[key] || '';
+}
+
 function validateNewPassword(){
     var newPassword = document.getElementById("new_password").value;
     var confirmPassword = document.getElementById("confirm_password2").value;
@@ -35,8 +42,8 @@ function validateNewPassword(){
     if (newPassword.length < 2 || confirmPassword.length < 2) {
         console.log("2");
         Swal.fire({
-            title: 'Weak Password!',
-            text: 'Password must be at least 2 characters long.',
+            title: getLocalizedErrorMessage("weak_pwd"),
+            text: getLocalizedErrorMessage("short_pwd"),
             icon: 'error',
             background: '#FFFFFF',
             color: '#000000',
@@ -48,8 +55,8 @@ function validateNewPassword(){
     if (newPassword.length < 6 || confirmPassword.length < 6) {
         console.log("6");
         Swal.fire({
-            title: 'Weak Password!',
-            text: 'Your password must be at least 6 characters long.',
+            title: getLocalizedErrorMessage("weak_pwd"),
+            text:  getLocalizedErrorMessage("short_pwd"),
             icon: 'error',
             background: '#FFFFFF',
             color: '#000000',
@@ -69,8 +76,8 @@ function validatePassword() {
 
     if (password.trim() === '' || confirm_password.trim() === '' || email.trim() === '') {
         Swal.fire({
-            title: 'Empty Field!',
-            text: 'Please fill all fields.',
+            title: getLocalizedErrorMessage("empty"),
+            text: getLocalizedErrorMessage("fill_all"),
             icon: 'error',
             background: '#FFFFFF',
             color: '#000000',
@@ -82,8 +89,8 @@ function validatePassword() {
 
     if (password.length < 2 || confirm_password.length < 2) {
         Swal.fire({
-            title: 'Weak Password!',
-            text: 'Password must be at least 2 characters long.',
+            title: getLocalizedErrorMessage("weak_pwd"),
+            text: getLocalizedErrorMessage("short_pwd"),
             icon: 'error',
             background: '#FFFFFF',
             color: '#000000',
@@ -94,8 +101,8 @@ function validatePassword() {
     }
     if (password.length < 6 || confirm_password.length < 6) {
         Swal.fire({
-            title: 'Weak Password!',
-            text: 'Your password must be at least 6 characters long.',
+            title: getLocalizedErrorMessage("weak_pwd"),
+            text: getLocalizedErrorMessage("short_pwd"),
             icon: 'error',
             background: '#FFFFFF',
             color: '#000000',
@@ -106,8 +113,8 @@ function validatePassword() {
     }
     if (password !== confirm_password) {
         Swal.fire({
-            title: 'Password Mismatch!',
-            text: 'Please make sure your passwords match.',
+            title: getLocalizedErrorMessage("miss_match"),
+            text: getLocalizedErrorMessage("fix_match"),
             icon: 'error',
             background: '#FFFFFF',
             color: '#000000',
@@ -120,8 +127,8 @@ function validatePassword() {
     // Check if email format is valid using JavaScript regex
     if (!emailRegex.test(email)) {
         Swal.fire({
-            title: 'Invalid Email!',
-            text: 'Please enter a valid email address.',
+            title:  getLocalizedErrorMessage("invalid_email"),
+            text: getLocalizedErrorMessage("fix_email"),
             icon: 'error',
             background: '#FFFFFF',
             color: '#000000',

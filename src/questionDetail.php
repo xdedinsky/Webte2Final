@@ -88,7 +88,7 @@ if ($stmt = $conn->prepare("SELECT * FROM Questions WHERE question_code = ?")) {
                                         <h2 localize="your_answer"></h2>
                                     </label>
                                     <input type="text" class="form-control" id="openAnswer" name="answer" required>
-                                    <div class="invalid-feedback">Please provide an answer.</div>
+                                    <div class="invalid-feedback" localize="give_answr"></div>
                                     <!-- Added invalid feedback for Bootstrap validation -->
                                 </div>
                             </div>
@@ -148,7 +148,7 @@ if ($stmt = $conn->prepare("SELECT * FROM Questions WHERE question_code = ?")) {
                     dataType: "json",
                     success: function (response) {
                         Swal.fire({
-                            title: 'Answer submitted!',
+                            title: getLocalizedErrorMessage("answer_submitted"),
                             icon: 'success',
                             confirmButtonText: 'Ok',
                             allowOutsideClick: false // Prevent dismissing on click outside
@@ -161,7 +161,7 @@ if ($stmt = $conn->prepare("SELECT * FROM Questions WHERE question_code = ?")) {
                     error: function (xhr, status, error) {
                         Swal.fire({
                             title: 'Oops..',
-                            text: 'Answer was not submitted: ' + error,
+                            text: getLocalizedErrorMessage("answer_not_submitted") + error,
                             icon: 'error',
                             confirmButtonText: 'Ok'
                         });

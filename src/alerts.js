@@ -1,12 +1,49 @@
-document.addEventListener('DOMContentLoaded', function () {
+
+function updateContent(langData) {
+    document.querySelectorAll('[localize]').forEach(element => {
+        const key = element.getAttribute('localize');
+        element.textContent = langData[key];
+    });
+}
+
+function setLanguagePreference(lang) {
+    localStorage.setItem('language', lang);
+    location.reload();
+}
+
+async function fetchLanguageData(lang) {
+    const response = await fetch(`language/${lang}.json`);
+    return response.json();
+}
+
+async function changeLanguage(lang) {
+    await setLanguagePreference(lang);
+
+    const langData = await fetchLanguageData(lang);
+    updateContent(langData);
+}
+
+var usedLanguage;
+
+document.addEventListener('DOMContentLoaded', async () => {
+    const userPreferredLanguage = localStorage.getItem('language') || 'en';
+    const langData = await fetchLanguageData(userPreferredLanguage);
+    usedLanguage = langData;
+    updateContent(langData);
+
     const urlParams = new URLSearchParams(window.location.search);
     const actionResult = urlParams.get('action');
 
+    function getLocalizedErrorMessage(key) {
+        return usedLanguage[key] || '';
+    }
+
     switch (actionResult) {
+
         case 'login-success':
             Swal.fire({
-                title: 'Success!',
-                text: 'You have logged in successfully!',
+                title: getLocalizedErrorMessage("success"),
+                text: getLocalizedErrorMessage("logged_in"),
                 icon: 'success',
                 background: '#FFFFFF', // --accent-color
                 color: '#000000', // --secondary-color
@@ -16,8 +53,8 @@ document.addEventListener('DOMContentLoaded', function () {
             break;
         case 'login-failed':
             Swal.fire({
-                title: 'Failed!',
-                text: 'Login failed. Please try again!',
+                title: getLocalizedErrorMessage("failed"),
+                text: getLocalizedErrorMessage("failed_login"),
                 icon: 'error',
                 background: '#FFFFFF',
                 color: '#000000',
@@ -27,8 +64,8 @@ document.addEventListener('DOMContentLoaded', function () {
             break;
         case 'logout-success':
             Swal.fire({
-                title: 'Logged Out!',
-                text: 'You have successfully logged out.',
+                title: getLocalizedErrorMessage("logged_out"),
+                text: getLocalizedErrorMessage("logged_out_s"),
                 icon: 'info',
                 background: '#FFFFFF',
                 color: '#000000',
@@ -38,8 +75,8 @@ document.addEventListener('DOMContentLoaded', function () {
             break;
         case 'register-success':
             Swal.fire({
-                title: 'Registration Successful!',
-                text: 'You are now registered and logged in.',
+                title: getLocalizedErrorMessage("signup_success"),
+                text: getLocalizedErrorMessage("signedup_end_logedin"),
                 icon: 'success',
                 background: '#FFFFFF',
                 color: '#000000',
@@ -49,8 +86,8 @@ document.addEventListener('DOMContentLoaded', function () {
             break;
         case 'register-failed':
             Swal.fire({
-                title: 'Registration Failed!',
-                text: 'Please try registering again.',
+                title: getLocalizedErrorMessage("signup_failed"),
+                text: getLocalizedErrorMessage("signup_again"),
                 icon: 'error',
                 background: '#FFFFFF',
                 color: '#000000',
@@ -60,8 +97,8 @@ document.addEventListener('DOMContentLoaded', function () {
             break;
         case 'code-not-found':
             Swal.fire({
-                title: 'Question with this code doesnt exist!',
-                text: 'Please enter a valid code.',
+                title: getLocalizedErrorMessage("q_does_not_exists"),
+                text: getLocalizedErrorMessage("eneter_code"),
                 icon: 'error',
                 background: '#FFFFFF',
                 color: '#000000',
@@ -71,8 +108,8 @@ document.addEventListener('DOMContentLoaded', function () {
             break;
         case 'username-taken':
             Swal.fire({
-                title: 'Username already exist!',
-                text: 'Please enter a valid code.',
+                title: getLocalizedErrorMessage("username_exists"),
+                text: getLocalizedErrorMessage("eneter_code"),
                 icon: 'error',
                 background: '#FFFFFF',
                 color: '#000000',
@@ -82,8 +119,8 @@ document.addEventListener('DOMContentLoaded', function () {
             break;
         case 'backup_noneed':
             Swal.fire({
-                title: 'Backup',
-                text: 'No backup is required.',
+                title: getLocalizedErrorMessage("back_up"),
+                text: getLocalizedErrorMessage("no_backup"),
                 icon: 'info',
                 background: '#FFFFFF',
                 color: '#000000',
@@ -93,8 +130,8 @@ document.addEventListener('DOMContentLoaded', function () {
             break;
         case 'backup_ok':
             Swal.fire({
-                title: 'Backup',
-                text: 'backup has been created.',
+                title: getLocalizedErrorMessage("back_up"),
+                text: getLocalizedErrorMessage("backedup"),
                 icon: 'success',
                 background: '#FFFFFF',
                 color: '#000000',

@@ -58,8 +58,8 @@ include_once 'header.php';
         var newPassword = $('#new_password').val();
         if (newPassword.length < 6) {
             Swal.fire({
-                title: 'Weak Password!',
-                text: 'Your password must be at least 6 characters long.',
+                title: getLocalizedErrorMessage("weak_pwd"),
+                text: getLocalizedErrorMessage("short_pwd"),
                 icon: 'error',
                 background: '#FFFFFF',
                 color: '#000000',
@@ -88,7 +88,7 @@ include_once 'header.php';
                     contentType: 'application/json',
                     success: function (data) {
                         if (data.success) {
-                            Swal.fire('Success', 'Password changed successfully!', 'success').then((result) => {
+                            Swal.fire('Success', getLocalizedErrorMessage("successMessage"), 'success').then((result) => {
                                 if (result.isConfirmed) {
                                     window.location.href = 'https://node71.webte.fei.stuba.sk/Webte2Final/src/account_settings.php';
                                 }
@@ -98,7 +98,7 @@ include_once 'header.php';
                         }
                     },
                     error: function () {
-                        Swal.fire('Error', 'Something went wrong!', 'error');
+                        Swal.fire('Error', getLocalizedErrorMessage("generalErrorMessage"), 'error');
                     }
                 });
             } else {

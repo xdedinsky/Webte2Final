@@ -113,7 +113,7 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="qrModalLabel">QR Code</h5>
+                    <h5 class="modal-title" id="qrModalLabel" localize="rq_code"></h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -128,7 +128,7 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="backupModalLabel">backup</h5>
+                    <h5 class="modal-title" id="backupModalLabel" localize="back_up"></h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -147,7 +147,7 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
     <?php
     if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
         echo "<table id='tableQuestions' class='table table-bordered'>";
-        echo "<thead><tr><th>Question ID</th><th>User</th><th>Subject</th><th>Question Text</th><th>Question Code</th><th>Date</th><th>Active</th><th>Uzatvoriť</th><th>QR Code</th></tr></thead>";
+        echo "<thead><tr><th localize='q_id'></th><th localize='th_user'></th><th localize='th_subject'></th><th localize='th_q_text'></th><th localize='th_q_code'></th><th localize='th_date'></th><th localize='th_active'></th><th localize='th_close'></th><th>QR Code</th></tr></thead>";
         echo "<tbody></tbody>";
         echo "</table>";
         ?>

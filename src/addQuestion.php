@@ -150,8 +150,8 @@ require '../../../configFinal.php';
                     options.last().remove();
                 } else {
                     Swal.fire({
-                        title: 'Attention!',
-                        text: 'You must keep at least two options.',
+                        title: getLocalizedErrorMessage("attention"),
+                        text: getLocalizedErrorMessage("keep_two_options"),
                         icon: 'info',
                         confirmButtonText: 'OK'
                     });
@@ -181,8 +181,8 @@ require '../../../configFinal.php';
                         dataType: "json",
                         success: function (response) {
                             Swal.fire({
-                                title: 'Success!',
-                                text: 'Question submitted successfully!',
+                                title: getLocalizedErrorMessage("success"),
+                                text: getLocalizedErrorMessage("q_submited"),
                                 icon: 'success',
                                 confirmButtonText: 'OK',
                                 allowOutsideClick: false
@@ -194,8 +194,8 @@ require '../../../configFinal.php';
                         },
                         error: function (err) {
                             Swal.fire({
-                                title: 'Error!',
-                                text: 'Error submitting question!',
+                                title: getLocalizedErrorMessage("error"),
+                                text: getLocalizedErrorMessage("error_submiting"),
                                 icon: 'error',
                                 confirmButtonText: 'OK'
                             });
