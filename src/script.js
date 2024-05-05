@@ -22,12 +22,19 @@ async function changeLanguage(lang) {
     updateContent(langData);
 }
 
+var usedLanguage;
 window.addEventListener('DOMContentLoaded', async () => {
     const userPreferredLanguage = localStorage.getItem('language') || 'en';
     const langData = await fetchLanguageData(userPreferredLanguage);
+    usedLanguage = langData;
     updateContent(langData);
 
 });
+
+function getLocalizedErrorMessage(key) {
+    return usedLanguage[key] || '';
+}
+
 function validateNewPassword(){
     var newPassword = document.getElementById("new_password").value;
     var confirmPassword = document.getElementById("confirm_password2").value;
