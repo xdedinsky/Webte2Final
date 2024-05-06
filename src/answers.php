@@ -38,6 +38,14 @@ $question_id = $_GET['qid'];
                 })
                 .then(data => {
                     console.log(data); // Výpis JSON dát do konzoly
+
+                    if(data.wordCloud ==0){
+                        document.getElementById("answers").style.display="block";
+                        document.getElementById('wordCloud').style.display = "none";
+                    }else{
+                        document.getElementById("answers").style.display="none";
+                        document.getElementById('wordCloud').style.display = "block";
+                    }
                     // Príklad: Manipulácia s JSON dátami, aktualizácia UI atď.
                     let answersContainer = document.getElementById("answers");
                     const questionTextHeading = document.createElement("h3");

@@ -7,7 +7,7 @@ require '../../../../configFinal.php';
 
 $question_id = $_GET['qid'];
 
-$sql = "SELECT question_type, question_text FROM Questions WHERE question_id = ?";
+$sql = "SELECT question_type, question_text, wordcloud FROM Questions WHERE question_id = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $question_id);
 $stmt->execute();
@@ -22,6 +22,7 @@ if ($result->num_rows > 0) {
 
     // Add question_text to response data
     $responseData["question_text"] = $question_text;
+    $responseData["wordCloud"] = $row["wordcloud"];
 
     if ($question_type === 'multiple_choice') {
         $sql = "SELECT o.option_text FROM QuestionOptions o JOIN Responses r ON r.option_id = o.option_id WHERE r.question_id = ?";
