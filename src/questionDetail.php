@@ -19,8 +19,10 @@ if ($stmt = $conn->prepare("SELECT * FROM Questions WHERE question_code = ?")) {
 
     // Check if a question was actually fetched
     if ($question = $result->fetch_assoc()) {
-        // Check the type of question and fetch options if it's multiple choice
-        if ($question['question_type'] == 'multiple_choice') {
+        if ($question["active"] === 0) {
+            header("location: /Webte2Final/src/index.php?action=ques-not-active");
+            exit;
+        } elseif ($question['question_type'] == 'multiple_choice') {
             if ($optionsStmt = $conn->prepare("SELECT option_id, option_text FROM QuestionOptions WHERE question_id = ?")) {
                 $optionsStmt->bind_param("i", $question['question_id']);
                 $optionsStmt->execute();

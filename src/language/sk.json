@@ -71,6 +71,7 @@
     "signup_failed" : "Registrácia zlyhala!",
     "signup_again" : "Skúste sa zaregistrovať znova.",
     "q_does_not_exists" : "Otázka s týmto kódom neexistuje!",
+    "q_not_active" : "Otázka s týmto kódom nie je aktívna!",
     "eneter_code" : "Zadajte platný kód.",
     "username_exists" : "Používateľské meno už existuje!",
     "no_backup" : "Nie je potrebná žiadna záloha.",

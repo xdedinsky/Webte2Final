@@ -106,6 +106,17 @@ document.addEventListener('DOMContentLoaded', async () => {
                 confirmButtonText: 'Ok'
             });
             break;
+        case 'ques-not-active':
+            Swal.fire({
+                title: getLocalizedErrorMessage("q_not_active"),
+                text: getLocalizedErrorMessage("eneter_code"),
+                icon: 'error',
+                background: '#FFFFFF',
+                color: '#000000',
+                confirmButtonColor: '#FF6A00',
+                confirmButtonText: 'Ok'
+            });
+            break;
         case 'username-taken':
             Swal.fire({
                 title: getLocalizedErrorMessage("username_exists"),
