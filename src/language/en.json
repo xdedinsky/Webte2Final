@@ -84,6 +84,7 @@
     "th_q_code" : "Question Code",
     "th_date" : "Date",
     "th_active" :"Active",
+    "th_wordcloud": "Word Cloud",
     "th_close" : "Close",
     "give_answr" : "Please provide an answer.",
     "answer_submitted" : "Answer submitted!",

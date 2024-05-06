@@ -84,6 +84,7 @@
     "th_q_code" : "Kód otázky",
     "th_date" : "Dátum",
     "th_active" :"Aktívne",
+    "th_wordcloud": "Mapa slov",
     "th_close" : "Uzatvoriť",
     "empty" : "Prázdne pole!",
     "fill_all" : "Vyplňte prosím všetky polia.",

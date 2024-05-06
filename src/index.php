@@ -146,7 +146,7 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
     <?php
     if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
         echo "<table id='tableQuestions' class='table table-bordered'>";
-        echo "<thead><tr><th localize='q_id'></th><th id ='ucol' localize='th_user'></th><th id='scol' localize='th_subject'></th><th localize='th_q_text'></th><th localize='th_q_code'></th><th id='dcol' localize='th_date'></th><th localize='th_active'></th><th localize='th_close'></th><th>QR Code</th></tr></thead>";
+        echo "<thead><tr><th localize='q_id'></th><th id ='ucol' localize='th_user'></th><th id='scol' localize='th_subject'></th><th localize='th_q_text'></th><th localize='th_q_code'></th><th id='dcol' localize='th_date'></th><th localize='th_active'></th><th localize='th_wordcloud'></th><th localize='th_close'></th><th>QR Code</th></tr></thead>";
         echo "<tbody></tbody>";
         echo "</table>";
         ?>
@@ -267,36 +267,39 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
                         const questionsContainer = document.getElementById('tableQuestions').querySelector('tbody');
                         data.forEach(question => {
                             const row = document.createElement('tr');
-
                             // Check if the question is active and set the checkbox accordingly
                             const isChecked = question.active == '1' ? 'checked' : '';
+                            const isCheckedWordCloud = question.wordcloud == '1' ? 'checked' : '';
                             const username2 = question.username;
                             row.innerHTML = `
-                                                                    <td>${question.question_id}</td>
-                                                                    <td>${question.username}</td>
-                                                                    <td>${question.subject}</td>
-                                                                    <td>${question.question_text}</td>
-                                                                    <td>${question.question_code}</td>
-                                                                    <td>${question.date}</td>
-                                                                    <td>   
-                                                                        <input type="checkbox" ${isChecked} onchange="toggleActive(${question.question_id}, this.checked)">
-                                                                    </td>
-                                                                    <td class="center-content">
-                                                                        <a href="#" data-bs-toggle="modal" data-bs-target="#backupModal" onclick="showBackupNote('${question.question_id}')">
-                                                                            Uzatvoriť
-                                                                        </a>
-                                                                         / 
-                                                                        <a href="showBackups.php?qid=${question.question_id}" >
-                                                                            Vysledky
-                                                                        </a>
-                                                                    </td>
-                                                                    <td class="center-content">
-                                                                        <a href="#" data-bs-toggle="modal" data-bs-target="#qrModal" onclick="showQRCode('${question.question_code}')">
-                                                                            <img src="images/qrimage.png" alt="qrimage" width="20" height="20">
-                                                                        </a>
-                                                                    </td>
+                                                                        <td>${question.question_id}</td>
+                                                                        <td>${question.username}</td>
+                                                                        <td>${question.subject}</td>
+                                                                        <td>${question.question_text}</td>
+                                                                        <td>${question.question_code}</td>
+                                                                        <td>${question.date}</td>
+                                                                        <td>   
+                                                                            <input type="checkbox" ${isChecked} onchange="toggleActive(${question.question_id}, this.checked)">
+                                                                        </td>
+                                                                        <td>   
+                                                                            <input type="checkbox" ${isCheckedWordCloud} onchange="toggleActiveWordCloud(${question.question_id}, this.checked)">
+                                                                        </td>
+                                                                        <td class="center-content">
+                                                                            <a href="#" data-bs-toggle="modal" data-bs-target="#backupModal" onclick="showBackupNote('${question.question_id}')">
+                                                                                Uzatvoriť
+                                                                            </a>
+                                                                             / 
+                                                                            <a href="showBackups.php?qid=${question.question_id}" >
+                                                                                Vysledky
+                                                                            </a>
+                                                                        </td>
+                                                                        <td class="center-content">
+                                                                            <a href="#" data-bs-toggle="modal" data-bs-target="#qrModal" onclick="showQRCode('${question.question_code}')">
+                                                                                <img src="images/qrimage.png" alt="qrimage" width="20" height="20">
+                                                                            </a>
+                                                                        </td>
                                                     
-                                                                    `;
+                                                                        `;
 
                             questionsContainer.appendChild(row);
                         });
@@ -313,11 +316,30 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
 
             function toggleActive(questionId, isActive) {
                 // Create the URL to send the request to
-                const url = `controllers / changeStatus.php ? question_id = ${questionId} & active=${isActive ? 1 : 0}`;
+                const url = `controllers/changeStatus.php?question_id=${questionId}&active=${isActive ? 1 : 0}`;
 
                 fetch(url)
                     .then(response => response.json())
                     .then(data => {
+                        Swal.fire({
+                            icon: data.success ? 'success' : 'error',
+                            title: data.success ? 'Success' : 'Error',
+                            text: data.message
+                        });
+                    })
+                    .catch(error => {
+                        console.error('Error updating status:', error);
+                    });
+            }
+
+            function toggleActiveWordCloud(questionId, isWordCloud) {
+                // Create the URL to send the request to
+                const url = `controllers/changeWordCloud.php?question_id=${questionId}&wordcloud=${isWordCloud ? 1 : 0}`;
+
+                fetch(url)
+                    .then(response => response.json())
+                    .then(data => {
+                        
                         Swal.fire({
                             icon: data.success ? 'success' : 'error',
                             title: data.success ? 'Success' : 'Error',

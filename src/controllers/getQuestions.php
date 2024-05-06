@@ -21,10 +21,10 @@ if ($result->num_rows > 0) {
 
 
     if ($role === "admin") {
-        $sql_questions = "SELECT q.question_id, u.username, q.question_text, q.subject, DATE(q.created_at) AS date, q.active, q.question_code, q.updated_at FROM Questions q JOIN Users u on u.user_id = q.user_id";
+        $sql_questions = "SELECT q.question_id, u.username, q.question_text, q.subject, DATE(q.created_at) AS date, q.active, q.wordcloud, q.question_code, q.updated_at FROM Questions q JOIN Users u on u.user_id = q.user_id";
         $stmt_questions = $conn->prepare($sql_questions);
     } elseif ($role === "user") {
-        $sql_questions = "SELECT q.question_id, u.username, q.question_text, q.subject, DATE(q.created_at) AS date, q.active, q.question_code, q.updated_at FROM Questions q JOIN Users u on u.user_id = q.user_id WHERE q.user_id = ?";
+        $sql_questions = "SELECT q.question_id, u.username, q.question_text, q.subject, DATE(q.created_at) AS date, q.active, q.wordcloud, q.question_code, q.updated_at FROM Questions q JOIN Users u on u.user_id = q.user_id WHERE q.user_id = ?";
         $stmt_questions = $conn->prepare($sql_questions);
         $stmt_questions->bind_param("i", $user_id);
     }

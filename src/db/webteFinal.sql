@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hostiteľ: localhost:3306
--- Čas generovania: Út 30.Apr 2024, 09:45
+-- Čas generovania: Po 06.Máj 2024, 19:50
 -- Verzia serveru: 8.0.36-0ubuntu0.22.04.1
 -- Verzia PHP: 8.3.3-1+ubuntu22.04.1+deb.sury.org+1
 
@@ -24,6 +24,64 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Štruktúra tabuľky pre tabuľku `Backup`
+--
+
+CREATE TABLE `Backup` (
+  `id` int NOT NULL,
+  `question_id` int NOT NULL,
+  `note` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `created_at` timestamp NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Sťahujem dáta pre tabuľku `Backup`
+--
+
+INSERT INTO `Backup` (`id`, `question_id`, `note`, `created_at`) VALUES
+(1, 5, 'backup1', '2024-05-06 18:06:14'),
+(2, 5, 'backup2', '2024-05-06 18:07:00'),
+(3, 6, 'backupo1', '2024-05-06 18:11:07'),
+(4, 6, 'backupo2', '2024-05-06 18:12:27');
+
+-- --------------------------------------------------------
+
+--
+-- Štruktúra tabuľky pre tabuľku `BackupResponses`
+--
+
+CREATE TABLE `BackupResponses` (
+  `backup_response_id` int NOT NULL,
+  `backup_id` int NOT NULL,
+  `user_id` int DEFAULT NULL,
+  `option_id` int DEFAULT NULL,
+  `response_text` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Sťahujem dáta pre tabuľku `BackupResponses`
+--
+
+INSERT INTO `BackupResponses` (`backup_response_id`, `backup_id`, `user_id`, `option_id`, `response_text`) VALUES
+(1, 1, 7, 1, ''),
+(2, 1, 7, 1, ''),
+(3, 1, 7, 2, ''),
+(4, 2, 7, 2, ''),
+(5, 2, 7, 2, ''),
+(6, 2, 7, 2, ''),
+(7, 2, 7, 2, ''),
+(8, 3, 7, NULL, 'ano ano'),
+(9, 3, 7, NULL, 'ano ano'),
+(10, 3, 7, NULL, 'juchuchu'),
+(11, 4, 7, NULL, 'nie nie'),
+(12, 4, 7, NULL, 'nie'),
+(13, 4, 7, NULL, 'jj'),
+(14, 4, 7, NULL, 'ok'),
+(15, 4, 7, NULL, 'ok');
+
+-- --------------------------------------------------------
+
+--
 -- Štruktúra tabuľky pre tabuľku `QuestionOptions`
 --
 
@@ -38,14 +96,8 @@ CREATE TABLE `QuestionOptions` (
 --
 
 INSERT INTO `QuestionOptions` (`option_id`, `question_id`, `option_text`) VALUES
-(1, 3, 'a'),
-(2, 3, 'aa'),
-(3, 4, 'b'),
-(4, 4, 'bbb'),
-(5, 4, 'bbbbb'),
-(6, 5, 'c'),
-(7, 5, 'ccc'),
-(8, 5, 'ccccc');
+(1, 5, 'ano funguje'),
+(2, 5, 'nefunguje');
 
 -- --------------------------------------------------------
 
@@ -59,7 +111,8 @@ CREATE TABLE `Questions` (
   `question_text` text NOT NULL,
   `question_type` enum('multiple_choice','open_ended') NOT NULL,
   `subject` varchar(255) NOT NULL,
-  `active` tinyint(1) NOT NULL,
+  `active` tinyint(1) NOT NULL DEFAULT '1',
+  `wordcloud` tinyint(1) NOT NULL DEFAULT '1',
   `question_code` varchar(5) NOT NULL,
   `options_count` enum('single','multiple') DEFAULT NULL,
   `created_at` timestamp NOT NULL,
@@ -71,14 +124,13 @@ CREATE TABLE `Questions` (
 -- Sťahujem dáta pre tabuľku `Questions`
 --
 
-INSERT INTO `Questions` (`question_id`, `user_id`, `question_text`, `question_type`, `subject`, `active`, `question_code`, `options_count`, `created_at`, `updated_at`, `note_at_close`) VALUES
-(1, 7, 'otvorena1', 'open_ended', 'Predmet1', 1, '70DGU', NULL, '2024-04-30 09:36:42', '2024-04-30 09:36:42', NULL),
-(2, 7, 'otvorena2', 'open_ended', 'Predmet2', 1, 'MJ289', NULL, '2024-04-30 09:36:49', '2024-04-30 09:36:49', NULL),
-(3, 7, 'UzavaretaSingle1', 'multiple_choice', 'Predmet1', 1, 'IREOL', 'single', '2024-04-30 09:37:24', '2024-04-30 09:37:24', NULL),
-(4, 7, 'UzavaretaSingle1', 'multiple_choice', 'Predmet1', 1, 'VSJXC', 'multiple', '2024-04-30 09:37:39', '2024-04-30 09:37:39', NULL),
-(5, 7, 'UzavaretaSingle2', 'multiple_choice', 'Predmet2', 1, 'SFJZI', 'single', '2024-04-30 09:38:01', '2024-04-30 09:38:01', NULL),
-(6, 9, 'otvorenaR1', 'open_ended', 'predmet1', 1, 'MWDP9', NULL, '2024-04-30 09:39:27', '2024-04-30 09:39:27', NULL),
-(7, 9, 'otvorenaR2', 'open_ended', 'Predmet1', 1, 'BAECH', NULL, '2024-04-30 09:39:41', '2024-04-30 09:39:41', NULL);
+INSERT INTO `Questions` (`question_id`, `user_id`, `question_text`, `question_type`, `subject`, `active`, `wordcloud`, `question_code`, `options_count`, `created_at`, `updated_at`, `note_at_close`) VALUES
+(1, 7, 'aaaaa:?', 'open_ended', 'skuska1', 1, 0, '9YNAH', NULL, '2024-05-06 19:34:07', '2024-05-06 19:34:07', NULL),
+(2, 7, 'BBB?', 'open_ended', 'bbbb', 1, 1, '6VU5F', NULL, '2024-05-02 12:23:33', '2024-05-02 12:23:33', NULL),
+(3, 7, 'CSCS', 'open_ended', 'ccc', 1, 1, 'BJDQP', NULL, '2024-05-02 12:42:32', '2024-05-02 12:42:32', NULL),
+(4, 9, 'skuska aaaaaaaaaaaaa', 'open_ended', 'ada', 1, 1, 'H2Y1B', NULL, '2024-05-06 12:54:21', '2024-05-06 12:54:21', NULL),
+(5, 7, 'funguje ten backup?', 'multiple_choice', 'skusam backup', 1, 1, 'C39TB', 'single', '2024-05-06 18:05:25', '2024-05-06 18:05:25', NULL),
+(6, 7, 'backup skuska otvorena', 'open_ended', 'backup skuska 2', 1, 0, 'BZVHW', NULL, '2024-05-06 18:10:22', '2024-05-06 18:10:22', NULL);
 
 -- --------------------------------------------------------
 
@@ -94,6 +146,18 @@ CREATE TABLE `Responses` (
   `response_text` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
   `created_at` timestamp NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Sťahujem dáta pre tabuľku `Responses`
+--
+
+INSERT INTO `Responses` (`response_id`, `question_id`, `user_id`, `option_id`, `response_text`, `created_at`) VALUES
+(13, 5, 7, 1, '', '2024-05-06 18:07:07'),
+(14, 5, 7, 2, '', '2024-05-06 18:07:12'),
+(23, 6, 7, NULL, 'aaaa', '2024-05-06 18:12:38'),
+(24, 6, 7, NULL, 'abab', '2024-05-06 18:12:46'),
+(25, 6, 7, NULL, 'avav', '2024-05-06 18:12:54'),
+(26, 6, 7, NULL, 'avav', '2024-05-06 18:13:01');
 
 -- --------------------------------------------------------
 
@@ -133,11 +197,29 @@ CREATE TABLE `Users` (
 INSERT INTO `Users` (`user_id`, `username`, `password`, `email`, `role`, `created_at`, `updated_at`) VALUES
 (7, 'admin', '$2y$10$SL/RO2YeUqV6DrIAxolfL.YQOhlCX35W.AhlIY4n19k2qm2Y.kioO', 'admin@admin.sk', 'admin', '2024-04-29 14:28:13', '2024-04-29 14:28:13'),
 (9, 'rado', '$2y$10$cy7YF0zahZbA9OFjZOHJ5Oj1DOGlNbKgBYsA3CGoY38ABsYqyaIbm', 'radoslav.kubalec17@gmail.com', 'user', '2024-04-29 14:28:37', '2024-04-29 14:28:37'),
-(10, 'jurkoheslorado1', '$2y$10$cy7YF0zahZbA9OFjZOHJ5Oj1DOGlNbKgBYsA3CGoY38ABsYqyaIbm', 'radoslav.kubalec17@gmail.com', 'user', '2024-04-30 09:41:47', '2024-04-30 09:41:47');
+(10, 'jurkoheslorado1', '$2y$10$cy7YF0zahZbA9OFjZOHJ5Oj1DOGlNbKgBYsA3CGoY38ABsYqyaIbm', 'radoslav.kubalec17@gmail.com', 'user', '2024-04-30 09:41:47', '2024-04-30 09:41:47'),
+(11, 'juko', '$2y$10$XvDLu8N2IcL1PVLV7ox6VetPSWfLizJLHbqlcdHSUKbxDvMfDzuXu', 'jurajlopusek@gmail.com', 'user', '2024-05-01 10:51:39', '2024-05-01 10:51:39'),
+(12, 'ferko', '$2y$10$zRXLkd2SPa1OCurCe86Qs.PNBIeD8GB0zPh/wX.qHVkywlJeDAWtW', 'ferko@sk.sk', 'user', '2024-05-01 10:51:59', '2024-05-01 10:51:59');
 
 --
 -- Kľúče pre exportované tabuľky
 --
+
+--
+-- Indexy pre tabuľku `Backup`
+--
+ALTER TABLE `Backup`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `question_id` (`question_id`);
+
+--
+-- Indexy pre tabuľku `BackupResponses`
+--
+ALTER TABLE `BackupResponses`
+  ADD PRIMARY KEY (`backup_response_id`),
+  ADD KEY `USER` (`user_id`),
+  ADD KEY `OPTION` (`option_id`),
+  ADD KEY `backup_id` (`backup_id`);
 
 --
 -- Indexy pre tabuľku `QuestionOptions`
@@ -181,22 +263,34 @@ ALTER TABLE `Users`
 --
 
 --
+-- AUTO_INCREMENT pre tabuľku `Backup`
+--
+ALTER TABLE `Backup`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT pre tabuľku `BackupResponses`
+--
+ALTER TABLE `BackupResponses`
+  MODIFY `backup_response_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+
+--
 -- AUTO_INCREMENT pre tabuľku `QuestionOptions`
 --
 ALTER TABLE `QuestionOptions`
-  MODIFY `option_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `option_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT pre tabuľku `Questions`
 --
 ALTER TABLE `Questions`
-  MODIFY `question_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `question_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT pre tabuľku `Responses`
 --
 ALTER TABLE `Responses`
-  MODIFY `response_id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `response_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT pre tabuľku `Sessions`
@@ -208,11 +302,25 @@ ALTER TABLE `Sessions`
 -- AUTO_INCREMENT pre tabuľku `Users`
 --
 ALTER TABLE `Users`
-  MODIFY `user_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `user_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- Obmedzenie pre exportované tabuľky
 --
+
+--
+-- Obmedzenie pre tabuľku `Backup`
+--
+ALTER TABLE `Backup`
+  ADD CONSTRAINT `Backup_ibfk_1` FOREIGN KEY (`question_id`) REFERENCES `Questions` (`question_id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+--
+-- Obmedzenie pre tabuľku `BackupResponses`
+--
+ALTER TABLE `BackupResponses`
+  ADD CONSTRAINT `BackupResponses_ibfk_1` FOREIGN KEY (`backup_id`) REFERENCES `Backup` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `BackupResponses_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `Users` (`user_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `BackupResponses_ibfk_3` FOREIGN KEY (`option_id`) REFERENCES `QuestionOptions` (`option_id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 --
 -- Obmedzenie pre tabuľku `QuestionOptions`
