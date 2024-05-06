@@ -30,10 +30,7 @@ function isActive($navLink)
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VOTE</title>
-    <link rel="stylesheet" type="text/css"
-        href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.dataTables.min.css">
-    <script type="text/javascript"
-        src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
+    
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -42,6 +39,10 @@ function isActive($navLink)
     <script src="https://cdn.datatables.net/2.0.1/js/dataTables.js"></script>
     <link rel="stylesheet" href="styles.css">
     <script src="script.js"></script>
+    <link rel="stylesheet" type="text/css"
+        href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.dataTables.min.css">
+    <script type="text/javascript"
+        src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
 </head>
 
 <body>

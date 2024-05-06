@@ -140,14 +140,13 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
     </div>
 
 
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="alerts.js"></script>
     <script src="script.js"></script>
     <?php
     if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
         echo "<table id='tableQuestions' class='table table-bordered'>";
-        echo "<thead><tr><th localize='q_id'></th><th localize='th_user'></th><th localize='th_subject'></th><th localize='th_q_text'></th><th localize='th_q_code'></th><th localize='th_date'></th><th localize='th_active'></th><th localize='th_close'></th><th>QR Code</th></tr></thead>";
+        echo "<thead><tr><th localize='q_id'></th><th id ='ucol' localize='th_user'></th><th id='scol' localize='th_subject'></th><th localize='th_q_text'></th><th localize='th_q_code'></th><th id='dcol' localize='th_date'></th><th localize='th_active'></th><th localize='th_close'></th><th>QR Code</th></tr></thead>";
         echo "<tbody></tbody>";
         echo "</table>";
         ?>
@@ -332,6 +331,8 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
 
     }
     ?>
+
+
     <script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
 
     </body>
