@@ -10,32 +10,76 @@ $question_id = $_GET['qid'];
 ?>
 
 <style>
-        #tablesContainer {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-around; /* Umiestnenie tabuliek v rámci kontajnera */
-        }
-        table {
-            
-            margin-bottom: 20px;
-            border-collapse: collapse;
-        }
-        table, th, td {
-            border: 1px solid black;
-            padding: 8px;
-            text-align: center;
-        }
-        h1 {
-            text-align: center;
-        }
-        .table-caption {
-            caption-side: top;
-            font-weight: bold;
-            font-size: 1.2em;
-            padding: 8px;
-            background-color: lightgray;
-        }
-    </style>
+    :root {
+        --primary-color: #FF6A00;
+        --primary-color-light: #FF8C42;
+        --secondary-color: #000000;
+        --accent-color: #FFFFFF;
+        --nav-font-size: 1.2rem;
+        --inactive-color: #6e6c6c;
+        --invisible-color: rgba(0, 0, 0, 0);
+        --body-font-family: 'Arial', sans-serif;
+        --header-font-family: 'Helvetica Neue', sans-serif;
+    }
+
+    #questionText {
+        font-family: var(--header-font-family);
+        margin: 0 auto;
+        padding: 20px;
+        max-width: 800px;
+        background-color: var(--primary-color-light);
+        color: var(--accent-color); /* Text color for headings */
+        border: 2px solid var(--primary-color); /* Updated border to use primary color */
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        font-weight: bold;
+    }
+
+    #statistics {
+        font-family: var(--body-font-family);
+        margin: 0 auto;
+        padding: 20px;
+        max-width: 800px;
+    }
+
+    #tablesContainer {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+    }
+
+    table {
+        margin-bottom: 20px;
+        border-collapse: collapse;
+        border: 2px solid var(--primary-color); /* Updated border to use primary color */
+        width: 100%; /* Ensures tables take full width */
+    }
+
+    th, td {
+        border: 1px solid var(--primary-color); /* Updated border to use primary color */
+        padding: 8px;
+        text-align: center;
+    }
+
+    th {
+        background-color: var(--primary-color-light); /* Background color for table headers */
+        color: var(--accent-color); /* Text color for table headers */
+    }
+
+    h1 {
+        text-align: center;
+        color: var(--secondary-color); /* Text color for headings */
+    }
+
+    .table-caption {
+        caption-side: top;
+        font-weight: bold;
+        font-size: 1.2em;
+        padding: 8px;
+        background-color: var(--primary-color-light);
+        color: var(--accent-color); /* Text color for table caption */
+    }
+</style>
+
 
 <div id="statistics" >
     <h1 id="questionText"></h1>
@@ -43,7 +87,6 @@ $question_id = $_GET['qid'];
 
     <div id="backupTables"></div>
     <div id="tablesContainer"></div>
-
 </div>
 
 
