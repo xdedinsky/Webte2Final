@@ -285,6 +285,10 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
                                                                         <a href="#" data-bs-toggle="modal" data-bs-target="#backupModal" onclick="showBackupNote('${question.question_id}')">
                                                                             Uzatvoriť
                                                                         </a>
+                                                                         / 
+                                                                        <a href="showBackups.php?qid=${question.question_id}" >
+                                                                            Vysledky
+                                                                        </a>
                                                                     </td>
                                                                     <td class="center-content">
                                                                         <a href="#" data-bs-toggle="modal" data-bs-target="#qrModal" onclick="showQRCode('${question.question_code}')">
