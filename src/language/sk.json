@@ -44,7 +44,7 @@
     "enter_current_pwd" : "Zadajte svoje aktuálne heslo.",
     "enter_new_pwd" : "Zadajte nové heslo.",
     "confirm_your_pwd" :"Prosím, potvrďte svoje nové heslo.",
-    "user_man" : "User Manažment",
+    "user_man" : "Správa použivateľov",
     "admin_text" : "Vyber užívateľa, ktorého chcete upraviť",
     "change_role" : "Zmena role",
     "user_text" : "Zmena údajov pre: ",
