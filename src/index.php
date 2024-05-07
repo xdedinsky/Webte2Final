@@ -138,8 +138,14 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
             </div>
         </div>
     </div>
-
-
+    <?php 
+    //if logged in 
+    if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
+        ?>
+        <button id="exportButton" class="btn btn-custom">Export Questions and Answers</button>
+        <?php
+    }
+    ?>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="alerts.js"></script>
     <script src="script.js"></script>
@@ -152,6 +158,12 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
         ?>
 
         <script>
+            $(document).ready(function() {
+                $('#exportButton').click(function() {
+                    // Redirect to the export script URL
+                    window.location.href = 'controllers/export_questions_answers.php';
+                });
+            });
             function showQRCode(questionCode) {
                 var qrCodeContainer = document.getElementById('qrCode');
                 qrCodeContainer.innerHTML = ''; // Clear previous QR codes
