@@ -152,7 +152,7 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
     <?php
     if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
         echo "<table id='tableQuestions' class='table table-bordered'>";
-        echo "<thead><tr><th localize='q_id'></th><th id ='ucol' localize='th_user'></th><th id='scol' localize='th_subject'></th><th localize='th_q_text'></th><th localize='th_q_code'></th><th id='dcol' localize='th_date'></th><th localize='th_active'></th><th localize='th_wordcloud'></th><th localize='th_close'></th><th>QR Code</th></tr></thead>";
+        echo "<thead><tr><th localize='q_id'></th><th id ='ucol' localize='th_user'></th><th id='scol' localize='th_subject'></th><th localize='th_q_text'></th><th localize='th_q_code'></th><th id='dcol' localize='th_date'></th><th localize='th_active'></th><th localize='th_wordcloud'></th><th localize='th_close'></th><th>QR Code</th><th>Operacie</th></tr></thead>";
         echo "<tbody></tbody>";
         echo "</table>";
         ?>
@@ -308,6 +308,14 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
                                                                         <td class="center-content">
                                                                             <a href="#" data-bs-toggle="modal" data-bs-target="#qrModal" onclick="showQRCode('${question.question_code}')">
                                                                                 <img src="images/qrimage.png" alt="qrimage" width="20" height="20">
+                                                                            </a>
+                                                                        </td>
+                                                                        <td class="center-content">
+                                                                            <a href="controllers/copyQues.php?qid=${question.question_id}" >
+                                                                            <img src="images/copy.png" alt="copyimg" width="20" height="20"></a>
+                                                                             |       
+                                                                            <a href="controllers/deleteQues.php?qid=${question.question_id}" >
+                                                                                <img src="images/bin.png" alt="binimg" width="20" height="20">
                                                                             </a>
                                                                         </td>
                                                     
