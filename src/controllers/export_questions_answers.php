@@ -7,12 +7,13 @@ require '../../../../configFinal.php';
 
 // Funkcia na export otázok a odpovedí vo formáte JSON
 // Funkcia na export otázok a odpovedí vo formáte JSON
-function exportQuestionsAndResponses($userId, $conn) {
+function exportQuestionsAndResponses($userId, $conn)
+{
     // Overenie pripojenia
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
     }
-    
+
     // Pole pre ukladanie otázok a odpovedí vo formáte JSON
     $questionsAndResponses = [];
 
@@ -24,59 +25,145 @@ function exportQuestionsAndResponses($userId, $conn) {
     }
 
     // Vykonanie SQL dotazu na otázky
-    $result = $conn->query($sql);
+    $result10 = $conn->query($sql);
 
     // Spracovanie výsledkov
-    if ($result->num_rows > 0) {
+    if ($result10->num_rows > 0) {
         // Pre každý riadok výsledku (otázka)
-        while($row = $result->fetch_assoc()) {
+        while ($row10 = $result10->fetch_assoc()) {
             $question = [
-                "question_id" => $row["question_id"],
-                "question_text" => $row["question_text"],
+                "question_id" => $row10["question_id"],
+                "question_text" => $row10["question_text"],
                 "responses" => [] // Pole pre ukladanie odpovedí k otázke
             ];
-            
-            // Získa odpovede na túto otázku z tabuľky Responses
-            $questionId = $row["question_id"];
-            $responseSql = "SELECT * FROM Responses WHERE question_id = $questionId";
-            
-            // Pre admina alebo pre používateľa, ktorý položil otázku, získa odpovede
-            if ($_SESSION['role'] == 'admin' || $row['user_id'] == $_SESSION['user_id']) {
-                $responseResult = $conn->query($responseSql);
 
-                // Ak sú odpovede k dispozícii, pridá ich do pola
-                if ($responseResult->num_rows > 0) {
-                    while($responseRow = $responseResult->fetch_assoc()) {
-                        // Vytvorí pole pre odpoveď
-                        $response = [
-                            "response_text" => $responseRow["response_text"]
-                        ];
-                        
-                        // Ak existuje možnosť v odpovedi, získa ju z tabuľky QuestionOptions
-                        if ($responseRow["option_id"] != null) {
-                            $optionId = $responseRow["option_id"];
-                            $optionSql = "SELECT * FROM QuestionOptions WHERE option_id = $optionId";
-                            $optionResult = $conn->query($optionSql);
-                            
-                            if ($optionResult->num_rows > 0) {
-                                $optionRow = $optionResult->fetch_assoc();
-                                $response["option_text"] = $optionRow["option_text"];
-                            }
-                        }
-                        
-                        // Pridá odpoveď do poľa odpovedí k otázke
-                        $question["responses"][] = $response;
+            $question_id = $row10["question_id"];
+
+            $responseData = [];
+            $question_type = $row10["question_type"];
+            $question_text = $row10["question_text"];
+
+            // Add question_text to response data
+            $responseData = [];
+
+            if ($question_type === 'multiple_choice') {
+                $sql = "SELECT o.option_text FROM QuestionOptions o JOIN Responses r ON r.option_id = o.option_id WHERE r.question_id = ?";
+                $stmt = $conn->prepare($sql);
+                $stmt->bind_param("i", $question_id);
+                $stmt->execute();
+                $result = $stmt->get_result();
+                $optionCounts = [];
+
+                // Loop through the result set
+                while ($row = $result->fetch_assoc()) {
+                    $option_text = $row['option_text'];
+
+                    // If option_text exists in the array, increment its count; otherwise, initialize it to 1
+                    if (isset($optionCounts[$option_text])) {
+                        $optionCounts[$option_text]++;
+                    } else {
+                        $optionCounts[$option_text] = 1;
                     }
                 }
+                // Add optionCounts to response data
+                $responseData["current"] = $optionCounts;
+
+
+                $sql = "SELECT id, created_at FROM Backup WHERE question_id = ?";
+                $stmt = $conn->prepare($sql);
+                $stmt->bind_param("i", $question_id);
+                $stmt->execute();
+                $result = $stmt->get_result();
+
+                while ($row = $result->fetch_assoc()) {
+                    $backup_id = $row['id'];
+                    $created_at = $row['created_at'];
+                    $sql = "SELECT o.option_text FROM QuestionOptions o JOIN BackupResponses r ON r.option_id = o.option_id WHERE r.backup_id = ?";
+                    $stmt = $conn->prepare($sql);
+                    $stmt->bind_param("i", $backup_id);
+                    $stmt->execute();
+                    $result1 = $stmt->get_result();
+                    $optionCounts = [];
+                    while ($row1 = $result1->fetch_assoc()) {
+                        $option_text = $row1['option_text'];
+                        // If option_text exists in the array, increment its count; otherwise, initialize it to 1
+                        if (isset($optionCounts[$option_text])) {
+                            $optionCounts[$option_text]++;
+                        } else {
+                            $optionCounts[$option_text] = 1;
+                        }
+                    }
+                    // Add optionCounts to response data
+                    $responseData[$created_at] = $optionCounts;
+                }
+
+            } elseif ($question_type === 'open_ended') {
+                $sql = "SELECT response_text FROM Responses WHERE question_id = ?";
+                $stmt = $conn->prepare($sql);
+                $stmt->bind_param("i", $question_id);
+                $stmt->execute();
+                $result = $stmt->get_result();
+                $responseCounts = [];
+
+                // Loop through the result set
+                while ($row = $result->fetch_assoc()) {
+                    $response_text = $row['response_text'];
+
+                    // If response_text exists in the array, increment its count; otherwise, initialize it to 1
+                    if (isset($responseCounts[$response_text])) {
+                        $responseCounts[$response_text]++;
+                    } else {
+                        $responseCounts[$response_text] = 1;
+                    }
+                }
+
+                // Add responseCounts to response data
+                $responseData["current"] = $responseCounts;
+
+
+                $sql = "SELECT id, created_at FROM Backup WHERE question_id = ?";
+                $stmt = $conn->prepare($sql);
+                $stmt->bind_param("i", $question_id);
+                $stmt->execute();
+                $result = $stmt->get_result();
+
+                while ($row = $result->fetch_assoc()) {
+                    $backup_id = $row['id'];
+                    $created_at = $row['created_at'];
+                    $sql = "SELECT response_text FROM BackupResponses WHERE backup_id = ?";
+                    ;
+                    $stmt = $conn->prepare($sql);
+                    $stmt->bind_param("i", $backup_id);
+                    $stmt->execute();
+                    $result1 = $stmt->get_result();
+                    $responseCounts = [];
+                    while ($row1 = $result1->fetch_assoc()) {
+                        $response_text = $row1['response_text'];
+
+                        // If response_text exists in the array, increment its count; otherwise, initialize it to 1
+                        if (isset($responseCounts[$response_text])) {
+                            $responseCounts[$response_text]++;
+                        } else {
+                            $responseCounts[$response_text] = 1;
+                        }
+                    }
+                    // Add optionCounts to response data
+                    $responseData[$created_at] = $responseCounts;
+                }
             }
-            
+            $question['responses']= $responseData;
+
+
+
+
             // Pridá otázku do hlavného poľa
             $questionsAndResponses[] = $question;
         }
     }
 
     // Konvertuje pole otázok a odpovedí na JSON a vypíše ho
-    $json =  json_encode($questionsAndResponses,  JSON_PRETTY_PRINT);
+    $json = json_encode($questionsAndResponses, JSON_PRETTY_PRINT);
+    
     // Hlavičky pre sťahovanie JSON súboru
     header('Content-Description: File Transfer');
     header('Content-Type: application/json');

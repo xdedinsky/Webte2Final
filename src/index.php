@@ -105,7 +105,7 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
             }
 } ?>
     </div>
-
+    
 
     <div id="questionsDiv">
     </div>
@@ -142,7 +142,7 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
     //if logged in 
     if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
         ?>
-        <button id="exportButton" class="btn btn-custom">Export Questions and Answers</button>
+        <button id="exportButton" class="btn btn-custom" style="margin-top = 10px">Export Questions and Answers</button>
         <?php
     }
     ?>

@@ -205,6 +205,9 @@ button.navbar-toggler .navbar-toggler-icon {
 #submitButton {
     margin: 10px;
 }
+#exportButton{
+    margin: 10px !important;
+}
 
 .centered {
     display: flex;
