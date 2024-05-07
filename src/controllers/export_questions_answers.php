@@ -76,7 +76,18 @@ function exportQuestionsAndResponses($userId, $conn) {
     }
 
     // Konvertuje pole otázok a odpovedí na JSON a vypíše ho
-    echo json_encode($questionsAndResponses);
+    $json =  json_encode($questionsAndResponses,  JSON_PRETTY_PRINT);
+    // Hlavičky pre sťahovanie JSON súboru
+    header('Content-Description: File Transfer');
+    header('Content-Type: application/json');
+    header('Content-Disposition: attachment; filename="questions_and_responses.json"');
+    header('Expires: 0');
+    header('Cache-Control: must-revalidate');
+    header('Pragma: public');
+    header('Content-Length: ' . strlen($json));
+
+    // Vypíše JSON do výstupu (sťahuje súbor)
+    echo $json;
 }
 
 // Zavolanie funkcie na export otázok a odpovedí
