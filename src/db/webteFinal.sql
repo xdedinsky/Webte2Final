@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hostiteľ: localhost:3306
--- Čas generovania: Po 06.Máj 2024, 19:50
+-- Čas generovania: Út 07.Máj 2024, 19:31
 -- Verzia serveru: 8.0.36-0ubuntu0.22.04.1
 -- Verzia PHP: 8.3.3-1+ubuntu22.04.1+deb.sury.org+1
 
@@ -97,7 +97,9 @@ CREATE TABLE `QuestionOptions` (
 
 INSERT INTO `QuestionOptions` (`option_id`, `question_id`, `option_text`) VALUES
 (1, 5, 'ano funguje'),
-(2, 5, 'nefunguje');
+(2, 5, 'nefunguje'),
+(3, 8, 'ano funguje'),
+(4, 8, 'nefunguje');
 
 -- --------------------------------------------------------
 
@@ -130,7 +132,9 @@ INSERT INTO `Questions` (`question_id`, `user_id`, `question_text`, `question_ty
 (3, 7, 'CSCS', 'open_ended', 'ccc', 1, 1, 'BJDQP', NULL, '2024-05-02 12:42:32', '2024-05-02 12:42:32', NULL),
 (4, 9, 'skuska aaaaaaaaaaaaa', 'open_ended', 'ada', 1, 1, 'H2Y1B', NULL, '2024-05-06 12:54:21', '2024-05-06 12:54:21', NULL),
 (5, 7, 'funguje ten backup?', 'multiple_choice', 'skusam backup', 1, 1, 'C39TB', 'single', '2024-05-06 18:05:25', '2024-05-06 18:05:25', NULL),
-(6, 7, 'backup skuska otvorena', 'open_ended', 'backup skuska 2', 1, 0, 'BZVHW', NULL, '2024-05-06 18:10:22', '2024-05-06 18:10:22', NULL);
+(6, 7, 'backup skuska otvorena', 'open_ended', 'backup skuska 2', 1, 1, 'BZVHW', NULL, '2024-05-06 18:10:22', '2024-05-06 18:10:22', NULL),
+(7, 7, 'funguje ten backup?', 'multiple_choice', 'skusam backup', 1, 1, 'H3IZO', 'single', '2024-05-07 19:08:42', '2024-05-07 19:08:42', NULL),
+(8, 7, 'funguje ten backup?', 'multiple_choice', 'skusam backup', 1, 1, 'BR7ES', 'single', '2024-05-07 19:16:02', '2024-05-07 19:16:02', NULL);
 
 -- --------------------------------------------------------
 
@@ -157,7 +161,8 @@ INSERT INTO `Responses` (`response_id`, `question_id`, `user_id`, `option_id`, `
 (23, 6, 7, NULL, 'aaaa', '2024-05-06 18:12:38'),
 (24, 6, 7, NULL, 'abab', '2024-05-06 18:12:46'),
 (25, 6, 7, NULL, 'avav', '2024-05-06 18:12:54'),
-(26, 6, 7, NULL, 'avav', '2024-05-06 18:13:01');
+(26, 6, 7, NULL, 'avav', '2024-05-06 18:13:01'),
+(27, 6, 7, NULL, 'aa', '2024-05-06 19:54:31');
 
 -- --------------------------------------------------------
 
@@ -210,7 +215,7 @@ INSERT INTO `Users` (`user_id`, `username`, `password`, `email`, `role`, `create
 --
 ALTER TABLE `Backup`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `question_id` (`question_id`);
+  ADD KEY `Backup_ibfk_1` (`question_id`);
 
 --
 -- Indexy pre tabuľku `BackupResponses`
@@ -219,7 +224,7 @@ ALTER TABLE `BackupResponses`
   ADD PRIMARY KEY (`backup_response_id`),
   ADD KEY `USER` (`user_id`),
   ADD KEY `OPTION` (`option_id`),
-  ADD KEY `backup_id` (`backup_id`);
+  ADD KEY `BackupResponses_ibfk_1` (`backup_id`);
 
 --
 -- Indexy pre tabuľku `QuestionOptions`
@@ -266,31 +271,31 @@ ALTER TABLE `Users`
 -- AUTO_INCREMENT pre tabuľku `Backup`
 --
 ALTER TABLE `Backup`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT pre tabuľku `BackupResponses`
 --
 ALTER TABLE `BackupResponses`
-  MODIFY `backup_response_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `backup_response_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT pre tabuľku `QuestionOptions`
 --
 ALTER TABLE `QuestionOptions`
-  MODIFY `option_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `option_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT pre tabuľku `Questions`
 --
 ALTER TABLE `Questions`
-  MODIFY `question_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `question_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT pre tabuľku `Responses`
 --
 ALTER TABLE `Responses`
-  MODIFY `response_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `response_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT pre tabuľku `Sessions`
@@ -312,21 +317,21 @@ ALTER TABLE `Users`
 -- Obmedzenie pre tabuľku `Backup`
 --
 ALTER TABLE `Backup`
-  ADD CONSTRAINT `Backup_ibfk_1` FOREIGN KEY (`question_id`) REFERENCES `Questions` (`question_id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+  ADD CONSTRAINT `Backup_ibfk_1` FOREIGN KEY (`question_id`) REFERENCES `Questions` (`question_id`) ON DELETE CASCADE ON UPDATE RESTRICT;
 
 --
 -- Obmedzenie pre tabuľku `BackupResponses`
 --
 ALTER TABLE `BackupResponses`
-  ADD CONSTRAINT `BackupResponses_ibfk_1` FOREIGN KEY (`backup_id`) REFERENCES `Backup` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `BackupResponses_ibfk_1` FOREIGN KEY (`backup_id`) REFERENCES `Backup` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT,
   ADD CONSTRAINT `BackupResponses_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `Users` (`user_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `BackupResponses_ibfk_3` FOREIGN KEY (`option_id`) REFERENCES `QuestionOptions` (`option_id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+  ADD CONSTRAINT `BackupResponses_ibfk_3` FOREIGN KEY (`option_id`) REFERENCES `QuestionOptions` (`option_id`) ON DELETE CASCADE ON UPDATE RESTRICT;
 
 --
 -- Obmedzenie pre tabuľku `QuestionOptions`
 --
 ALTER TABLE `QuestionOptions`
-  ADD CONSTRAINT `QuestionOptions_ibfk_1` FOREIGN KEY (`question_id`) REFERENCES `Questions` (`question_id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+  ADD CONSTRAINT `QuestionOptions_ibfk_1` FOREIGN KEY (`question_id`) REFERENCES `Questions` (`question_id`) ON DELETE CASCADE ON UPDATE RESTRICT;
 
 --
 -- Obmedzenie pre tabuľku `Questions`
@@ -338,8 +343,8 @@ ALTER TABLE `Questions`
 -- Obmedzenie pre tabuľku `Responses`
 --
 ALTER TABLE `Responses`
-  ADD CONSTRAINT `OPTION` FOREIGN KEY (`option_id`) REFERENCES `QuestionOptions` (`option_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `QUESTION` FOREIGN KEY (`question_id`) REFERENCES `Questions` (`question_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `OPTION` FOREIGN KEY (`option_id`) REFERENCES `QuestionOptions` (`option_id`) ON DELETE CASCADE ON UPDATE RESTRICT,
+  ADD CONSTRAINT `QUESTION` FOREIGN KEY (`question_id`) REFERENCES `Questions` (`question_id`) ON DELETE CASCADE ON UPDATE RESTRICT,
   ADD CONSTRAINT `USER` FOREIGN KEY (`user_id`) REFERENCES `Users` (`user_id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 --
