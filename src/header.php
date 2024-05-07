@@ -43,6 +43,7 @@ function isActive($navLink)
         href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.dataTables.min.css">
     <script type="text/javascript"
         src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
+        <link rel="icon" type="image/png" href="images/vote.png">
 </head>
 
 <body>
