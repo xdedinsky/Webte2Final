@@ -6,7 +6,8 @@ error_reporting(E_ALL);
 include_once 'header.php';
 require '../../../configFinal.php';
 ?>
-
+ <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  
 <div class="containerTable">
     <div class="tableHeader">
         <h2 class="text" id="text" localize="admin_text"></h2>
