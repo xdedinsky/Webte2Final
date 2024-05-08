@@ -92,6 +92,12 @@
     "miss_match" : "Nezhoda hesla!",
     "fix_match" : "Uistite sa, že sa vaše heslá zhodujú.",
     "invalid_email" : "Neplatný email!",
-    "fix_email" : "Zadajte platnú e-mailovú adresu."
+    "fix_email" : "Zadajte platnú e-mailovú adresu.",
+    "q_delete": "Vymazanie otázky",
+    "q_copy": "Kópia otázky",
+    "q_update": "Úprava otázky",
+    "q_suc_up": "Otázka úspešne aktualizovaná.",
+    "q_suc_copy": "Otázka úspešne skopírovaná.",
+    "q_suc_del": "Otázka úspešne vymazaná."
    
 }
