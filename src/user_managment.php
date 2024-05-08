@@ -118,7 +118,7 @@ require '../../../configFinal.php';
                 }
             }
         };
-        xhr.open('GET', 'fetchUserData.php?username=' + username, false);
+        xhr.open('GET', 'controllers/fetchUserData.php?username=' + username, false);
         xhr.send();
     }
 
