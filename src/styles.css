@@ -412,13 +412,6 @@ input[type="submit"]:hover {
     background-color: #FF8C42; /* Lighter shade of primary color on hover */
 }
 
-label {
-    display: block; /* Ensures labels are on a new line */
-    margin-top: 15px;
-    font-weight: bold; /* Emphasizes label */
-    color: var(--secondary-color); /* Ensures readability */
-}
-
 @media (max-width: 768px) {
     .form-wrapper, .container {
         padding: 10px; /* Adequate padding in smaller screens */
