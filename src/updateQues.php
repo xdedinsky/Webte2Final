@@ -31,19 +31,21 @@ if ($result_options->num_rows > 0) {
 ?>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <h2>Editácia Otázky</h2>
-<form method="post" action="controllers/update.php">
-    <input type="hidden" name="question_id" value="<?php echo $questionId; ?>">
-    <label for="question_text">Text Otázky:</label><br>
-    <input type="text" id="question_text" name="question_text" value="<?php echo $questionText; ?>">
-    <label for="subject">Predmet:</label><br>
-    <input type="text" name="subject" value="<?php echo $subject; ?>"><br><br>
-    <?php
-    if (!empty($options)) {
-        echo "<h3>Možnosti:</h3>";
-        foreach ($options as $optionId => $optionText) {
-            echo "<input type='text' name='options[$optionId]' value='$optionText'><br><br>";
+<div class="container mt-4">
+    <form method="post" action="controllers/update.php">
+        <input type="hidden" name="question_id" value="<?php echo $questionId; ?>">
+        <label for="question_text">Text Otázky:</label><br>
+        <input type="text" id="question_text" name="question_text" value="<?php echo $questionText; ?>">
+        <label for="subject">Predmet:</label><br>
+        <input type="text" name="subject" value="<?php echo $subject; ?>"><br><br>
+        <?php
+        if (!empty($options)) {
+            echo "<h3>Možnosti:</h3>";
+            foreach ($options as $optionId => $optionText) {
+                echo "<input type='text' name='options[$optionId]' value='$optionText'><br><br>";
+            }
         }
-    }
-    ?>
-    <input type="submit" value="Uložiť zmeny">
-</form>
+        ?>
+        <input type="submit" value="Uložiť zmeny">
+    </form>
+</div>
