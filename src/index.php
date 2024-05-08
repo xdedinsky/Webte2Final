@@ -298,12 +298,10 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
                                                                         </td>
                                                                         <td class="center-content">
                                                                             <a href="#" data-bs-toggle="modal" data-bs-target="#backupModal" onclick="showBackupNote('${question.question_id}')">
-                                                                                Uzatvoriť
-                                                                            </a>
-                                                                             / 
+                                                                            <img src="images/backup.png" alt="qrimage" width="20" height="20"></a>
+                                                                             | 
                                                                             <a href="showBackups.php?qid=${question.question_id}" >
-                                                                                Vysledky
-                                                                            </a>
+                                                                            <img src="images/eye.png" alt="qrimage" width="20" height="20"></a>
                                                                         </td>
                                                                         <td class="center-content">
                                                                             <a href="#" data-bs-toggle="modal" data-bs-target="#qrModal" onclick="showQRCode('${question.question_code}')">
@@ -313,6 +311,9 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
                                                                         <td class="center-content">
                                                                             <a href="controllers/copyQues.php?qid=${question.question_id}" >
                                                                             <img src="images/copy.png" alt="copyimg" width="20" height="20"></a>
+                                                                            |       
+                                                                            <a href="updateQues.php?qid=${question.question_id}" >
+                                                                                <img src="images/edit.png" alt="binimg" width="20" height="20"></a>
                                                                              |       
                                                                             <a href="controllers/deleteQues.php?qid=${question.question_id}" >
                                                                                 <img src="images/bin.png" alt="binimg" width="20" height="20">
