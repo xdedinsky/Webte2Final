@@ -40,7 +40,6 @@ if ($result_options->num_rows > 0) {
     if (!empty($options)) {
         echo "<h3>Možnosti:</h3>";
         foreach ($options as $optionId => $optionText) {
-            echo "<label for='option_$optionId'>Možnosť :</label><br>";
             echo "<input type='text' name='options[$optionId]' value='$optionText'><br><br>";
         }
     }
