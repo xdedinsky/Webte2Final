@@ -117,6 +117,39 @@ document.addEventListener('DOMContentLoaded', async () => {
                 confirmButtonText: 'Ok'
             });
             break;
+        case 'ques-copy-success':
+            Swal.fire({
+                title: getLocalizedErrorMessage("q_copy"),
+                text: getLocalizedErrorMessage("q_suc_copy"),
+                icon: 'success',
+                background: '#FFFFFF',
+                color: '#000000',
+                confirmButtonColor: '#FF6A00',
+                confirmButtonText: 'Ok'
+            });
+            break;
+        case 'ques-update-success':
+            Swal.fire({
+                title: getLocalizedErrorMessage("q_update"),
+                text: getLocalizedErrorMessage("q_suc_up"),
+                icon: 'success',
+                background: '#FFFFFF',
+                color: '#000000',
+                confirmButtonColor: '#FF6A00',
+                confirmButtonText: 'Ok'
+            });
+            break;
+        case 'ques-delete-success':
+            Swal.fire({
+                title: getLocalizedErrorMessage("q_delete"),
+                text: getLocalizedErrorMessage("q_suc_del"),
+                icon: 'success',
+                background: '#FFFFFF',
+                color: '#000000',
+                confirmButtonColor: '#FF6A00',
+                confirmButtonText: 'Ok'
+            });
+            break;
         case 'username-taken':
             Swal.fire({
                 title: getLocalizedErrorMessage("username_exists"),

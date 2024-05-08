@@ -33,7 +33,7 @@ require '../../../../configFinal.php';
 
     $conn->close();
     // Presmerovanie na inú stránku po spracovaní formulára
-    header("Location:../index.php");
+    header("Location:../index.php?action=ques-update-success");
     exit;
 
 
