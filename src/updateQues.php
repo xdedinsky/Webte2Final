@@ -7,6 +7,7 @@ include_once 'header.php';
 require '../../../configFinal.php';
 
 
+
 $questionId = $_GET["qid"];
 // Dotaz na získanie otázky
 $sql = "SELECT * FROM Questions WHERE question_id='$questionId'";
@@ -29,9 +30,6 @@ if ($result_options->num_rows > 0) {
 }
 ?>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script src="alerts.js"></script>
-<script src="script.js"></script>
-
 <h2>Editácia Otázky</h2>
 <form method="post" action="controllers/update.php">
     <input type="hidden" name="question_id" value="<?php echo $questionId; ?>">
