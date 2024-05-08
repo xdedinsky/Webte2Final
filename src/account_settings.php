@@ -21,7 +21,8 @@ include_once 'header.php';
 <body>
     <div class="container mt-4">
         <h2 localize="change_pwd"></h2>
-        <form action="" id="changePasswordForm" class="needs-validation" novalidate onsubmit="return validateNewPassword();">
+        <form action="" id="changePasswordForm" class="needs-validation" novalidate
+            onsubmit="return validateNewPassword();">
             <div class="mb-3">
                 <label>
                     <h2 localize="current_pwd"></h2>
@@ -47,6 +48,7 @@ include_once 'header.php';
                 <input type="submit" class="btn btn-primary" value="Submit">
             </div>
         </form>
+        
     </div>
 
 
@@ -54,60 +56,60 @@ include_once 'header.php';
     <script src="alerts.js"></script>
     <script src="script.js"></script>
     <script>
-    function validateNewPassword() {
-        var newPassword = $('#new_password').val();
-        if (newPassword.length < 6) {
-            Swal.fire({
-                title: getLocalizedErrorMessage("weak_pwd"),
-                text: getLocalizedErrorMessage("short_pwd"),
-                icon: 'error',
-                background: '#FFFFFF',
-                color: '#000000',
-                confirmButtonColor: '#FF6A00',
-                confirmButtonText: 'Ok'
-            });
-            return false;
-        }
-        return true;
-    }
-
-    $(document).ready(function () {
-        $('#changePasswordForm').submit(function (event) {
-            event.preventDefault();
-            if (this.checkValidity() && validateNewPassword()) {
-                var formData = {
-                    confirm_password2: $('#confirm_password2').val(),
-                    current_password: $('#current_password').val(),
-                    new_password: $('#new_password').val(),
-                };
-
-                $.ajax({
-                    type: 'POST',
-                    url: 'controllers/password.php',
-                    data: JSON.stringify(formData),
-                    contentType: 'application/json',
-                    success: function (data) {
-                        if (data.success) {
-                            Swal.fire('Success', getLocalizedErrorMessage("successMessage"), 'success').then((result) => {
-                                if (result.isConfirmed) {
-                                    window.location.href = 'https://node71.webte.fei.stuba.sk/Webte2Final/src/account_settings.php';
-                                }
-                            });
-                        } else {
-                            Swal.fire('Error', data.error, 'error');
-                        }
-                    },
-                    error: function () {
-                        Swal.fire('Error', getLocalizedErrorMessage("generalErrorMessage"), 'error');
-                    }
+        function validateNewPassword() {
+            var newPassword = $('#new_password').val();
+            if (newPassword.length < 6) {
+                Swal.fire({
+                    title: getLocalizedErrorMessage("weak_pwd"),
+                    text: getLocalizedErrorMessage("short_pwd"),
+                    icon: 'error',
+                    background: '#FFFFFF',
+                    color: '#000000',
+                    confirmButtonColor: '#FF6A00',
+                    confirmButtonText: 'Ok'
                 });
-            } else {
-                event.stopPropagation();
+                return false;
             }
-            $('#changePasswordForm').addClass('was-validated');
+            return true;
+        }
+
+        $(document).ready(function () {
+            $('#changePasswordForm').submit(function (event) {
+                event.preventDefault();
+                if (this.checkValidity() && validateNewPassword()) {
+                    var formData = {
+                        confirm_password2: $('#confirm_password2').val(),
+                        current_password: $('#current_password').val(),
+                        new_password: $('#new_password').val(),
+                    };
+
+                    $.ajax({
+                        type: 'POST',
+                        url: 'controllers/password.php',
+                        data: JSON.stringify(formData),
+                        contentType: 'application/json',
+                        success: function (data) {
+                            if (data.success) {
+                                Swal.fire('Success', getLocalizedErrorMessage("successMessage"), 'success').then((result) => {
+                                    if (result.isConfirmed) {
+                                        window.location.href = 'account_settings.php';
+                                    }
+                                });
+                            } else {
+                                Swal.fire('Error', data.error, 'error');
+                            }
+                        },
+                        error: function () {
+                            Swal.fire('Error', getLocalizedErrorMessage("generalErrorMessage"), 'error');
+                        }
+                    });
+                } else {
+                    event.stopPropagation();
+                }
+                $('#changePasswordForm').addClass('was-validated');
+            });
         });
-    });
-</script>
+    </script>
 
 </body>
 
