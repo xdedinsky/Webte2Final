@@ -5,8 +5,6 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 require '../../../../configFinal.php';
-echo($_POST['user_id']);
-// Check if the form data is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Check if the form submission is for updating user data or password
     
