@@ -170,12 +170,12 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
 
                 // Create an anchor element that wraps the QR code and redirects on click
                 var link = document.createElement('a');
-                link.href = `https://node28.webte.fei.stuba.sk/${questionCode}`; // Link to redirect
+                link.href = `https://node65.webte.fei.stuba.sk/${questionCode}`; // Link to redirect
                 link.target = '_blank'; // Open in new tab
 
                 // Create QR code inside the link
                 var qr = new QRCode(link, {
-                    text: `https://node28.webte.fei.stuba.sk/${questionCode}`,
+                    text: `https://node65.webte.fei.stuba.sk/${questionCode}`,
                     width: 256,
                     height: 256,
                     colorDark: "#000000",
