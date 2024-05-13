@@ -34,25 +34,18 @@ include "header.php";
 
 
 
-<button id="downloadButton" onclick="generatePDF()">Stiahnuť príručku vo formáte PDF</button>
+<button id="downloadButton" onclick="generatePDF()" localize="download_info"></button>
 <div id="content">
-    <div id="skmanual" style="display: none">
-        <h1 class="manual-title">Slovenská príručka</h1>
-        <p class="manual-text">Toto je slovenský manuál vo formáte PDF s diakritikou.</p>
-        <p class="pManual"><img src="images/bin.png" alt="bin" width="20" height="20" class="iconManual"> Kliknutím na
-            ikonu koša vymažete danú
-            otázku.</p>
-        <p class="pManual"><img src="images/edit.png" alt="edit" width="20" height="20" class="iconManual"> Kliknutím na
-            ikonu úpravy môžete
-            upraviť danú otázku.</p>
+    <div id="manual" style="padding: 10px; border: 1px solid;">
+        <h1 class="manual-title" localize="sk_info"></h1>
+        <p class="manual-text" localize="pdf"></p>
+        <p class="pManual">
+            <img src="images/bin.png" alt="bin" width="20" height="20" class="iconManual">
+            <span localize="delete_q"></span> </p>
+        <p class="pManual">
+            <img src="images/edit.png" alt="edit" width="20" height="20" class="iconManual" >
+            <span localize="update_q"></span> </p>
     </div>
-
-    <div id="enmanual" style="display: none">
-        <h1 class="manual-title">English Manual</h1>
-        <p class="manual-text">This is an English manual in PDF format.</p>
-    </div>
-
-
 </div>
 
 
@@ -61,18 +54,6 @@ include "header.php";
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        let lang = localStorage.getItem('language');
-        console.log(lang);
-        if(lang === "sk"){
-            document.getElementById("skmanual").style.display = "block";
-            document.getElementById("enmanual").style.display = "none";
-        }else if(lang === "en"){
-            document.getElementById("enmanual").style.display = "block";
-            document.getElementById("skmanual").style.display = "none";
-        }
-
-    });
     let lang = localStorage.getItem('language')
     function generatePDF() {
         // Získať obsah celej stránky na tlač

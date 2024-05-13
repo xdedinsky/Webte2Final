@@ -99,6 +99,11 @@
     "q_update": "Úprava otázky",
     "q_suc_up": "Otázka úspešne aktualizovaná.",
     "q_suc_copy": "Otázka úspešne skopírovaná.",
-    "q_suc_del": "Otázka úspešne vymazaná."
+    "q_suc_del": "Otázka úspešne vymazaná.",
+    "download_info" : "Stiahnuť príručku vo formáte PDF",
+    "sk_info" : "Slovenská príručka",
+    "pdf" : "Toto je slovenský manuál vo formáte PDF s diakritikou.",
+    "delete_q" : "Kliknutím na ikonu koša vymažete danú otázku.",
+    "update_q" : "Kliknutím na ikonu úpravy môžete upraviť danú otázku."
    
 }
