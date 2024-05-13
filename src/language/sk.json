@@ -104,6 +104,14 @@
     "sk_info" : "Slovenská príručka",
     "pdf" : "Toto je slovenský manuál vo formáte PDF s diakritikou.",
     "delete_q" : "Kliknutím na ikonu koša vymažete danú otázku.",
-    "update_q" : "Kliknutím na ikonu úpravy môžete upraviť danú otázku."
-   
+    "update_q" : "Kliknutím na ikonu úpravy môžete upraviť danú otázku.",
+    "edit_q" : "Editácia Otázky",
+    "text_q" : "Text Otázky:",
+    "name" : "Meno:",
+    "email_" : "Email:",
+    "edit_data" : "Upraviť údaje",
+    "role" : "Role:",
+    "admin" : "Admin",
+    "user_a" : "Používateľ",
+    "data_updated" : "Údaje boli úspešne aktualizované"
 }

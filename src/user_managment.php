@@ -34,29 +34,29 @@ require '../../../configFinal.php';
     </div>
 </div>
 <div class="container mt-4" id="EditName" style="display: none;">
-    <h2>Edit Data</h2>
+    <h2 localize="edit_data"></h2>
     <form id="editUserDataForm" onsubmit="updateUserData(); return false;">
         <input type="hidden" id="userId" name="user_id" required>
         <div class="mb-3">
-            <label for="editUsername" class="form-label">Name:</label>
+            <label for="editUsername" class="form-label" localize="name"></label>
             <input type="text" class="form-control" id="editUsername" name="username" required>
         </div>
         <div class="mb-3">
-            <label for="editEmail" class="form-label">Email:</label>
+            <label for="editEmail" class="form-label" localize="email_"></label>
             <input type="email" class="form-control" id="editEmail" name="email" required>
         </div>
         <div class="mb-3">
-            <label for="editRole" class="form-label">Role:</label>
+            <label for="editRole" class="form-label" localize="role"></label>
             <select class="form-select" id="editRole" name="role" required>
-                <option value="admin">Admin</option>
-                <option value="user">User</option>
+                <option value="admin" localize="admin"></option>
+                <option value="user" localize="user_a"></option>
             </select>
         </div>
         <input type="submit" class="btn btn-primary" value="Submit">
     </form>
 </div>
 <div class="container mt-4" id="EditPassword" style="display: none;">
-    <h2>Change Password</h2>
+    <h2 localize="change_pwd"></h2>
     <form id="changePasswordFormAdmin" onsubmit="updatePassword(); return false;">
         <input type="hidden" id="passwordUserId" name="user_id" required>
         <div class="mb-3">
@@ -128,8 +128,8 @@ require '../../../configFinal.php';
                 if (xhr.status === 200) {
                     console.log('User data updated successfully');
                     Swal.fire({
-                        title: 'Success',
-                        text: 'Data updated successfully',
+                        title: getLocalizedErrorMessage("success"),
+                        text: getLocalizedErrorMessage("data_updated"),
                         icon: 'success',
                         confirmButtonText: 'OK'
                     }).then((result) => {
@@ -155,8 +155,8 @@ require '../../../configFinal.php';
                 if (xhr.status === 200) {
                     console.log('Password updated successfully');
                     Swal.fire({
-                        title: 'Success',
-                        text: 'Data updated successfully',
+                        title: getLocalizedErrorMessage("success"),
+                        text: getLocalizedErrorMessage("data_updated"),
                         icon: 'success',
                         confirmButtonText: 'OK'
                     }).then((result) => {

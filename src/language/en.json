@@ -107,5 +107,15 @@
     "pdf" : "This is an English manual in PDF format.",
     "delete_q" : "By clicking on the trash can icon, you delete the given question.",
     "update_q" : "By clicking on the edit icon, you can edit the given question.",
-    "download_info" : "Download the manual in PDF format"
+    "download_info" : "Download the manual in PDF format",
+    "edit_q" : "Edit Questions",
+    "text_q" : "Question text",
+    "name" : "Name:",
+    "email_" : "Email:",
+    "edit_data" : "Edit Data",
+    "role" : "Role:",
+    "admin" : "Admin",
+    "user_a" : "User",
+    "data_updated" : "Data updated successfully"
+    
 }
