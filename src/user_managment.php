@@ -169,6 +169,7 @@ require '../../../configFinal.php';
                 }
             }
         };
+        
         xhr.open('POST', './controllers/updateUserData.php', true);
         xhr.send(formData);
     }
