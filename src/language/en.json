@@ -1,5 +1,6 @@
 {
     "home": "Home",
+    "manual": "Manual",
     "to_be_added": "ToBeAdded",
     "acc_settings": "Account Settings",
     "log_out": "Logout",
@@ -101,5 +102,20 @@
     "q_update": "Update question",
     "q_suc_up": "Question successfully updated.",
     "q_suc_copy": "Question successfully copied.",
-    "q_suc_del": "Question successfully deleted."
+    "q_suc_del": "Question successfully deleted.",
+    "sk_info" : "English Manual",
+    "pdf" : "This is an English manual in PDF format.",
+    "delete_q" : "By clicking on the trash can icon, you delete the given question.",
+    "update_q" : "By clicking on the edit icon, you can edit the given question.",
+    "download_info" : "Download the manual in PDF format",
+    "edit_q" : "Edit Questions",
+    "text_q" : "Question text",
+    "name" : "Name:",
+    "email_" : "Email:",
+    "edit_data" : "Edit Data",
+    "role" : "Role:",
+    "admin" : "Admin",
+    "user_a" : "User",
+    "data_updated" : "Data updated successfully"
+    
 }

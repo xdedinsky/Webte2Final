@@ -16,7 +16,11 @@
     --body-font-family: 'Arial', sans-serif; /* Modern and readable font for body text */
     --header-font-family: 'Helvetica Neue', sans-serif; /* Stylish font for headers */
 }
-
+#tableQuestions_wrapper{
+    width: 100%; /* Nastavte maximálnu šírku kontajnera podľa potreby */
+    overflow-x: auto; /* Povolte horizontálny overflow s posuvníkom */
+    white-space: nowrap; 
+}
 .tableHeader {
     background-color: var(--primary-color);
     color: var(--accent-color);
@@ -27,21 +31,7 @@
     align-items: center;
     justify-content: center;
     text-align: center;
-    width: 100%;
-    overflow-x: auto; /* Pridá posuvník ak je tabuľka širšia ako obal */
-}
-
-.table {
-    width: 100%;
-    max-width: 100%;
-    margin-bottom: 1rem;
-}
-
-@media (max-width: 768px) { /* Číslo 768px môžete upraviť podľa potreby */
-    .containerTable {
-        padding-left: 15px;
-        padding-right: 15px;
-    }
+   
 }
 
 body {

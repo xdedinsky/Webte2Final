@@ -1,5 +1,6 @@
 {
     "home": "Domov",
+    "manual": "Manuál",
     "to_be_added" : "Pridať",
     "acc_settings" : "Nastavenia účtu",
     "log_out" : "Odhlásiť",
@@ -98,6 +99,19 @@
     "q_update": "Úprava otázky",
     "q_suc_up": "Otázka úspešne aktualizovaná.",
     "q_suc_copy": "Otázka úspešne skopírovaná.",
-    "q_suc_del": "Otázka úspešne vymazaná."
-   
+    "q_suc_del": "Otázka úspešne vymazaná.",
+    "download_info" : "Stiahnuť príručku vo formáte PDF",
+    "sk_info" : "Slovenská príručka",
+    "pdf" : "Toto je slovenský manuál vo formáte PDF s diakritikou.",
+    "delete_q" : "Kliknutím na ikonu koša vymažete danú otázku.",
+    "update_q" : "Kliknutím na ikonu úpravy môžete upraviť danú otázku.",
+    "edit_q" : "Editácia Otázky",
+    "text_q" : "Text Otázky:",
+    "name" : "Meno:",
+    "email_" : "Email:",
+    "edit_data" : "Upraviť údaje",
+    "role" : "Role:",
+    "admin" : "Admin",
+    "user_a" : "Používateľ",
+    "data_updated" : "Údaje boli úspešne aktualizované"
 }
