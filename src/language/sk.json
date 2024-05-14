@@ -113,5 +113,8 @@
     "role" : "Role:",
     "admin" : "Admin",
     "user_a" : "Používateľ",
-    "data_updated" : "Údaje boli úspešne aktualizované"
+    "data_updated" : "Údaje boli úspešne aktualizované",
+    "qrimage_q" : "Kliknutím na ikonku zobrazíte QR-kód pre danú otazku",
+    "eye_q" : "Kliknutim na ikonku zobrazite danú otázku",
+    "backup_q" : "Kliknutím na ikonku zobrazíte backedup danej otázky"
 }
