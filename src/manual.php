@@ -70,7 +70,7 @@ include "header.php";
                         </p>
                         <p class="pManual">
                             <img src="images/copy.png" alt="copy" width="20" height="20" class="iconManual">
-                            <span localize="edit_q"></span>
+                            <span localize="copy_q"></span>
                         </p>
                         <p class="pManual">
                             <img src="images/edit.png" alt="edit" width="20" height="20" class="iconManual">

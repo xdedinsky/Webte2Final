@@ -105,7 +105,7 @@
     "pdf" : "Toto je slovenský manuál vo formáte PDF s diakritikou.",
     "delete_q" : "Kliknutím na ikonu koša vymažete danú otázku.",
     "update_q" : "Kliknutím na ikonu úpravy môžete upraviť danú otázku.",
-    "edit_q" : "Editácia Otázky",
+    "copy_q" : "Kopirovanie Otázky",
     "text_q" : "Text Otázky:",
     "name" : "Meno:",
     "email_" : "Email:",
@@ -115,6 +115,6 @@
     "user_a" : "Používateľ",
     "data_updated" : "Údaje boli úspešne aktualizované",
     "qrimage_q" : "Kliknutím na ikonku zobrazíte QR-kód pre danú otazku",
-    "eye_q" : "Kliknutim na ikonku zobrazite danú otázku",
-    "backup_q" : "Kliknutím na ikonku zobrazíte backedup danej otázky"
+    "eye_q" : "Kliknutim na ikonku zobrazite vysledky hlasovaní pre danú otázku",
+    "backup_q" : "Kliknutím na ikonku vytvorite zalohu danej otázky"
 }

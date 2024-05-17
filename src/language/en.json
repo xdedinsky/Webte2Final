@@ -9,7 +9,7 @@
     "current_pwd": "Current Password",
     "new_pwd": "New Password",
     "conf_pwd": "Confirm New Password",
-    "add_q": "Add Q",
+    "add_q": "Add Question",
     "account_acces": "Account Access",
     "log_in_button": "Login",
     "signup_button": "Register",
@@ -108,7 +108,7 @@
     "delete_q" : "By clicking on the trash can icon, you delete the given question.",
     "update_q" : "By clicking on the edit icon, you can edit the given question.",
     "download_info" : "Download the manual in PDF format",
-    "edit_q" : "Edit Questions",
+    "copy_q" : "Copy Questions",
     "text_q" : "Question text",
     "name" : "Name:",
     "email_" : "Email:",
@@ -116,6 +116,9 @@
     "role" : "Role:",
     "admin" : "Admin",
     "user_a" : "User",
-    "data_updated" : "Data updated successfully"
+    "data_updated" : "Data updated successfully",
+    "qrimage_q" : "Click the icon to display the QR code for the given question",
+    "eye_q" : "Click the icon to view the voting results for the given question",
+    "backup_q" : "Click the icon to create a backup of the given question"
     
 }
