@@ -3,7 +3,7 @@ session_start();
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
-require '../../../../configFinal.php'; 
+require '../configFinal.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST['username'];
@@ -25,12 +25,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $_SESSION["username"] = $username;   
                     $_SESSION["role"] = $role; 
 
-                    header("location: /Webte2Final/src/index.php?action=login-success");
+                    header("location: /index.php?action=login-success");
                 } else {
-                     header("location: /Webte2Final/src/index.php?action=login-failed");
+                     header("location: /index.php?action=login-failed");
                 }
             } else {
-                header("location: /Webte2Final/src/index.php?action=login-failed");
+                header("location: /index.php?action=login-failed");
             }
             $stmt->close();
         }

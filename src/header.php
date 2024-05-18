@@ -1,5 +1,5 @@
 <?php
-require '../../../configFinal.php';
+require 'configFinal.php';
 if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
     $stmt = $conn->prepare("SELECT role FROM Users WHERE user_id = ?");
     $stmt->bind_param("i", $_SESSION['user_id']);

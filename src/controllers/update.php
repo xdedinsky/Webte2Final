@@ -3,8 +3,8 @@ session_start();
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
-include_once 'header.php';
-require '../../../../configFinal.php';
+include_once '../header.php';
+require '../configFinal.php';
 
 
     // Získanie hodnôt z formulára
@@ -33,7 +33,9 @@ require '../../../../configFinal.php';
 
     $conn->close();
     // Presmerovanie na inú stránku po spracovaní formulára
-    header("Location:../index.php?action=ques-update-success");
+?>
+<script> window.location.href = "../index.php?action=ques-update-success";</script>
+<?php
     exit;
 
 

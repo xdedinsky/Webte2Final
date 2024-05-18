@@ -3,7 +3,7 @@
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
-require_once '../../../../configFinal.php';
+require '../configFinal.php';
 if (isset($_GET['username'])) {
     $username = $_GET['username'];
     $sql = "SELECT * FROM Users WHERE username = ?";

@@ -2,7 +2,7 @@
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
-require '../../../../configFinal.php';
+require '../configFinal.php';
 
 // Check if both question_id and active values are present in the GET request
 if (isset($_GET['question_id']) && isset($_GET['wordcloud'])) {
