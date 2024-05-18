@@ -26,9 +26,9 @@ services:
   mysql:
     image: mysql/mysql-server:8.0
     environment:
-      MYSQL_ROOT_PASSWORD: webte2
-      MYSQL_USER: xtaborsky
-      MYSQL_PASSWORD: webte2
+      MYSQL_ROOT_PASSWORD: rado-bezpecne-heslo1
+      MYSQL_USER: xkubalec
+      MYSQL_PASSWORD: rado-bezpecne-heslo1
       MYSQL_DATABASE: webteFinal
     volumes:
       - ./.docker/mysql/my.cnf:/etc/mysql/mysql.cnf
