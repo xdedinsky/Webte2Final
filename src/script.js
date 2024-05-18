@@ -65,8 +65,24 @@ function validateNewPassword(){
         });
         return false; 
     }
+    if (newPassword !== confirmPassword) {
+        Swal.fire({
+            title: getLocalizedErrorMessage("miss_match"),
+            text: getLocalizedErrorMessage("fix_match"),
+            icon: 'error',
+            background: '#FFFFFF',
+            color: '#000000',
+            confirmButtonColor: '#FF6A00',
+            confirmButtonText: 'Ok'
+        });
+        return false; // Prevent form submission
+    }
+
     return true;
 }
+
+
+
 
 function validatePassword() {
     var password = document.getElementById("passwordReg").value;
