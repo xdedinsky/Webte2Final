@@ -142,7 +142,7 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
     //if logged in 
     if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
         ?>
-        <button id="exportButton" class="btn btn-custom" style="margin-top = 10px">Export Questions and Answers</button>
+        <button id="exportButton" class="btn btn-custom" style="margin-top = 10px" localize = "exportbutton"></button>
         <?php
     }
     ?>
@@ -225,11 +225,11 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
                             if (response.message === 'ok') {
                                 console.log('Poznámka úspešne odoslaná!');
                                 // Presmerovanie na inú stránku po úspešnom odoslaní
-                                window.location.href = '/Webte2Final/src/index.php?action=backup_ok';
+                                window.location.href = 'index.php?action=backup_ok';
                             } else if (response.message === 'no_need') {
                                 console.log('Nie je potrebné odoslať poznámku.');
                                 // Presmerovanie na inú stránku v prípade, že nie je potrebné odoslať poznámku
-                                window.location.href = '/Webte2Final/src/index.php?action=backup_noneed';
+                                window.location.href = 'index.php?action=backup_noneed';
                             }
                             var modal = document.getElementById('backupModal');
                             var bootstrapModal = bootstrap.Modal.getInstance(modal);
@@ -342,8 +342,8 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
                     .then(data => {
                         Swal.fire({
                             icon: data.success ? 'success' : 'error',
-                            title: data.success ? 'Success' : 'Error',
-                            text: data.message
+                            title: data.success ? getLocalizedErrorMessage('success') : getLocalizedErrorMessage('error'),
+                            
                         });
                     })
                     .catch(error => {
@@ -361,8 +361,8 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
                         
                         Swal.fire({
                             icon: data.success ? 'success' : 'error',
-                            title: data.success ? 'Success' : 'Error',
-                            text: data.message
+                            title: data.success ? getLocalizedErrorMessage('success') : getLocalizedErrorMessage('error'),
+                            
                         });
                     })
                     .catch(error => {

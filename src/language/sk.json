@@ -22,6 +22,8 @@
     "question_with_options" : "Otázka s možnosťami",
     "question_text" : "Text otázky:",
     "answer_type" : "Typ odpovede:",
+    "answer_submitted": "Odpoveď odoslaná!",
+    "answer_not_submitted": "Odpoveď nebola odoslaná",
     "single_correct_answer" : "Jedna správna odpoveď",
     "multiple_correct_answers" : "Viac správnych odpovedí",
     "options" : "Možnosti:",
@@ -95,7 +97,7 @@
     "fix_email" : "Zadajte platnú e-mailovú adresu.",
     "q_delete": "Vymazanie otázky",
     "q_copy": "Kópia otázky",
-    "q_update": "Úp rava otázky",
+    "q_update": "Úprava otázky",
     "q_suc_up": "Otázka úspešne aktualizovaná.",
     "q_suc_copy": "Otázka úspešne skopírovaná.",
     "q_suc_del": "Otázka úspešne vymazaná.",
@@ -157,7 +159,8 @@
     "text_34_i" : "Zadaním adresy do prehliadača v tvare 'https://node65.webte.fei.stuba.sk/abcde', kde 'abcde' je 5-znakový vstupný kód.",
     "text_35_i" : "Vyplnenie hlasovacej otázky:",
     "text_36_i" : "Po vyplnení hlasovacej otázky bude užívateľ presmerovaný na stránku s grafickým zobrazením výsledkov hlasovania na danú otázku.",
-    "text_37_i" : "Z tejto stánky je možný návrat na domovskú stránku aplikácie."
+    "text_37_i" : "Z tejto stánky je možný návrat na domovskú stránku aplikácie.",
+    "exportbutton": "Exportovať otázky a odpovede"
 
 
 }

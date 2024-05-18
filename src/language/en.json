@@ -161,6 +161,7 @@
     "text_34_i" : "Entering the address in the browser in the form 'https://node65.webte.fei.stuba.sk/abcde', where 'abcde' is the 5-character entry code.",
     "text_35_i" : "Filling in the Voting Question:",
     "text_36_i" : "After filling in the voting question, the user will be redirected to a page with a graphical display of the voting results for that question.",
-    "text_37_i" : "You can return to the application's home page from this page."
+    "text_37_i" : "You can return to the application's home page from this page.",
+    "exportbutton": "Export Questions and Answers"
     
 }

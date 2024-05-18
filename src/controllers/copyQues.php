@@ -66,5 +66,7 @@ $conn->close();
 // Úspešná odpoveď
 http_response_code(200);
 echo json_encode(['success' => 'Otázka úspešne vložená a skopírovaná']);
-header("Location:../index.php?action=ques-copy-success");
+
 ?>
+<script> window.location.href = "../index.php?action=ques-copy-success";</script>
+
