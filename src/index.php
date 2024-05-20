@@ -52,7 +52,7 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
                     $stmt_dates = $conn->prepare($sql_dates);
                     $stmt_dates->bind_param("i", $user_id);
                 }
-                // Query to fetch unique dates from the Questions table.
+                // Query to fetch unique dates from the Questions table
             
                 $stmt_dates->execute();
                 $dates = $stmt_dates->get_result();
