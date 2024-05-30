@@ -2,11 +2,12 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <?php
 ob_start(); // Start output buffering
-session_start();
+//session_start();
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
-require '../../../configFinal.php';
+
+require 'configFinal.php';
 include_once 'header.php';
 
 $questionCode = $_GET['questionCode'] ?? '';  // Safely fetch the question code
@@ -20,7 +21,9 @@ if ($stmt = $conn->prepare("SELECT * FROM Questions WHERE question_code = ?")) {
     // Check if a question was actually fetched
     if ($question = $result->fetch_assoc()) {
         if ($question["active"] === 0) {
-            header("location: /Webte2Final/src/index.php?action=ques-not-active");
+            ?>
+            <script> window.location.href = "../index.php?action=ques-not-active";</script>
+            <?php
             exit;
         } elseif ($question['question_type'] == 'multiple_choice') {
             if ($optionsStmt = $conn->prepare("SELECT option_id, option_text FROM QuestionOptions WHERE question_id = ?")) {
@@ -31,7 +34,9 @@ if ($stmt = $conn->prepare("SELECT * FROM Questions WHERE question_code = ?")) {
             }
         }
     } else {
-        header("location: /Webte2Final/src/index.php?action=code-not-found");
+        ?>
+            <script> window.location.href = "../index.php?action=code-not-found";</script>
+            <?php
         exit;
     }
     $stmt->close();

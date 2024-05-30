@@ -7,7 +7,7 @@ error_reporting(E_ALL);
 header('Content-Type: application/json');
 
 // Include your existing database configuration
-require '../../../../configFinal.php';
+require '../configFinal.php';
 
 $data = json_decode(file_get_contents('php://input'), true);
 

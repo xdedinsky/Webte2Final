@@ -4,7 +4,7 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 include_once 'header.php';
-require '../../../configFinal.php';
+require 'configFinal.php';
 
 if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
     $stmt = $conn->prepare("SELECT role FROM Users WHERE user_id = ?");
@@ -142,7 +142,7 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
     //if logged in 
     if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
         ?>
-        <button id="exportButton" class="btn btn-custom" style="margin-top = 10px">Export Questions and Answers</button>
+        <button id="exportButton" class="btn btn-custom" style="margin-top = 10px" localize = "exportbutton"></button>
         <?php
     }
     ?>
@@ -152,7 +152,7 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
     <?php
     if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
         echo "<table id='tableQuestions' class='table table-bordered'>";
-        echo "<thead><tr><th localize='q_id'></th><th id ='ucol' localize='th_user'></th><th id='scol' localize='th_subject'></th><th localize='th_q_text'></th><th localize='th_q_code'></th><th id='dcol' localize='th_date'></th><th localize='th_active'></th><th localize='th_wordcloud'></th><th localize='th_close'></th><th>QR Code</th><th>Operacie</th></tr></thead>";
+        echo "<thead><tr><th id ='ucol' localize='th_user'></th><th id='scol' localize='th_subject'></th><th localize='th_q_text'></th><th localize='th_q_code'></th><th id='dcol' localize='th_date'></th><th localize='th_active'></th><th localize='th_wordcloud'></th><th>QR Code</th><th localize='th_operation'></th></tr></thead>";
         echo "<tbody></tbody>";
         echo "</table>";
         ?>
@@ -170,12 +170,12 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
 
                 // Create an anchor element that wraps the QR code and redirects on click
                 var link = document.createElement('a');
-                link.href = `https://node28.webte.fei.stuba.sk/${questionCode}`; // Link to redirect
+                link.href = `https://node65.webte.fei.stuba.sk/${questionCode}`; // Link to redirect
                 link.target = '_blank'; // Open in new tab
 
                 // Create QR code inside the link
                 var qr = new QRCode(link, {
-                    text: `https://node28.webte.fei.stuba.sk/${questionCode}`,
+                    text: `https://node65.webte.fei.stuba.sk/${questionCode}`,
                     width: 256,
                     height: 256,
                     colorDark: "#000000",
@@ -225,11 +225,11 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
                             if (response.message === 'ok') {
                                 console.log('Poznámka úspešne odoslaná!');
                                 // Presmerovanie na inú stránku po úspešnom odoslaní
-                                window.location.href = '/Webte2Final/src/index.php?action=backup_ok';
+                                window.location.href = 'index.php?action=backup_ok';
                             } else if (response.message === 'no_need') {
                                 console.log('Nie je potrebné odoslať poznámku.');
                                 // Presmerovanie na inú stránku v prípade, že nie je potrebné odoslať poznámku
-                                window.location.href = '/Webte2Final/src/index.php?action=backup_noneed';
+                                window.location.href = 'index.php?action=backup_noneed';
                             }
                             var modal = document.getElementById('backupModal');
                             var bootstrapModal = bootstrap.Modal.getInstance(modal);
@@ -284,7 +284,6 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
                             const isCheckedWordCloud = question.wordcloud == '1' ? 'checked' : '';
                             const username2 = question.username;
                             row.innerHTML = `
-                                                                        <td>${question.question_id}</td>
                                                                         <td>${question.username}</td>
                                                                         <td>${question.subject}</td>
                                                                         <td>${question.question_text}</td>
@@ -297,25 +296,25 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
                                                                             <input type="checkbox" ${isCheckedWordCloud} onchange="toggleActiveWordCloud(${question.question_id}, this.checked)">
                                                                         </td>
                                                                         <td class="center-content">
-                                                                            <a href="#" data-bs-toggle="modal" data-bs-target="#backupModal" onclick="showBackupNote('${question.question_id}')">
-                                                                                Uzatvoriť
-                                                                            </a>
-                                                                             / 
-                                                                            <a href="showBackups.php?qid=${question.question_id}" >
-                                                                                Vysledky
-                                                                            </a>
-                                                                        </td>
-                                                                        <td class="center-content">
                                                                             <a href="#" data-bs-toggle="modal" data-bs-target="#qrModal" onclick="showQRCode('${question.question_code}')">
                                                                                 <img src="images/qrimage.png" alt="qrimage" width="20" height="20">
                                                                             </a>
                                                                         </td>
                                                                         <td class="center-content">
+                                                                        <a href="#" data-bs-toggle="modal" data-bs-target="#backupModal" onclick="showBackupNote('${question.question_id}')">
+                                                                            <img src="images/backup.png" alt="qrimage" width="20" height="20"></a>
+                                                                             | 
+                                                                            <a href="showBackups.php?qid=${question.question_id}" >
+                                                                            <img src="images/eye.png" alt="qrimage" width="20" height="20"></a>
+                                                                             | 
                                                                             <a href="controllers/copyQues.php?qid=${question.question_id}" >
                                                                             <img src="images/copy.png" alt="copyimg" width="20" height="20"></a>
+                                                                            |       
+                                                                            <a href="updateQues.php?qid=${question.question_id}" >
+                                                                                <img src="images/edit.png" alt="binimg" width="20" height="20"></a>
                                                                              |       
                                                                             <a href="controllers/deleteQues.php?qid=${question.question_id}" >
-                                                                                <img src="images/bin.png" alt="binimg" width="20" height="20">
+                                                                                <img src="images/bin.png" alt="binimg"  width="20" height="20">
                                                                             </a>
                                                                         </td>
                                                     
@@ -343,8 +342,8 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
                     .then(data => {
                         Swal.fire({
                             icon: data.success ? 'success' : 'error',
-                            title: data.success ? 'Success' : 'Error',
-                            text: data.message
+                            title: data.success ? getLocalizedErrorMessage('success') : getLocalizedErrorMessage('error'),
+                            
                         });
                     })
                     .catch(error => {
@@ -362,8 +361,8 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
                         
                         Swal.fire({
                             icon: data.success ? 'success' : 'error',
-                            title: data.success ? 'Success' : 'Error',
-                            text: data.message
+                            title: data.success ? getLocalizedErrorMessage('success') : getLocalizedErrorMessage('error'),
+                            
                         });
                     })
                     .catch(error => {

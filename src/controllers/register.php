@@ -3,7 +3,7 @@ session_start();
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
-require '../../../../configFinal.php'; 
+require '../configFinal.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST['username'];
@@ -20,7 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $result_check_username = $stmt_check_username->get_result();
 
         if ($result_check_username->num_rows > 0) {
-            header("location: /Webte2Final/src/index.php?action=username-taken");
+            header("location: /index.php?action=username-taken");
             exit(); 
         }
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
@@ -32,9 +32,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $_SESSION["loggedin"] = true;
                 $_SESSION["user_id"] = $conn->insert_id; // Dostupné len ak je user_id AUTO_INCREMENT
                 $_SESSION["username"] = $username;
-                header("location: /Webte2Final/src/index.php?action=register-success"); // Redirect to login page
+                header("location: /index.php?action=register-success"); // Redirect to login page
             } else {
-                header("location: /Webte2Final/src/index.php?action=register-failed");
+                header("location: /index.php?action=register-failed");
             }
             $stmt->close();
         }

@@ -1,5 +1,5 @@
 <?php
-require '../../../configFinal.php';
+require 'configFinal.php';
 if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
     $stmt = $conn->prepare("SELECT role FROM Users WHERE user_id = ?");
     $stmt->bind_param("i", $_SESSION['user_id']);
@@ -71,7 +71,8 @@ function isActive($navLink)
                     </div>
                     <a class="nav-link <?php echo isActive('index'); ?> " localize="home" aria-current="page"
                         href="index.php"></a>
-
+                        <a class="nav-link <?php echo isActive('manual'); ?> " localize="manual" aria-current="page"
+                        href="manual.php"></a>
                     <?php if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true): ?>
                         <a class="nav-link <?php echo isActive('addQuestion'); ?>" aria-current="page" localize="add_q"
                             href="addQuestion.php"></a>

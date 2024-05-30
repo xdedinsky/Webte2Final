@@ -1,5 +1,5 @@
 <?php
-require '../../../../configFinal.php';
+require '../configFinal.php';
 
 // Check if both question_id and active values are present in the GET request
 if (isset($_GET['question_id']) && isset($_GET['active'])) {
