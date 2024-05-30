@@ -8,7 +8,7 @@ require '../configFinal.php';
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Načítajte údaje z tela požiadavky
     $question_id = $_POST['question_id']; // ID otázky
-    $note = $_POST['note']; // Poznámka
+    $note = $_POST['note']; // Poznámkaa
 
     $sql_select_responses = "SELECT * FROM Questions WHERE question_id = $question_id";
     $result = $conn->query($sql_select_responses);
